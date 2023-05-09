@@ -18,12 +18,18 @@ PATH_TO_RAW_FACE = {
 }
 PATH_TO_TRANSCRIPTIONS = {
 	'MER2023': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/base_text_refine_dataset_all.csv'),
+    'BASE_TRAIN': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/base_train.csv'),
+    'BASE_TEST': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/base_test.csv'),
 }
 PATH_TO_FEATURES = {
 	'MER2023': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'features'),
+    'BASE_TRAIN': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'features/base_train'),
+    'BASE_TEST': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'features/base_test'),
 }
 PATH_TO_LABEL = {
 	'MER2023': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/label-6way.npz'),
+    'BASE_TRAIN': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/base_train_label.npz'),
+    'BASE_TEST': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/base_test_label.npz'),
 }
 
 PATH_TO_PRETRAINED_MODELS = '/home/wyz/MER-TER/TER-Pipeline/tools/'
