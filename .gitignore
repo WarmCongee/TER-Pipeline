@@ -1,6 +1,9 @@
-./back/*
-./tools/*
-./dataset/*
+back/
+dataset/
+features/
+saved/
+tools/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
