@@ -119,12 +119,10 @@ def refinement_transcription_files_asr(old_path, new_path):
     df.to_csv(new_path, sep='\t', index=False)
 
 def construct_text_dataset():
-    #normalize_dataset_format(config_path.MER_DATASET_PATH_SOURCE, config_path.TER_DATASET_PATH)
-    #split_audio_from_video_16k(config_path.TER_DATASET_PATH_VIDEO, config_path.TER_DATASET_PATH_AUDIO)
-    #generate_transcription_files_asr(config_path.TER_DATASET_PATH_AUDIO, config_path.ASR_TRANS_DATASET_PATH)
+    normalize_dataset_format(config_path.MER_DATASET_PATH_SOURCE, config_path.TER_DATASET_PATH)
+    split_audio_from_video_16k(config_path.TER_DATASET_PATH_VIDEO, config_path.TER_DATASET_PATH_AUDIO)
+    generate_transcription_files_asr(config_path.TER_DATASET_PATH_AUDIO, config_path.ASR_TRANS_DATASET_PATH)
     refinement_transcription_files_asr(config_path.ASR_TRANS_DATASET_PATH, config_path.ASR_TRANS_REFINEMENT_DATASET_PATH)
 
 if __name__ == '__main__':
     construct_text_dataset()
-    # import fire
-    # fire.Fire()
