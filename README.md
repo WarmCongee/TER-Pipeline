@@ -12,9 +12,10 @@
 ├── extract_text_embedding_LZ.py # 从Text数据集提取embedding并存储
 ├── train.py # 分类网络和模型构建及训练
 ├── README.md
-├── dataset # gitignored: [Text单模态数据集]
+├── dataset # [Text单模态数据集]
+├── result # [Text单模态TER结果]
 ├── features # gitignored: [embedding特征]
-├── saved-unimodal # gitignored: [训练完成网络]
+├── saved-unimodal # gitignored: [训练超参数等]
 └── tools # gitignored: [预训练模型及工具库]
 ```
 
