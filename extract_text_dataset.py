@@ -128,13 +128,13 @@ def divide_train_test_dateset(csv_path_all, label_path_all, \
 
 def construct_text_dataset():
     # 整理video，整理Label存储格式
-    # normalize_dataset_format(config_path.MER_DATASET_PATH_SOURCE, config_path.TER_DATASET_PATH)
+    normalize_dataset_format(config_path.MER_DATASET_PATH_SOURCE, config_path.TER_DATASET_PATH)
     # 提取wav
-    # split_audio_from_video_16k(config_path.TER_DATASET_PATH_VIDEO, config_path.TER_DATASET_PATH_AUDIO)
+    split_audio_from_video_16k(config_path.TER_DATASET_PATH_VIDEO, config_path.TER_DATASET_PATH_AUDIO)
     # 翻译wav得到Text，合并Text和Label到同一csv
-    # generate_transcription_files_asr(config_path.TER_DATASET_PATH_AUDIO, config_path.ASR_TRANS_DATASET_PATH)
+    generate_transcription_files_asr(config_path.TER_DATASET_PATH_AUDIO, config_path.ASR_TRANS_DATASET_PATH)
     # 微调csv中Text结果，补充标点符号
-    # refinement_transcription_files_asr(config_path.ASR_TRANS_DATASET_PATH, config_path.ASR_TRANS_REFINEMENT_DATASET_PATH)
+    refinement_transcription_files_asr(config_path.ASR_TRANS_DATASET_PATH, config_path.ASR_TRANS_REFINEMENT_DATASET_PATH)
     # 初步划分Train和Test的数据集
     divide_train_test_dateset(config_path.ASR_TRANS_REFINEMENT_DATASET_PATH, config_path.TRAIN_LABLE_NPZ_PATH, 
                               config_path.ASR_TRANS_REFINEMENT_DATASET_PATH_TRAIN, config_path.TRAIN_LABLE_NPZ_PATH_TRAIN,

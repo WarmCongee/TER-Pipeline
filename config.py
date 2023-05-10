@@ -32,6 +32,10 @@ PATH_TO_LABEL = {
     'BASE_TEST': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/base_test_label.npz'),
 }
 
+PATH_TO_RESULT = {
+	'RESULT_CSV': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'result/results.txt'),
+}
+
 PATH_TO_PRETRAINED_MODELS = '/home/wyz/MER-TER/TER-Pipeline/tools/'
 PATH_TO_OPENSMILE = '/home/wyz/MER-TER/TER-Pipeline/tools/opensmile-2.3.0/'
 PATH_TO_FFMPEG = '/home/wyz/MER-TER/TER-Pipeline/tools/ffmpeg-4.4.1-i686-static/ffmpeg'

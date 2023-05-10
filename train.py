@@ -342,12 +342,12 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
         multi_feat = torch.cat([audio_feat, text_feat, visual_feat], dim=1)
         
         ## add cuda
-        emos = emos#.cuda()
-        vals = vals#.cuda()
-        audio_feat  = audio_feat#.cuda()
-        text_feat   = text_feat#.cuda()
-        visual_feat = visual_feat#.cuda()
-        multi_feat  = multi_feat#.cuda()
+        emos = emos.cuda()
+        vals = vals.cuda()
+        audio_feat  = audio_feat.cuda()
+        text_feat   = text_feat.cuda()
+        visual_feat = visual_feat.cuda()
+        multi_feat  = multi_feat.cuda()
 
         ## feed-forward process
         if args.model_type == 'mlp':
@@ -527,6 +527,14 @@ def report_results_on_test3(test_label, test_pred):
     return emo_fscore, -100, -100
 
 
+def record_exp_result(cv_fscore, cv_valmse, cv_metric, args_saved_path):
+    save_path = config.PATH_TO_RESULT['RESULT_CSV']
+    result_text = "fscore: {:.4f}, valmse: {:.4f}, metric: {:.4f}, train_args_path: {}".format(cv_fscore, cv_valmse, cv_metric, args_saved_path)
+    # t = ",".join([str(item) for item in t])
+    f = open(save_path, "a")
+    f.write(result_text + '\n')
+    f.close()
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
@@ -612,9 +620,9 @@ if __name__ == '__main__':
                               layers=args.layers)
         reg_loss = MSELoss()
         cls_loss = CELoss()
-        model#.cuda()
-        reg_loss#.cuda()
-        cls_loss#.cuda()
+        model.cuda()
+        reg_loss.cuda()
+        cls_loss.cuda()
         optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.l2)
 
         print (f'Step2: training (multiple epoches)')
@@ -636,9 +644,9 @@ if __name__ == '__main__':
             store_values['eval_emoprobs'] = eval_results['emo_probs']
             store_values['eval_valpreds'] = eval_results['val_preds']
             store_values['eval_names']    = eval_results['names']
-            print ('epoch:%d; train_fscore:%.4f; eval_metric:%.4f' %(epoch+1, train_results['emo_fscore'], eval_metric))
+            print ('epoch:%d; eval_acc:%.4f; eval_fscore:%.4f; eval_val_mse:%.4f; eval_metric:%.4f' %(epoch+1, eval_results['emo_accuracy'], eval_results['emo_fscore'], eval_results['val_mse'], eval_metric))
 
-            ## testing and saving
+            ## testing and saving： test in all trained dataset
             for jj, test_loader in enumerate(test_loaders):
                 test_set = args.test_sets[jj]
                 test_results = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, optimizer=None, train=False)
@@ -671,33 +679,37 @@ if __name__ == '__main__':
     ## analyze cv results
     cv_fscore, cv_valmse = np.mean(np.array(folder_evalres), axis=0)
     cv_metric = overall_metric(cv_fscore, cv_valmse)
-    res_name = f'f1:{cv_fscore:.4f}_val:{cv_valmse:.4f}_metric:{cv_metric:.4f}'
+    res_name = f'f1:{cv_fscore:.4f}_valmse:{cv_valmse:.4f}_metric:{cv_metric:.4f}'
     save_path = f'{save_modelroot}/cv_features:{feature_name}_{res_name}_{name_time}.npz'
     print (f'save results in {save_path}')
-    np.savez_compressed(save_path, args=np.array(args, dtype=object))
+    np.savez_compressed(save_path, args=np.array(args, dtype=object))  # 参数保存选择
 
-    for setname in args.test_sets:
-        pred_path  = f'{save_predroot}/{setname}-pred-{name_time}.csv'
-        label_path = f'./dataset-release/{setname}-label.csv'
-        name2preds = average_folder_results(folder_save, setname)
-        if args.savewhole: name2feats = gain_name2feat(folder_save, setname)
-        write_to_csv_pred(name2preds, pred_path)
 
-        res_name = 'nores'
-        if os.path.exists(label_path):
-            if setname in ['test1', 'test2']: emo_fscore, val_mse, final_metric = report_results_on_test1_test2(label_path, pred_path)
-            if setname in ['test3']:          emo_fscore, val_mse, final_metric = report_results_on_test3(label_path, pred_path)
-            res_name = f'f1:{emo_fscore:.4f}_val:{val_mse:.4f}_metric:{final_metric:.4f}'
+    record_exp_result(cv_fscore, cv_valmse, cv_metric, save_path)
 
-        save_path = f'{save_modelroot}/{setname}_features:{feature_name}_{res_name}_{name_time}.npz'
-        print (f'save results in {save_path}')
+    ## 拼接Feature 和 pred结果存储
+    # for setname in args.test_sets:
+    #     pred_path  = f'{save_predroot}/{setname}-pred-{name_time}.csv'
+    #     label_path = f'./dataset-release/{setname}-label.csv'
+    #     name2preds = average_folder_results(folder_save, setname)
+    #     if args.savewhole: name2feats = gain_name2feat(folder_save, setname)
+    #     write_to_csv_pred(name2preds, pred_path)
 
-        if args.savewhole:
-            np.savez_compressed(save_path,
-                            name2preds=name2preds,
-                            name2feats=name2feats,
-                            args=np.array(args, dtype=object))
-        else:
-            np.savez_compressed(save_path,
-                                name2preds=name2preds,
-                                args=np.array(args, dtype=object))
+    #     res_name = 'nores'
+    #     if os.path.exists(label_path):
+    #         if setname in ['test1', 'test2']: emo_fscore, val_mse, final_metric = report_results_on_test1_test2(label_path, pred_path)
+    #         if setname in ['test3']:          emo_fscore, val_mse, final_metric = report_results_on_test3(label_path, pred_path)
+    #         res_name = f'f1:{emo_fscore:.4f}_val:{val_mse:.4f}_metric:{final_metric:.4f}'
+
+    #     save_path = f'{save_modelroot}/{setname}_features:{feature_name}_{res_name}_{name_time}.npz'
+    #     print (f'save results in {save_path}')
+
+    #     if args.savewhole:
+    #         np.savez_compressed(save_path,
+    #                         name2preds=name2preds,
+    #                         name2feats=name2feats,
+    #                         args=np.array(args, dtype=object))
+    #     else:
+    #         np.savez_compressed(save_path,
+    #                             name2preds=name2preds,
+    #                             args=np.array(args, dtype=object))

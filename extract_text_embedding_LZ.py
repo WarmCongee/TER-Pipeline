@@ -13,7 +13,6 @@ from transformers import GPT2Tokenizer, GPT2Model
 import re
 import argparse
 
-from util import write_feature_to_csv, load_word2vec, load_glove, strip_accent
 # import config
 import sys
 sys.path.append('../../')
