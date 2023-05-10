@@ -2,9 +2,10 @@ back/
 dataset/
 features/
 saved/
-saved-unimodal/
+saved-unimodal/*
 tools/
 
+!/saved-unimodal/model/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
