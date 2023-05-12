@@ -36,6 +36,7 @@ from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 from torch.utils.data.sampler import SubsetRandomSampler
 from model import *
+from utils import *
 from transformers import BertTokenizer
 
 import config
@@ -437,9 +438,9 @@ def report_results_on_test3(test_label, test_pred):
     return emo_fscore, -100, -100
 
 
-def record_exp_result(cv_fscore, cv_valmse, cv_metric, args_saved_path):
+def record_exp_result(cv_fscore, cv_valmse, cv_metric, pretrain_model, freez_mode):
     save_path = config.PATH_TO_RESULT['RESULT_CSV']
-    result_text = "fscore: {:.4f}, valmse: {:.4f}, metric: {:.4f}, train_args_path: {}".format(cv_fscore, cv_valmse, cv_metric, args_saved_path)
+    result_text = "fscore: {:.4f}, valmse: {:.4f}, metric: {:.4f}, pretrain_model: {}, freez_mode: {}".format(cv_fscore, cv_valmse, cv_metric, pretrain_model, freez_mode)
     # t = ",".join([str(item) for item in t])
     f = open(save_path, "a")
     f.write(result_text + '\n')
@@ -496,7 +497,7 @@ if __name__ == '__main__':
         args.save_root = f'{args.save_root}-trimodal'
 
     checkpoint = 'hfl/chinese-macbert-base'
-    freeze = "1"
+    freeze = "3"
 
     torch.cuda.set_device(args.gpu)
     os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
@@ -533,8 +534,10 @@ if __name__ == '__main__':
         eval_fscores = []
         eval_valmses = []
         test_save = []
-        for epoch in range(args.epochs):
 
+        best_eval_metric = -100.0
+        for epoch in range(args.epochs):
+            
             store_values = {}
 
             ## training and validation
@@ -558,6 +561,12 @@ if __name__ == '__main__':
                 store_values[f'{test_set}_names']      = test_results['names']
                 if args.savewhole: store_values[f'{test_set}_embeddings'] = test_results['embeddings']
             test_save.append(store_values)
+
+            if eval_metric > -0.25 and eval_metric > best_eval_metric:
+                best_eval_metric = eval_metric
+                torch.save(model.module.encoder.state_dict(), "./saved-unimodal/best_model_{}.pth".format(ii+1))
+                write_log("folder: {}, epoch: {}, eval_metric: {}".format(ii+1, epoch, eval_metric), path="./result/fine_model_save.txt")
+
             
         print (f'Step3: saving and testing on the {ii+1} folder')
         best_index = np.argmax(np.array(eval_metrics))
@@ -587,6 +596,5 @@ if __name__ == '__main__':
     # print (f'save results in {save_path}')
     # np.savez_compressed(save_path, args=np.array(args, dtype=object))  # 参数保存选择
 
-
-    record_exp_result(cv_fscore, cv_valmse, cv_metric, save_path)
+    record_exp_result(cv_fscore, cv_valmse, cv_metric, checkpoint, freeze)
 
