@@ -196,12 +196,14 @@ def get_loaders(args, config):
                                   batch_size=args.batch_size,
                                   sampler=SubsetRandomSampler(train_idxs),
                                   num_workers=args.num_workers,
-                                  pin_memory=False)
+                                  pin_memory=False,
+                                  drop_last=True)
         eval_loader = DataLoader(train_dataset,
                                  batch_size=args.batch_size,
                                  sampler=SubsetRandomSampler(eval_idxs),
                                  num_workers=args.num_workers,
-                                 pin_memory=False)
+                                 pin_memory=False,
+                                 drop_last=True)
         train_loaders.append(train_loader)
         eval_loaders.append(eval_loader)
 
@@ -216,7 +218,8 @@ def get_loaders(args, config):
                                     batch_size=args.batch_size,
                                     num_workers=args.num_workers,
                                     shuffle=False,
-                                    pin_memory=False)
+                                    pin_memory=False,
+                                    drop_last=True)
         test_loaders.append(test_loader)
 
     ## return loaders
@@ -242,7 +245,7 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
     else:
         model.eval()
 
-    for data in tqdm.tqdm(dataloader):
+    for data in dataloader:
         if train:
             optimizer.zero_grad()
         
@@ -256,7 +259,7 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
         emos = emos.cuda()
         vals = vals.cuda()
 
-        
+
         features, emos_out, vals_out = model(enc_inputs=input_ids,
                     attention_mask=attention_mask,
                     token_type_ids=token_type_ids)

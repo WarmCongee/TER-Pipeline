@@ -98,7 +98,7 @@ class MSELoss(nn.Module):
         return loss
 
 class TextClassification(nn.Module):
-    def __init__(self, checkpoint, freeze, classifier_mode=0):
+    def __init__(self, checkpoint, freeze):
         super(TextClassification, self).__init__()
         self.encoder = BertModel.from_pretrained(checkpoint)
         if freeze == "1":
