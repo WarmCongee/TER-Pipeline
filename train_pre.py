@@ -500,7 +500,7 @@ if __name__ == '__main__':
     freeze = "3"
 
     torch.cuda.set_device(args.gpu)
-    os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
+    os.environ['CUDA_VISIBLE_DEVICES'] = '1'
     print(args)
 
     
@@ -521,13 +521,19 @@ if __name__ == '__main__':
         name_time  = time.time()
 
         print (f'Step1: build model (each folder has its own model)')
-        model = nn.DataParallel(TextClassification(checkpoint=checkpoint, freeze=freeze))
+        model = nn.DataParallel(TextClassification(checkpoint=checkpoint, freeze=freeze), device_ids = [1])
         reg_loss = MSELoss()
         cls_loss = CELoss()
         model.cuda()
         reg_loss.cuda()
         cls_loss.cuda()
         optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.l2)
+        gamma = 0.9; stepsize = 2; warm_up_epochs=5
+        warm_up_with_step_lr = lambda epoch: (epoch+1) / warm_up_epochs if epoch < warm_up_epochs \
+            else gamma**( (epoch+1 - warm_up_epochs)//stepsize )
+        scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=warm_up_with_step_lr)
+
+        # scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=3, gamma=0.8)
 
         print (f'Step2: training (multiple epoches)')
         eval_metrics = []
@@ -543,6 +549,8 @@ if __name__ == '__main__':
             ## training and validation
             train_results = train_or_eval_model(args, model, reg_loss, cls_loss, train_loader, optimizer=optimizer, train=True)
             eval_results  = train_or_eval_model(args, model, reg_loss, cls_loss, eval_loader,  optimizer=None,      train=False)
+            print(optimizer.state_dict()['param_groups'][0]['lr'])
+            scheduler.step()
             eval_metric = overall_metric(eval_results['emo_fscore'], eval_results['val_mse']) # bigger -> better
             eval_metrics.append(eval_metric)
             eval_fscores.append(eval_results['emo_fscore'])
@@ -553,14 +561,14 @@ if __name__ == '__main__':
             print ('epoch:%d; eval_acc:%.4f; eval_fscore:%.4f; eval_val_mse:%.4f; eval_metric:%.4f' %(epoch+1, eval_results['emo_accuracy'], eval_results['emo_fscore'], eval_results['val_mse'], eval_metric))
 
             ## testing and saving： test in all trained dataset
-            for jj, test_loader in enumerate(test_loaders):
-                test_set = args.test_sets[jj]
-                test_results = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, optimizer=None, train=False)
-                store_values[f'{test_set}_emoprobs']   = test_results['emo_probs']
-                store_values[f'{test_set}_valpreds']   = test_results['val_preds']
-                store_values[f'{test_set}_names']      = test_results['names']
-                if args.savewhole: store_values[f'{test_set}_embeddings'] = test_results['embeddings']
-            test_save.append(store_values)
+            # for jj, test_loader in enumerate(test_loaders):
+            #     test_set = args.test_sets[jj]
+            #     test_results = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, optimizer=None, train=False)
+            #     store_values[f'{test_set}_emoprobs']   = test_results['emo_probs']
+            #     store_values[f'{test_set}_valpreds']   = test_results['val_preds']
+            #     store_values[f'{test_set}_names']      = test_results['names']
+            #     if args.savewhole: store_values[f'{test_set}_embeddings'] = test_results['embeddings']
+            # test_save.append(store_values)
 
             if eval_metric > -0.25 and eval_metric > best_eval_metric:
                 best_eval_metric = eval_metric
@@ -570,17 +578,17 @@ if __name__ == '__main__':
             
         print (f'Step3: saving and testing on the {ii+1} folder')
         best_index = np.argmax(np.array(eval_metrics))
-        best_save  = test_save[best_index]
+        # best_save  = test_save[best_index]
         best_evalfscore = eval_fscores[best_index]
         best_evalvalmse = eval_valmses[best_index]
-        folder_save.append(best_save)
+        # folder_save.append(best_save)
         folder_evalres.append([best_evalfscore, best_evalvalmse])
         end_time = time.time()
         print (f'>>>>> Finish: training on the {ii+1} folder, duration: {end_time - start_time} >>>>>')
 
 
     print (f'====== Gain predition on test data =======')
-    assert len(folder_save)     == args.num_folder
+    # assert len(folder_save)     == args.num_folder
     assert len(folder_evalres)  == args.num_folder
     save_modelroot = os.path.join(args.save_root, 'model')
     save_predroot  = os.path.join(args.save_root, 'prediction')
