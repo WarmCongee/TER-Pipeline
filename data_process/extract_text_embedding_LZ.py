@@ -15,7 +15,7 @@ import argparse
 
 # import config
 import sys
-sys.path.append('../../')
+sys.path.append("..") 
 import config
 
 ##################### English #####################
@@ -180,6 +180,7 @@ if __name__ == '__main__':
     parser.add_argument('--dataset', type=str, help='input dataset')
     parser.add_argument('--feature_level', type=str, default='UTTERANCE', choices=['UTTERANCE', 'FRAME'], help='output types')
     args = parser.parse_args()
+    os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
     
     trans_dir = config.PATH_TO_TRANSCRIPTIONS[args.dataset] # directory of transcriptions
     save_dir = config.PATH_TO_FEATURES[args.dataset] # directory used to store features

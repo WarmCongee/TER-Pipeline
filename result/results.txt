@@ -4,3 +4,19 @@ fscore: 0.4261, valmse: 2.3998, metric: -0.1739, train_args_path: ./saved-unimod
 fscore: 0.4245, valmse: 2.3955, metric: -0.1744, train_args_path: ./saved-unimodal/model/cv_features:chinese-roberta-wwm-ext-large-4-UTT+chinese-roberta-wwm-ext-large-4-UTT+chinese-roberta-wwm-ext-large-4-UTT_f1:0.4245_valmse:2.3955_metric:-0.1744_1683703252.0435195.npz
 fscore: 0.4247, valmse: 2.3798, metric: -0.1703, train_args_path: ./saved-unimodal/model/cv_features:chinese-roberta-wwm-ext-large-4-UTT+chinese-roberta-wwm-ext-large-4-UTT+chinese-roberta-wwm-ext-large-4-UTT_f1:0.4247_valmse:2.3798_metric:-0.1703_1683703431.8806338.npz
 fscore: 0.4237, valmse: 2.3435, metric: -0.1622, train_args_path: ./saved-unimodal/model/cv_features:chinese-roberta-wwm-ext-large-4-UTT+chinese-roberta-wwm-ext-large-4-UTT+chinese-roberta-wwm-ext-large-4-UTT_f1:0.4237_valmse:2.3435_metric:-0.1622_1683703848.208033.npz
+
+fscore: 0.1020, valmse: 3.3100, metric: -0.7255, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.1020_valmse:3.3100_metric:-0.7255_1683882686.167828.npz
+
+fscore: 0.4238, valmse: 2.4918, metric: -0.1991, pretrain_model: hfl/chinese-macbert-base, freez_mode: 3
+
+# without transcription refine
+fscore: 0.4093, valmse: 2.3977, metric: -0.1901, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.4093_valmse:2.3977_metric:-0.1901_1683970821.7739902.npz
+fscore: 0.4176, valmse: 2.3917, metric: -0.1803, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.4176_valmse:2.3917_metric:-0.1803_1683971206.240877.npz
+fscore: 0.4143, valmse: 2.4635, metric: -0.2016, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.4143_valmse:2.4635_metric:-0.2016_1683971572.9869392.npz
+
+fscore: 0.4287, valmse: 2.4704, metric: -0.1889, pretrain_model: hfl/chinese-macbert-base, freez_mode: 3
+
+# text length > 5
+fscore: 0.4330, valmse: 2.3013, metric: -0.1424, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.4330_valmse:2.3013_metric:-0.1424_1684089924.8843021.npz
+fscore: 0.4367, valmse: 2.3043, metric: -0.1394, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.4367_valmse:2.3043_metric:-0.1394_1684090066.2758462.npz
+fscore: 0.4259, valmse: 2.2985, metric: -0.1487, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.4259_valmse:2.2985_metric:-0.1487_1684090215.8754394.npz

@@ -35,7 +35,7 @@ import torch.optim as optim
 from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 from torch.utils.data.sampler import SubsetRandomSampler
-
+from data_process.utils import *
 import config
 
 emos = ['neutral', 'angry', 'happy', 'sad', 'worried',  'surprise']
@@ -684,7 +684,7 @@ if __name__ == '__main__':
     print (f'save results in {save_path}')
     np.savez_compressed(save_path, args=np.array(args, dtype=object))  # 参数保存选择
 
-
+    # analyzing_asr_impact(folder_save, config.PATH_TO_LABEL[args.train_dataset], emo2idx, idx2emo)
     record_exp_result(cv_fscore, cv_valmse, cv_metric, save_path)
 
     ## 拼接Feature 和 pred结果存储

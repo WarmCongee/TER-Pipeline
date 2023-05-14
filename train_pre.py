@@ -36,7 +36,7 @@ from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 from torch.utils.data.sampler import SubsetRandomSampler
 from model import *
-from utils import *
+from data_process.utils import *
 from transformers import BertTokenizer
 
 import config

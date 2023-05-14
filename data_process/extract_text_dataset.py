@@ -123,21 +123,48 @@ def divide_train_test_dateset(csv_path_all, label_path_all, \
                               csv_save_path_test, label_save_path_test):
     emos, vals, names, sentences = [], [], [], []
     df_label = pd.read_csv(csv_path_all, sep = '\t')
+    
     # TODO: Train里面的数据集分割出Test
 
 
+def preserve_longer_text_datasets(csv_path_all, save_path, label_root_path):
+    emos, vals, names, sentences = [], [], [], []
+    train_corpus = {}
+    df_label = pd.read_csv(csv_path_all, sep = '\t')
+    for _, row in df_label.iterrows():
+        sentence = row['sentence']
+        if (not pd.isna(sentence)) and len(sentence) > 5:
+            emos.append(row['emo'])
+            vals.append(row['val'])
+            names.append(row['name'])
+            train_corpus[row['name']] = {'emo': row['emo'], 'val': row['val']}
+            sentences.append(sentence)
+    columns = ['emo', 'val', 'name', 'sentence']
+    data = np.column_stack([emos, vals, names, sentences])
+    df = pd.DataFrame(data=data, columns=columns)
+    df[columns] = df[columns].astype(str)
+    df.to_csv(save_path, sep='\t', index=False)
+
+    ## output path
+    save_label = os.path.join(label_root_path, 'label_base_long_text.npz')
+    if not os.path.exists(label_root_path): os.makedirs(label_root_path)
+    np.savez_compressed(save_label,
+                        train_corpus=train_corpus)
+        
+
 def construct_text_dataset():
-    # 整理video，整理Label存储格式
-    normalize_dataset_format(config_path.MER_DATASET_PATH_SOURCE, config_path.TER_DATASET_PATH)
-    # 提取wav
-    split_audio_from_video_16k(config_path.TER_DATASET_PATH_VIDEO, config_path.TER_DATASET_PATH_AUDIO)
-    # 翻译wav得到Text，合并Text和Label到同一csv
-    generate_transcription_files_asr(config_path.TER_DATASET_PATH_AUDIO, config_path.ASR_TRANS_DATASET_PATH)
-    # 微调csv中Text结果，补充标点符号
-    refinement_transcription_files_asr(config_path.ASR_TRANS_DATASET_PATH, config_path.ASR_TRANS_REFINEMENT_DATASET_PATH)
-    # 初步划分Train和Test的数据集
-    divide_train_test_dateset(config_path.ASR_TRANS_REFINEMENT_DATASET_PATH, config_path.TRAIN_LABLE_NPZ_PATH, 
-                              config_path.ASR_TRANS_REFINEMENT_DATASET_PATH_TRAIN, config_path.TRAIN_LABLE_NPZ_PATH_TRAIN,
-                              config_path.ASR_TRANS_REFINEMENT_DATASET_PATH_TEST, config_path.TRAIN_LABLE_NPZ_PATH_TEST)
+    # # 整理video，整理Label存储格式
+    # normalize_dataset_format(config_path.MER_DATASET_PATH_SOURCE, config_path.TER_DATASET_PATH)
+    # # 提取wav
+    # split_audio_from_video_16k(config_path.TER_DATASET_PATH_VIDEO, config_path.TER_DATASET_PATH_AUDIO)
+    # # 翻译wav得到Text，合并Text和Label到同一csv
+    # generate_transcription_files_asr(config_path.TER_DATASET_PATH_AUDIO, config_path.ASR_TRANS_DATASET_PATH)
+    # # 微调csv中Text结果，补充标点符号
+    # refinement_transcription_files_asr(config_path.ASR_TRANS_DATASET_PATH, config_path.ASR_TRANS_REFINEMENT_DATASET_PATH)
+    # # 初步划分Train和Test的数据集
+    # divide_train_test_dateset(config_path.ASR_TRANS_REFINEMENT_DATASET_PATH, config_path.TRAIN_LABLE_NPZ_PATH, 
+    #                           config_path.ASR_TRANS_REFINEMENT_DATASET_PATH_TRAIN, config_path.TRAIN_LABLE_NPZ_PATH_TRAIN,
+    #                           config_path.ASR_TRANS_REFINEMENT_DATASET_PATH_TEST, config_path.TRAIN_LABLE_NPZ_PATH_TEST)
+    preserve_longer_text_datasets(config_path.ASR_TRANS_REFINEMENT_DATASET_PATH, config_path.ASR_TRANS_LONG_TEXT_PATH, config_path.TRAIN_LONG_LABLE_NPZ_PATH)
 if __name__ == '__main__':
     construct_text_dataset()
