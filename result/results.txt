@@ -20,3 +20,5 @@ fscore: 0.4287, valmse: 2.4704, metric: -0.1889, pretrain_model: hfl/chinese-mac
 fscore: 0.4330, valmse: 2.3013, metric: -0.1424, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.4330_valmse:2.3013_metric:-0.1424_1684089924.8843021.npz
 fscore: 0.4367, valmse: 2.3043, metric: -0.1394, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.4367_valmse:2.3043_metric:-0.1394_1684090066.2758462.npz
 fscore: 0.4259, valmse: 2.2985, metric: -0.1487, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.4259_valmse:2.2985_metric:-0.1487_1684090215.8754394.npz
+
+fscore: 0.3193, valmse: 2.4620, metric: -0.2962, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.3193_valmse:2.4620_metric:-0.2962_1684150964.3807287.npz

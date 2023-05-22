@@ -324,6 +324,7 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
     val_preds, val_labels = [], []
     emo_probs, emo_labels = [], []
     embeddings = []
+    losses = []
 
     assert not train or optimizer!=None
     if train:
@@ -366,6 +367,7 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
             loss2 = reg_loss(vals_out, vals)
             loss = loss1 + loss2
             loss.backward()
+            losses.append(loss.cpu().detach().numpy())
             optimizer.step()
 
     ## evaluate on discrete labels
@@ -375,6 +377,7 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
     emo_preds = np.argmax(emo_probs, 1)
     emo_accuracy = accuracy_score(emo_labels, emo_preds)
     emo_fscore = f1_score(emo_labels, emo_preds, average='weighted')
+    # losses = np.concatenate(losses)
 
     ## evaluate on dimensional labels
     val_preds  = np.concatenate(val_preds)
@@ -392,6 +395,7 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
     save_results['emo_labels'] = emo_labels
     save_results['val_labels'] = val_labels
     save_results['names'] = vidnames
+    save_results['losses'] = losses
     # item3: latent embeddings
     if args.savewhole: save_results['embeddings'] = embeddings
     return save_results
@@ -655,6 +659,7 @@ if __name__ == '__main__':
                 store_values[f'{test_set}_names']      = test_results['names']
                 store_values[f'{test_set}_emolabels']   = test_results['emo_labels']
                 store_values[f'{test_set}_vallabels']   = test_results['val_labels']
+                store_values[f'{test_set}_losses']   = test_results['losses']
                 if args.savewhole: store_values[f'{test_set}_embeddings'] = test_results['embeddings']
             test_save.append(store_values)
             
@@ -684,10 +689,10 @@ if __name__ == '__main__':
     res_name = f'f1:{cv_fscore:.4f}_valmse:{cv_valmse:.4f}_metric:{cv_metric:.4f}'
     save_path = f'{save_modelroot}/cv_features:{feature_name}_{res_name}_{name_time}.npz'
     print (f'save results in {save_path}')
-    np.savez_compressed(save_path, args=np.array(args, dtype=object))  # 参数保存选择
+    # np.savez_compressed(save_path, args=np.array(args, dtype=object))  # 参数保存选择
 
     analyzing_asr_impact(folder_save, config.PATH_TO_LABEL[args.train_dataset], config.PATH_TO_TRANSCRIPTIONS[args.train_dataset], emo2idx, idx2emo, args)
-    record_exp_result(cv_fscore, cv_valmse, cv_metric, save_path)
+    # record_exp_result(cv_fscore, cv_valmse, cv_metric, save_path)
 
     ## 拼接Feature 和 pred结果存储
     # for setname in args.test_sets:
