@@ -1,0 +1,53 @@
+folder: 1, epoch: 24, eval_metric: -0.23453568105346068
+folder: 1, epoch: 32, eval_metric: -0.23143141967961628
+folder: 1, epoch: 33, eval_metric: -0.20939985730395477
+folder: 1, epoch: 36, eval_metric: -0.20599269206965187
+folder: 1, epoch: 37, eval_metric: -0.1873612476692676
+folder: 2, epoch: 27, eval_metric: -0.24522069123737583
+folder: 2, epoch: 29, eval_metric: -0.23979616386391533
+folder: 2, epoch: 31, eval_metric: -0.23676081252959347
+folder: 2, epoch: 43, eval_metric: -0.22713693067760016
+folder: 2, epoch: 54, eval_metric: -0.22256719484672377
+folder: 3, epoch: 6, eval_metric: -0.23293856907462068
+folder: 3, epoch: 11, eval_metric: -0.2155164951085784
+folder: 3, epoch: 22, eval_metric: -0.18823308351312856
+folder: 3, epoch: 32, eval_metric: -0.1727217516704313
+folder: 3, epoch: 34, eval_metric: -0.161258202605146
+folder: 3, epoch: 37, eval_metric: -0.13591703979608816
+folder: 5, epoch: 24, eval_metric: -0.2422485992542488
+folder: 5, epoch: 27, eval_metric: -0.20627703253309715
+folder: 5, epoch: 34, eval_metric: -0.20613093350088713
+folder: 5, epoch: 38, eval_metric: -0.19978637470037097
+folder: 5, epoch: 45, eval_metric: -0.19936033464599073
+
+
+folder: 1, epoch: 21, eval_metric: -0.24340967812227104
+folder: 1, epoch: 23, eval_metric: -0.2247472995599999
+folder: 1, epoch: 24, eval_metric: -0.19656020391114115
+folder: 1, epoch: 28, eval_metric: -0.1932942090950222
+
+folder: 1, epoch: 27, eval_metric: -0.21931819906245237
+
+folder: 1, epoch: 15, eval_metric: -0.24047190434878069
+folder: 1, epoch: 18, eval_metric: -0.24002198726639723
+folder: 1, epoch: 21, eval_metric: -0.21460235239577446
+folder: 1, epoch: 24, eval_metric: -0.2077032335881454
+folder: 1, epoch: 25, eval_metric: -0.17113073793222378
+folder: 1, epoch: 34, eval_metric: -0.16799931040120847
+folder: 1, epoch: 35, eval_metric: -0.14556845006884594
+folder: 1, epoch: 48, eval_metric: -0.1329354648938061
+folder: 1, epoch: 62, eval_metric: -0.12827210997182553
+folder: 2, epoch: 19, eval_metric: -0.2279747563678161
+folder: 2, epoch: 21, eval_metric: -0.22690290505604954
+folder: 2, epoch: 35, eval_metric: -0.2217366379346492
+folder: 2, epoch: 45, eval_metric: -0.21996301448512295
+folder: 3, epoch: 16, eval_metric: -0.21539305911409085
+folder: 3, epoch: 20, eval_metric: -0.19813446239410643
+folder: 3, epoch: 22, eval_metric: -0.1564805274089644
+folder: 3, epoch: 25, eval_metric: -0.13270552933084923
+folder: 3, epoch: 30, eval_metric: -0.11843585328144879
+folder: 4, epoch: 20, eval_metric: -0.2486679082253997
+folder: 4, epoch: 23, eval_metric: -0.24210520289576376
+folder: 4, epoch: 36, eval_metric: -0.24081625863087375
+folder: 5, epoch: 29, eval_metric: -0.23702341136513355
+

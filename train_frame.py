@@ -145,6 +145,53 @@ class MERDataset(Dataset):
         print (f'audio dimension: {self.adim}; text dimension: {self.tdim}; video dimension: {self.vdim}')
         return self.adim, self.tdim, self.vdim
 
+class Collate_fn():
+    def __init__(self, padding_value=0):
+        self.padding_value = padding_value
+
+    def __call__(self, batch):
+        # print('*'*60)
+        lengths = []
+        feature_dim = []
+        for i in range(3):
+            length = []
+            for tensor in batch:
+                length.append(tensor[i].shape[0])
+            lengths.append(length)
+            
+            feature_dim.append(batch[0][0].shape[0])
+               
+        max_length = [max(length) for length in lengths]
+        collated_batch = []
+        batch_size = len(batch)
+        audio_collated_batch = torch.zeros(batch_size, max_length[0], feature_dim[0])
+        text_collated_batch = torch.zeros(batch_size, max_length[1], feature_dim[1])
+        video_collated_batch = torch.zeros(batch_size, max_length[2], feature_dim[2])
+        emo_collated_batch = torch.zeros(batch_size)
+        val_collated_batch = torch.zeros(batch_size)
+        name_collated_batch = []
+        
+        for i, tuple_pre in enumerate(batch):
+            audio_length = tuple_pre[0].shape[0]
+            audio_collated_tensor = torch.zeros(max_length[0], feature_dim[0])
+            audio_collated_tensor[0:audio_length, ] = tuple_pre[0]
+            audio_collated_batch[i,:,:] = audio_collated_tensor
+            text_length = tuple_pre[1].shape[0]
+            text_collated_tensor = torch.zeros(max_length[1], feature_dim[1])
+            text_collated_tensor[0:text_length, ] = tuple_pre[1]
+            text_collated_batch[i,:,:] = text_collated_tensor
+            video_length = tuple_pre[2].shape[0]
+            video_collated_tensor = torch.zeros(max_length[2], feature_dim[2])
+            video_collated_tensor[0:video_length, ] = tuple_pre[2]
+            video_collated_batch[i,:,:] = video_collated_tensor
+            emo_collated_batch[i] = tuple_pre[3]
+            val_collated_batch[i] = tuple_pre[4]
+            name_collated_batch.append(tuple_pre[5])
+            
+        collated_batch = (audio_collated_batch, text_collated_batch, video_collated_batch, emo_collated_batch, val_collated_batch, name_collated_batch)
+        return collated_batch
+
+
 ## for five-fold cross-validation on Train&Val
 def get_loaders(args, config):
     train_dataset = MERDataset(label_path = config.PATH_TO_LABEL[args.train_dataset],
@@ -183,44 +230,43 @@ def get_loaders(args, config):
     ## gain train and eval loaders
     train_loaders = []
     eval_loaders = []
-    test_loaders = []
     for ii in range(len(train_eval_idxs)):
         train_idxs = train_eval_idxs[ii][0]
         eval_idxs  = train_eval_idxs[ii][1]
         train_loader = DataLoader(train_dataset,
                                   batch_size=args.batch_size,
                                   sampler=SubsetRandomSampler(train_idxs),
+                                  collate_fn= Collate_fn(padding_value=0),
                                   num_workers=args.num_workers,
-                                  pin_memory=False)
+                                  pin_memory=False,
+                                  drop_last=True)
         eval_loader = DataLoader(train_dataset,
                                  batch_size=args.batch_size,
                                  sampler=SubsetRandomSampler(eval_idxs),
+                                 collate_fn= Collate_fn(padding_value=0),
                                  num_workers=args.num_workers,
-                                 pin_memory=False)
-        test_loader = DataLoader(train_dataset,
-                                 batch_size=args.batch_size,
-                                 sampler=SubsetRandomSampler(eval_idxs),
-                                 num_workers=args.num_workers,
-                                 pin_memory=False)
+                                 pin_memory=False,
+                                 drop_last=True)
         train_loaders.append(train_loader)
         eval_loaders.append(eval_loader)
+
+
+    test_loaders = []
+    for test_set in args.test_sets:
+        test_dataset = MERDataset(label_path = config.PATH_TO_LABEL[args.train_dataset],
+                                    audio_root = os.path.join(config.PATH_TO_FEATURES[args.train_dataset], args.audio_feature),
+                                    text_root  = os.path.join(config.PATH_TO_FEATURES[args.train_dataset], args.text_feature),
+                                    video_root = os.path.join(config.PATH_TO_FEATURES[args.train_dataset], args.video_feature),
+                                    data_type  = 'train',
+                                    debug      = args.debug)
+        test_loader = DataLoader(test_dataset,
+                                    batch_size=args.batch_size,
+                                    num_workers=args.num_workers,
+                                    collate_fn= Collate_fn(padding_value=0),
+                                    shuffle=False,
+                                    pin_memory=False,
+                                    drop_last=True)
         test_loaders.append(test_loader)
-
-
-    # test_loaders = []
-    # for test_set in args.test_sets:
-    #     test_dataset = MERDataset(label_path = config.PATH_TO_LABEL[args.train_dataset],
-    #                                 audio_root = os.path.join(config.PATH_TO_FEATURES[args.train_dataset], args.audio_feature),
-    #                                 text_root  = os.path.join(config.PATH_TO_FEATURES[args.train_dataset], args.text_feature),
-    #                                 video_root = os.path.join(config.PATH_TO_FEATURES[args.train_dataset], args.video_feature),
-    #                                 data_type  = 'train',
-    #                                 debug      = args.debug)
-    #     test_loader = DataLoader(test_dataset,
-    #                                 batch_size=args.batch_size,
-    #                                 num_workers=args.num_workers,
-    #                                 shuffle=False,
-    #                                 pin_memory=False)
-    #     test_loaders.append(test_loader)
 
     ## return loaders
     adim, tdim, vdim = train_dataset.get_featDim()
@@ -252,10 +298,51 @@ class MLP(nn.Module):
         return features, emos_out, vals_out
 
 
+class FRA2UTT(nn.Module):
+    def __init__(self, input_dim=1024, atsize=1024, softmax_scale=0.3):
+        super(FRA2UTT, self).__init__()
+        self.atsize = atsize
+        self.softmax_scale = softmax_scale
+        self.attention_context_vector = nn.Parameter(torch.empty(1,atsize)) #(feature_dim)
+        nn.init.xavier_normal_(self.attention_context_vector)
+        self.input_proj = nn.Linear(input_dim, self.atsize)
+    
+    def forward(self, input_tensor):
+        batch_size = input_tensor.shape[0]
+        attention_context_vector = self.attention_context_vector.repeat(batch_size,1).unsqueeze(2)
+        input_proj = torch.tanh(self.input_proj(input_tensor))
+        vector_attention = torch.bmm(input_proj, attention_context_vector)
+        #softmax
+        vector_attention = F.softmax(self.softmax_scale*vector_attention,dim=1) 
+        output_vector = torch.mul(input_tensor, vector_attention)
+        output_vector.squeeze() 
+        output_tensor = torch.sum(output_vector, dim=1, keepdim=False)
+        return output_tensor
+    
+class FRA2UTT_new(nn.Module):
+    def __init__(self, input_dim=1024, atsize=256, softmax_scale=0.3):
+        super(FRA2UTT_new, self).__init__()
+        self.atsize = atsize
+        self.softmax_scale = softmax_scale
+        self.attention_context_vector = nn.Parameter(torch.empty(32,atsize)) #(batch_size, feature_dim)
+        nn.init.xavier_normal_(self.attention_context_vector)
+        self.input_proj = nn.Linear(input_dim, self.atsize)
+    
+    def forward(self, input_tensor):
+        input_proj = torch.tanh(self.input_proj(input_tensor))
+        vector_attention = torch.bmm(input_proj, self.attention_context_vector.unsqueeze(2))
+        #softmax
+        vector_attention = F.softmax(self.softmax_scale*vector_attention,dim=1)
+        output_vector = torch.mul(input_tensor, vector_attention)
+        output_vector.squeeze()
+        output_tensor = torch.sum(output_vector, dim=1, keepdim=False)
+        return output_tensor
+        
+    
 class Attention(nn.Module):
     def __init__(self, audio_dim, text_dim, video_dim, output_dim1, output_dim2=1, layers='256,128', dropout=0.3):
         super(Attention, self).__init__()
-
+        self.fra2utt = FRA2UTT_new(input_dim=1024, atsize=audio_dim)
         self.audio_mlp = self.MLP(audio_dim, layers, dropout)
         self.text_mlp  = self.MLP(text_dim,  layers, dropout)
         self.video_mlp = self.MLP(video_dim, layers, dropout)
@@ -265,8 +352,15 @@ class Attention(nn.Module):
         self.attention_mlp = self.MLP(hiddendim, layers, dropout)
 
         self.fc_att   = nn.Linear(layers_list[-1], 3)
-        self.fc_out_1 = nn.Linear(layers_list[-1], output_dim1)
-        self.fc_out_2 = nn.Linear(layers_list[-1], output_dim2)
+        self.fc_out_e = nn.Linear(layers_list[-1], output_dim1)
+        self.fc_out_v = nn.Linear(layers_list[-1], output_dim2)
+        self.fc_out_ev = nn.Linear(output_dim1, output_dim2)
+        self.tanh = nn.Tanh()
+        self.sigmoid = nn.Sigmoid()
+        self.relu = nn.ReLU()
+        self.prelu = nn.PReLU(num_parameters=6, init=0.25)
+        self.softmax = nn.Softmax(dim=1)
+        self.fc_out_att_ev = nn.Linear(2, 1)
     
     def MLP(self, input_dim, layers, dropout):
         all_layers = []
@@ -280,9 +374,18 @@ class Attention(nn.Module):
         return module
 
     def forward(self, audio_feat, text_feat, video_feat):
+        # audio_feat = self.softmax(audio_feat)
+        # text_feat = self.softmax(text_feat)
+        # video_feat = self.softmax(video_feat)
+        audio_feat = self.fra2utt(audio_feat)
+        video_feat = self.fra2utt(video_feat)
+        text_feat = self.fra2utt(text_feat) 
         audio_hidden = self.audio_mlp(audio_feat) # [32, 128]
         text_hidden  = self.text_mlp(text_feat)   # [32, 128]
         video_hidden = self.video_mlp(video_feat) # [32, 128]
+        # print(audio_hidden)
+        # print(text_hidden)
+        # print(video_hidden)
 
         multi_hidden1 = torch.cat([audio_hidden, text_hidden, video_hidden], dim=1) # [32, 384]
         attention = self.attention_mlp(multi_hidden1)
@@ -292,8 +395,12 @@ class Attention(nn.Module):
         multi_hidden2 = torch.stack([audio_hidden, text_hidden, video_hidden], dim=2) # [32, 128, 3]
         fused_feat = torch.matmul(multi_hidden2, attention)
         fused_feat = fused_feat.squeeze() # [32, 128]
-        emos_out  = self.fc_out_1(fused_feat)
-        vals_out  = self.fc_out_2(fused_feat)
+        emos_out  = self.fc_out_e(fused_feat)
+        vals_out_e  = self.fc_out_ev(emos_out)
+        vals_out_e = self.tanh(vals_out_e)
+        vals_out_v = self.fc_out_v(fused_feat)
+        vals_out_total = torch.cat([vals_out_e, vals_out_v], dim=1)
+        vals_out = self.fc_out_att_ev(vals_out_total)
         return fused_feat, emos_out, vals_out
 
 
@@ -331,7 +438,6 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
     val_preds, val_labels = [], []
     emo_probs, emo_labels = [], []
     embeddings = []
-    losses = []
 
     assert not train or optimizer!=None
     if train:
@@ -374,7 +480,6 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
             loss2 = reg_loss(vals_out, vals)
             loss = loss1 + loss2
             loss.backward()
-            losses.append(loss.cpu().detach().numpy())
             optimizer.step()
 
     ## evaluate on discrete labels
@@ -384,7 +489,6 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
     emo_preds = np.argmax(emo_probs, 1)
     emo_accuracy = accuracy_score(emo_labels, emo_preds)
     emo_fscore = f1_score(emo_labels, emo_preds, average='weighted')
-    # losses = np.concatenate(losses)
 
     ## evaluate on dimensional labels
     val_preds  = np.concatenate(val_preds)
@@ -402,7 +506,6 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
     save_results['emo_labels'] = emo_labels
     save_results['val_labels'] = val_labels
     save_results['names'] = vidnames
-    save_results['losses'] = losses
     # item3: latent embeddings
     if args.savewhole: save_results['embeddings'] = embeddings
     return save_results
@@ -658,7 +761,7 @@ if __name__ == '__main__':
             print ('epoch:%d; eval_acc:%.4f; eval_fscore:%.4f; eval_val_mse:%.4f; eval_metric:%.4f' %(epoch+1, eval_results['emo_accuracy'], eval_results['emo_fscore'], eval_results['val_mse'], eval_metric))
 
             ## testing and saving： test in all trained dataset
-            for jj, test_loader in enumerate([test_loaders[0]]):
+            for jj, test_loader in enumerate(test_loaders):
                 test_set = args.test_sets[jj]
                 test_results = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, optimizer=None, train=False)
                 store_values[f'{test_set}_emoprobs']   = test_results['emo_probs']
@@ -666,7 +769,6 @@ if __name__ == '__main__':
                 store_values[f'{test_set}_names']      = test_results['names']
                 store_values[f'{test_set}_emolabels']   = test_results['emo_labels']
                 store_values[f'{test_set}_vallabels']   = test_results['val_labels']
-                store_values[f'{test_set}_losses']   = test_results['losses']
                 if args.savewhole: store_values[f'{test_set}_embeddings'] = test_results['embeddings']
             test_save.append(store_values)
             
@@ -696,10 +798,10 @@ if __name__ == '__main__':
     res_name = f'f1:{cv_fscore:.4f}_valmse:{cv_valmse:.4f}_metric:{cv_metric:.4f}'
     save_path = f'{save_modelroot}/cv_features:{feature_name}_{res_name}_{name_time}.npz'
     print (f'save results in {save_path}')
-    # np.savez_compressed(save_path, args=np.array(args, dtype=object))  # 参数保存选择
+    np.savez_compressed(save_path, args=np.array(args, dtype=object))  # 参数保存选择
 
     analyzing_asr_impact(folder_save, config.PATH_TO_LABEL[args.train_dataset], config.PATH_TO_TRANSCRIPTIONS[args.train_dataset], emo2idx, idx2emo, args)
-    # record_exp_result(cv_fscore, cv_valmse, cv_metric, save_path)
+    record_exp_result(cv_fscore, cv_valmse, cv_metric, save_path)
 
     ## 拼接Feature 和 pred结果存储
     # for setname in args.test_sets:

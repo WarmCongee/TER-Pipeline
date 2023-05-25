@@ -22,3 +22,13 @@ fscore: 0.4367, valmse: 2.3043, metric: -0.1394, train_args_path: ./saved-unimod
 fscore: 0.4259, valmse: 2.2985, metric: -0.1487, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.4259_valmse:2.2985_metric:-0.1487_1684090215.8754394.npz
 
 fscore: 0.3193, valmse: 2.4620, metric: -0.2962, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.3193_valmse:2.4620_metric:-0.2962_1684150964.3807287.npz
+
+# better refin-turning
+fscore: 0.4337, valmse: 2.4310, metric: -0.1696, pretrain_model: hfl/chinese-macbert-base, freez_mode: 3
+fscore: 0.4248, valmse: 2.3835, metric: -0.1710, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4248_valmse:2.3835_metric:-0.1710_1684827711.105335.npz
+
+fscore: 0.4116, valmse: 2.5462, metric: -0.2249, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.4116_valmse:2.5462_metric:-0.2249_1684849109.3330908.npz
+fscore: 0.4076, valmse: 2.5157, metric: -0.2214, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.4076_valmse:2.5157_metric:-0.2214_1684849392.9355714.npz
+fscore: 0.3976, valmse: 2.4957, metric: -0.2263, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.3976_valmse:2.4957_metric:-0.2263_1684849675.654867.npz
+fscore: 0.4170, valmse: 2.3988, metric: -0.1827, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.4170_valmse:2.3988_metric:-0.1827_1684852314.7395647.npz
+fscore: 0.4197, valmse: 2.4424, metric: -0.1909, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.4197_valmse:2.4424_metric:-0.1909_1684853061.1905017.npz
