@@ -624,6 +624,10 @@ if __name__ == '__main__':
         reg_loss.cuda()
         cls_loss.cuda()
         optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.l2)
+        gamma = 0.9; stepsize = 2; warm_up_epochs=5
+        warm_up_with_step_lr = lambda epoch: (epoch+1) / warm_up_epochs if epoch < warm_up_epochs \
+            else gamma**( (epoch+1 - warm_up_epochs)//stepsize )
+        scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=warm_up_with_step_lr)
 
         print (f'Step2: training (multiple epoches)')
         eval_metrics = []
@@ -637,6 +641,7 @@ if __name__ == '__main__':
             ## training and validation
             train_results = train_or_eval_model(args, model, reg_loss, cls_loss, train_loader, optimizer=optimizer, train=True)
             eval_results  = train_or_eval_model(args, model, reg_loss, cls_loss, eval_loader,  optimizer=None,      train=False)
+            scheduler.step()
             eval_metric = overall_metric(eval_results['emo_fscore'], eval_results['val_mse']) # bigger -> better
             eval_metrics.append(eval_metric)
             eval_fscores.append(eval_results['emo_fscore'])

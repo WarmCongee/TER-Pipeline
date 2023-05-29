@@ -35,10 +35,7 @@ import torch.optim as optim
 from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 from torch.utils.data.sampler import SubsetRandomSampler
-from model import *
 from data_process.utils import *
-from transformers import BertTokenizer
-
 import config
 
 emos = ['neutral', 'angry', 'happy', 'sad', 'worried',  'surprise']
@@ -124,43 +121,89 @@ def read_data_multiprocess(label_path, feature_root, task='emo', data_type='trai
 ##################### data loader ######################
 ########################################################
 class MERDataset(Dataset):
-    def __init__(self, branch='train', tokenizer=None):
-        super(Dataset, self).__init__()
-        df = pd.read_csv("dataset/%s.csv" % branch, encoding='utf-8', sep="\t").fillna('')
-        self.tokenizer = tokenizer
-        self.data = df.values.tolist()
-        self.emos_label = self.trans_emos_2_label(np.array(self.data)[:, 0])
+
+    def __init__(self, label_path, audio_root, text_root, video_root, data_type, debug=False):
+        assert data_type in ['train', 'test1', 'test2', 'test3']
+        self.name2audio, self.name2labels, self.adim = read_data_multiprocess(label_path, audio_root, task='whole', data_type=data_type, debug=debug)
+        self.name2text,  self.name2labels, self.tdim = read_data_multiprocess(label_path, text_root,  task='whole', data_type=data_type, debug=debug)
+        self.name2video, self.name2labels, self.vdim = read_data_multiprocess(label_path, video_root, task='whole', data_type=data_type, debug=debug)
+        self.names = [name for name in self.name2audio if 1==1]
+
+    def __getitem__(self, index):
+        name = self.names[index]
+        return torch.FloatTensor(self.name2audio[name]),\
+               torch.FloatTensor(self.name2text[name]),\
+               torch.FloatTensor(self.name2video[name]),\
+               self.name2labels[name]['emo'],\
+               self.name2labels[name]['val'],\
+               name
 
     def __len__(self):
-        return len(self.data)
+        return len(self.names)
 
-    def __getitem__(self, idx):
-        enc_input = self.tokenizer(
-            self.data[idx][-1],
-            max_length=512,
-            padding="max_length",
-            truncation=True,
-            return_tensors="pt"
-        )
-        return enc_input.input_ids.squeeze(), enc_input.attention_mask.squeeze(), enc_input.token_type_ids.squeeze(), \
-               self.emos_label[idx], self.data[idx][1], self.data[idx][2]
-    
-    def trans_emos_2_label(self, emos_):
-        labels = []
-        for item in emos_:
-            labels.append(emo2idx[item])
-        return labels
+    def get_featDim(self):
+        print (f'audio dimension: {self.adim}; text dimension: {self.tdim}; video dimension: {self.vdim}')
+        return self.adim, self.tdim, self.vdim
+
+class Collate_fn():
+    def __init__(self, padding_value=0):
+        self.padding_value = padding_value
+
+    def __call__(self, batch):
+        # print('*'*60)
+        lengths = []
+        feature_dim = []
+        for i in range(3):
+            length = []
+            for tensor in batch:
+                length.append(tensor[i].shape[0])
+            lengths.append(length)
+            
+            feature_dim.append(batch[0][i].shape[0])
+               
+        max_length = [max(length) for length in lengths]
+        collated_batch = []
+        batch_size = len(batch)
+        audio_collated_batch = torch.zeros(batch_size, max_length[0], feature_dim[0])
+        text_collated_batch = torch.zeros(batch_size, max_length[1], feature_dim[1])
+        video_collated_batch = torch.zeros(batch_size, max_length[2], feature_dim[2])
+        emo_collated_batch = torch.zeros(batch_size)
+        val_collated_batch = torch.zeros(batch_size)
+        name_collated_batch = []
+        
+        for i, tuple_pre in enumerate(batch):
+            audio_length = tuple_pre[0].shape[0]
+            audio_collated_tensor = torch.zeros(max_length[0], feature_dim[0])
+            audio_collated_tensor[0:audio_length, ] = tuple_pre[0]
+            audio_collated_batch[i,:,:] = audio_collated_tensor
+            text_length = tuple_pre[1].shape[0]
+            text_collated_tensor = torch.zeros(max_length[1], feature_dim[1])
+            text_collated_tensor[0:text_length, ] = tuple_pre[1]
+            text_collated_batch[i,:,:] = text_collated_tensor
+            video_length = tuple_pre[2].shape[0]
+            video_collated_tensor = torch.zeros(max_length[2], feature_dim[2])
+            video_collated_tensor[0:video_length, ] = tuple_pre[2]
+            video_collated_batch[i,:,:] = video_collated_tensor
+            emo_collated_batch[i] = tuple_pre[3]
+            val_collated_batch[i] = tuple_pre[4]
+            name_collated_batch.append(tuple_pre[5])
+            
+        collated_batch = (audio_collated_batch, text_collated_batch, video_collated_batch, emo_collated_batch, val_collated_batch, name_collated_batch)
+        return collated_batch
+
+
 ## for five-fold cross-validation on Train&Val
 def get_loaders(args, config):
-    pretrained_model = 'hfl/chinese-macbert-base'
-    tokenizer = BertTokenizer.from_pretrained(pretrained_model)
-    
-    train_dataset = MERDataset(tokenizer = tokenizer,
-                               branch  = 'base_text_refine_dataset_all')
+    train_dataset = MERDataset(label_path = config.PATH_TO_LABEL[args.train_dataset],
+                               audio_root = os.path.join(config.PATH_TO_FEATURES[args.train_dataset], args.audio_feature),
+                               text_root  = os.path.join(config.PATH_TO_FEATURES[args.train_dataset], args.text_feature),
+                               video_root = os.path.join(config.PATH_TO_FEATURES[args.train_dataset], args.video_feature),
+                               data_type  = 'train',
+                               debug      = args.debug)
 
     # gain indices for cross-validation
     whole_folder = []
-    whole_num = len(train_dataset.data)
+    whole_num = len(train_dataset.names)
     indices = np.arange(whole_num)
     random.shuffle(indices)
 
@@ -193,12 +236,14 @@ def get_loaders(args, config):
         train_loader = DataLoader(train_dataset,
                                   batch_size=args.batch_size,
                                   sampler=SubsetRandomSampler(train_idxs),
+                                  collate_fn= Collate_fn(padding_value=0),
                                   num_workers=args.num_workers,
                                   pin_memory=False,
                                   drop_last=True)
         eval_loader = DataLoader(train_dataset,
                                  batch_size=args.batch_size,
                                  sampler=SubsetRandomSampler(eval_idxs),
+                                 collate_fn= Collate_fn(padding_value=0),
                                  num_workers=args.num_workers,
                                  pin_memory=False,
                                  drop_last=True)
@@ -208,23 +253,180 @@ def get_loaders(args, config):
 
     test_loaders = []
     for test_set in args.test_sets:
-        tokenizer = BertTokenizer.from_pretrained(pretrained_model)
-        test_dataset = MERDataset(tokenizer = tokenizer,
-                               branch  = 'base_text_refine_dataset_all')
-
+        test_dataset = MERDataset(label_path = config.PATH_TO_LABEL[args.train_dataset],
+                                    audio_root = os.path.join(config.PATH_TO_FEATURES[args.train_dataset], args.audio_feature),
+                                    text_root  = os.path.join(config.PATH_TO_FEATURES[args.train_dataset], args.text_feature),
+                                    video_root = os.path.join(config.PATH_TO_FEATURES[args.train_dataset], args.video_feature),
+                                    data_type  = 'train',
+                                    debug      = args.debug)
         test_loader = DataLoader(test_dataset,
                                     batch_size=args.batch_size,
                                     num_workers=args.num_workers,
+                                    collate_fn= Collate_fn(padding_value=0),
                                     shuffle=False,
                                     pin_memory=False,
                                     drop_last=True)
         test_loaders.append(test_loader)
 
     ## return loaders
-    return train_loaders, eval_loaders, test_loaders
+    adim, tdim, vdim = train_dataset.get_featDim()
+    return train_loaders, eval_loaders, test_loaders, adim, tdim, vdim
 
 
+########################################################
+##################### build model ######################
+########################################################
+class MLP(nn.Module):
+    def __init__(self, input_dim, output_dim1, output_dim2=1, layers='256,128', dropout=0.3):
+        super(MLP, self).__init__()
 
+        self.all_layers = []
+        layers = list(map(lambda x: int(x), layers.split(',')))
+        for i in range(0, len(layers)):
+            self.all_layers.append(nn.Linear(input_dim, layers[i]))
+            self.all_layers.append(nn.ReLU())
+            self.all_layers.append(nn.Dropout(dropout))
+            input_dim = layers[i]
+        self.module = nn.Sequential(*self.all_layers)
+        self.fc_out_1 = nn.Linear(layers[-1], output_dim1)
+        self.fc_out_2 = nn.Linear(layers[-1], output_dim2)
+        
+    def forward(self, inputs):
+        features = self.module(inputs)
+        emos_out  = self.fc_out_1(features)
+        vals_out  = self.fc_out_2(features)
+        return features, emos_out, vals_out
+
+
+class FRA2UTT(nn.Module):
+    def __init__(self, input_dim=1024, atsize=1024, softmax_scale=0.3):
+        super(FRA2UTT, self).__init__()
+        self.atsize = atsize
+        self.softmax_scale = softmax_scale
+        self.attention_context_vector = nn.Parameter(torch.empty(1,atsize)) #(feature_dim)
+        nn.init.xavier_normal_(self.attention_context_vector)
+        self.input_proj = nn.Linear(input_dim, self.atsize)
+    
+    def forward(self, input_tensor):
+        batch_size = input_tensor.shape[0]
+        attention_context_vector = self.attention_context_vector.repeat(batch_size,1).unsqueeze(2)
+        input_proj = torch.tanh(self.input_proj(input_tensor))
+        vector_attention = torch.bmm(input_proj, attention_context_vector)
+        #softmax
+        vector_attention = F.softmax(self.softmax_scale*vector_attention,dim=1) 
+        output_vector = torch.mul(input_tensor, vector_attention)
+        output_vector.squeeze() 
+        output_tensor = torch.sum(output_vector, dim=1, keepdim=False)
+        return output_tensor
+    
+class FRA2UTT_new(nn.Module):
+    def __init__(self, input_dim=1024, atsize=256, softmax_scale=0.3):
+        super(FRA2UTT_new, self).__init__()
+        self.atsize = atsize
+        self.softmax_scale = softmax_scale
+        self.attention_context_vector = nn.Parameter(torch.empty(32,atsize)) #(batch_size, feature_dim)
+        nn.init.xavier_normal_(self.attention_context_vector)
+        self.input_proj = nn.Linear(input_dim, self.atsize)
+    
+    def forward(self, input_tensor):
+        input_proj = torch.tanh(self.input_proj(input_tensor))
+        vector_attention = torch.bmm(input_proj, self.attention_context_vector.unsqueeze(2))
+        #softmax
+        vector_attention = F.softmax(self.softmax_scale*vector_attention,dim=1)
+        output_vector = torch.mul(input_tensor, vector_attention)
+        output_vector.squeeze()
+        output_tensor = torch.sum(output_vector, dim=1, keepdim=False)
+        return output_tensor
+        
+
+
+class Attention(nn.Module):
+    def __init__(self, audio_dim, text_dim, video_dim, output_dim1, output_dim2=1, layers='256,128', dropout=0.3):
+        super(Attention, self).__init__()
+        self.fra2utt = FRA2UTT_new(input_dim=1024)
+        self.audio_mlp = self.MLP(audio_dim, layers, dropout)
+        self.text_mlp  = self.MLP(text_dim,  layers, dropout)
+        self.video_mlp = self.MLP(video_dim, layers, dropout)
+
+        layers_list = list(map(lambda x: int(x), layers.split(',')))
+        hiddendim = layers_list[-1] * 3
+        self.attention_mlp = self.MLP(hiddendim, layers, dropout)
+
+        self.fc_att   = nn.Linear(layers_list[-1], 3)
+        self.fc_out_e = nn.Linear(layers_list[-1], output_dim1)
+        self.fc_out_v = nn.Linear(layers_list[-1], output_dim2)
+        self.fc_out_ev = nn.Linear(output_dim1, output_dim2)
+        self.tanh = nn.Tanh()
+        self.sigmoid = nn.Sigmoid()
+        self.relu = nn.ReLU()
+        self.prelu = nn.PReLU(num_parameters=6, init=0.25)
+        self.softmax = nn.Softmax(dim=1)
+        self.fc_out_att_ev = nn.Linear(2, 1)
+    
+    def MLP(self, input_dim, layers, dropout):
+        all_layers = []
+        layers = list(map(lambda x: int(x), layers.split(',')))
+        for i in range(0, len(layers)):
+            all_layers.append(nn.Linear(input_dim, layers[i]))
+            all_layers.append(nn.ReLU())
+            all_layers.append(nn.Dropout(dropout))
+            input_dim = layers[i]
+        module = nn.Sequential(*all_layers)
+        return module
+
+    def forward(self, audio_feat, text_feat, video_feat):
+        # audio_feat = self.softmax(audio_feat)
+        # text_feat = self.softmax(text_feat)
+        # video_feat = self.softmax(video_feat)
+        audio_feat = self.fra2utt(audio_feat)
+        video_feat = self.fra2utt(video_feat)
+        text_feat = self.fra2utt(text_feat) 
+        audio_hidden = self.audio_mlp(audio_feat) # [32, 128]
+        text_hidden  = self.text_mlp(text_feat)   # [32, 128]
+        video_hidden = self.video_mlp(video_feat) # [32, 128]
+        # print(audio_hidden)
+        # print(text_hidden)
+        # print(video_hidden)
+
+        multi_hidden1 = torch.cat([audio_hidden, text_hidden, video_hidden], dim=1) # [32, 384]
+        attention = self.attention_mlp(multi_hidden1)
+        attention = self.fc_att(attention)
+        attention = torch.unsqueeze(attention, 2) # [32, 3, 1]
+
+        multi_hidden2 = torch.stack([audio_hidden, text_hidden, video_hidden], dim=2) # [32, 128, 3]
+        fused_feat = torch.matmul(multi_hidden2, attention)
+        fused_feat = fused_feat.squeeze() # [32, 128]
+        emos_out  = self.fc_out_e(fused_feat)
+        vals_out_e  = self.fc_out_ev(emos_out)
+        vals_out_e = self.tanh(vals_out_e)
+        vals_out_v = self.fc_out_v(fused_feat)
+        vals_out_total = torch.cat([vals_out_e, vals_out_v], dim=1)
+        vals_out = self.fc_out_att_ev(vals_out_total)
+        return fused_feat, emos_out, vals_out
+
+class CELoss(nn.Module):
+
+    def __init__(self):
+        super(CELoss, self).__init__()
+        self.loss = nn.NLLLoss(reduction='sum')
+
+    def forward(self, pred, target):
+        pred = F.log_softmax(pred, 1)
+        target = target.squeeze().long()
+        loss = self.loss(pred, target) / len(pred)
+        return loss
+
+class MSELoss(nn.Module):
+
+    def __init__(self):
+        super(MSELoss, self).__init__()
+        self.loss = nn.MSELoss(reduction='sum')
+
+    def forward(self, pred, target):
+        pred = pred.view(-1,1)
+        target = target.view(-1,1)
+        loss = self.loss(pred, target) / len(pred)
+        return loss
 
 
 ########################################################
@@ -248,19 +450,24 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
             optimizer.zero_grad()
         
         ## analyze dataloader
-        input_ids, attention_mask, token_type_ids, emos, vals, vidnames  = data
+        audio_feat, text_feat, visual_feat = data[0], data[1], data[2]
+        emos, vals = data[3], data[4].float()
+        vidnames += data[-1]
+        multi_feat = torch.cat([audio_feat, text_feat, visual_feat], dim=1)
         
         ## add cuda
-        input_ids = input_ids.cuda()
-        attention_mask = attention_mask.cuda()
-        token_type_ids = token_type_ids.cuda()
         emos = emos.cuda()
         vals = vals.cuda()
+        audio_feat  = audio_feat.cuda()
+        text_feat   = text_feat.cuda()
+        visual_feat = visual_feat.cuda()
+        multi_feat  = multi_feat.cuda()
 
-
-        features, emos_out, vals_out = model(enc_inputs=input_ids,
-                    attention_mask=attention_mask,
-                    token_type_ids=token_type_ids)
+        ## feed-forward process
+        if args.model_type == 'mlp':
+            features, emos_out, vals_out = model(multi_feat)
+        elif args.model_type == 'attention':
+            features, emos_out, vals_out = model(audio_feat, text_feat, visual_feat)
         emo_probs.append(emos_out.data.cpu().numpy())
         val_preds.append(vals_out.data.cpu().numpy())
         emo_labels.append(emos.data.cpu().numpy())
@@ -269,10 +476,9 @@ def train_or_eval_model(args, model, reg_loss, cls_loss, dataloader, optimizer=N
 
         ## optimize params
         if train:
-            loss1 = cls_loss(emos_out.to(torch.float32), emos.to(torch.float32))
-            loss2 = reg_loss(vals_out.to(torch.float32), vals.to(torch.float32))
+            loss1 = cls_loss(emos_out, emos)
+            loss2 = reg_loss(vals_out, vals)
             loss = loss1 + loss2
-            loss = loss
             loss.backward()
             optimizer.step()
 
@@ -435,9 +641,9 @@ def report_results_on_test3(test_label, test_pred):
     return emo_fscore, -100, -100
 
 
-def record_exp_result(cv_fscore, cv_valmse, cv_metric, pretrain_model, freez_mode):
+def record_exp_result(cv_fscore, cv_valmse, cv_metric, args_saved_path):
     save_path = config.PATH_TO_RESULT['RESULT_CSV']
-    result_text = "fscore: {:.4f}, valmse: {:.4f}, metric: {:.4f}, pretrain_model: {}, freez_mode: {}".format(cv_fscore, cv_valmse, cv_metric, pretrain_model, freez_mode)
+    result_text = "fscore: {:.4f}, valmse: {:.4f}, metric: {:.4f}, train_args_path: {}".format(cv_fscore, cv_valmse, cv_metric, args_saved_path)
     # t = ",".join([str(item) for item in t])
     f = open(save_path, "a")
     f.write(result_text + '\n')
@@ -473,7 +679,6 @@ if __name__ == '__main__':
     parser.add_argument('--epochs', type=int, default=100, metavar='E', help='number of epochs')
     parser.add_argument('--seed', type=int, default=100, help='make split manner is same with same seed')
     parser.add_argument('--gpu', default=0, type=int, help='GPU id to use')
-    parser.add_argument('--adapter', default=1, type=int, help='adapter adjustment model')
     args = parser.parse_args()
 
     args.n_classes = 6
@@ -494,16 +699,12 @@ if __name__ == '__main__':
     elif len(set(whole_features)) == 3:
         args.save_root = f'{args.save_root}-trimodal'
 
-    checkpoint = 'hfl/chinese-macbert-base'
-    freeze = "4"
-
-    # torch.cuda.set_device(args.gpu)
-    os.environ['CUDA_VISIBLE_DEVICES'] = '0, 1'
+    torch.cuda.set_device(args.gpu)
     print(args)
 
     
     print (f'====== Reading Data =======')
-    train_loaders, eval_loaders, test_loaders= get_loaders(args, config)      
+    train_loaders, eval_loaders, test_loaders, adim, tdim, vdim = get_loaders(args, config)      
     assert len(train_loaders) == args.num_folder, f'Error: folder number'
     assert len(eval_loaders)   == args.num_folder, f'Error: folder number'
     
@@ -519,10 +720,18 @@ if __name__ == '__main__':
         name_time  = time.time()
 
         print (f'Step1: build model (each folder has its own model)')
-        if args.adapter == 1:
-            model = nn.DataParallel(AdapterClassification(checkpoint=checkpoint, freeze=freeze), device_ids = [0, 1])
-        else:
-            model = nn.DataParallel(TextClassification(checkpoint=checkpoint, freeze=freeze), device_ids = [0, 1])
+        if args.model_type == 'mlp':
+            model = MLP(input_dim=adim + tdim + vdim,
+                        output_dim1=args.n_classes,
+                        output_dim2=1,
+                        layers=args.layers)
+        elif args.model_type == 'attention':
+            model = Attention(audio_dim=adim,
+                              text_dim=tdim,
+                              video_dim=vdim,
+                              output_dim1=args.n_classes,
+                              output_dim2=1,
+                              layers=args.layers)
         reg_loss = MSELoss()
         cls_loss = CELoss()
         model.cuda()
@@ -534,23 +743,18 @@ if __name__ == '__main__':
             else gamma**( (epoch+1 - warm_up_epochs)//stepsize )
         scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=warm_up_with_step_lr)
 
-        # scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=3, gamma=0.8)
-
         print (f'Step2: training (multiple epoches)')
         eval_metrics = []
         eval_fscores = []
         eval_valmses = []
         test_save = []
-
-        best_eval_metric = -100.0
         for epoch in range(args.epochs):
-            
+
             store_values = {}
 
             ## training and validation
             train_results = train_or_eval_model(args, model, reg_loss, cls_loss, train_loader, optimizer=optimizer, train=True)
             eval_results  = train_or_eval_model(args, model, reg_loss, cls_loss, eval_loader,  optimizer=None,      train=False)
-            print(optimizer.state_dict()['param_groups'][0]['lr'])
             scheduler.step()
             eval_metric = overall_metric(eval_results['emo_fscore'], eval_results['val_mse']) # bigger -> better
             eval_metrics.append(eval_metric)
@@ -562,34 +766,30 @@ if __name__ == '__main__':
             print ('epoch:%d; eval_acc:%.4f; eval_fscore:%.4f; eval_val_mse:%.4f; eval_metric:%.4f' %(epoch+1, eval_results['emo_accuracy'], eval_results['emo_fscore'], eval_results['val_mse'], eval_metric))
 
             ## testing and saving： test in all trained dataset
-            # for jj, test_loader in enumerate(test_loaders):
-            #     test_set = args.test_sets[jj]
-            #     test_results = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, optimizer=None, train=False)
-            #     store_values[f'{test_set}_emoprobs']   = test_results['emo_probs']
-            #     store_values[f'{test_set}_valpreds']   = test_results['val_preds']
-            #     store_values[f'{test_set}_names']      = test_results['names']
-            #     if args.savewhole: store_values[f'{test_set}_embeddings'] = test_results['embeddings']
-            # test_save.append(store_values)
-
-            if eval_metric > -0.25 and eval_metric > best_eval_metric:
-                best_eval_metric = eval_metric
-                torch.save(model.module.encoder.state_dict(), "./saved-unimodal/best_model_{}.pth".format(ii+1))
-                write_log("folder: {}, epoch: {}, eval_metric: {}".format(ii+1, epoch, eval_metric), path="./result/fine_model_save.txt")
-
+            for jj, test_loader in enumerate(test_loaders):
+                test_set = args.test_sets[jj]
+                test_results = train_or_eval_model(args, model, reg_loss, cls_loss, test_loader, optimizer=None, train=False)
+                store_values[f'{test_set}_emoprobs']   = test_results['emo_probs']
+                store_values[f'{test_set}_valpreds']   = test_results['val_preds']
+                store_values[f'{test_set}_names']      = test_results['names']
+                store_values[f'{test_set}_emolabels']   = test_results['emo_labels']
+                store_values[f'{test_set}_vallabels']   = test_results['val_labels']
+                if args.savewhole: store_values[f'{test_set}_embeddings'] = test_results['embeddings']
+            test_save.append(store_values)
             
         print (f'Step3: saving and testing on the {ii+1} folder')
         best_index = np.argmax(np.array(eval_metrics))
-        # best_save  = test_save[best_index]
+        best_save  = test_save[best_index]
         best_evalfscore = eval_fscores[best_index]
         best_evalvalmse = eval_valmses[best_index]
-        # folder_save.append(best_save)
+        folder_save.append(best_save)
         folder_evalres.append([best_evalfscore, best_evalvalmse])
         end_time = time.time()
         print (f'>>>>> Finish: training on the {ii+1} folder, duration: {end_time - start_time} >>>>>')
 
 
     print (f'====== Gain predition on test data =======')
-    # assert len(folder_save)     == args.num_folder
+    assert len(folder_save)     == args.num_folder
     assert len(folder_evalres)  == args.num_folder
     save_modelroot = os.path.join(args.save_root, 'model')
     save_predroot  = os.path.join(args.save_root, 'prediction')
@@ -602,8 +802,35 @@ if __name__ == '__main__':
     cv_metric = overall_metric(cv_fscore, cv_valmse)
     res_name = f'f1:{cv_fscore:.4f}_valmse:{cv_valmse:.4f}_metric:{cv_metric:.4f}'
     save_path = f'{save_modelroot}/cv_features:{feature_name}_{res_name}_{name_time}.npz'
-    # print (f'save results in {save_path}')
-    # np.savez_compressed(save_path, args=np.array(args, dtype=object))  # 参数保存选择
+    print (f'save results in {save_path}')
+    np.savez_compressed(save_path, args=np.array(args, dtype=object))  # 参数保存选择
 
-    record_exp_result(cv_fscore, cv_valmse, cv_metric, checkpoint, freeze)
+    analyzing_asr_impact(folder_save, config.PATH_TO_LABEL[args.train_dataset], config.PATH_TO_TRANSCRIPTIONS[args.train_dataset], emo2idx, idx2emo, args)
+    record_exp_result(cv_fscore, cv_valmse, cv_metric, save_path)
 
+    ## 拼接Feature 和 pred结果存储
+    # for setname in args.test_sets:
+    #     pred_path  = f'{save_predroot}/{setname}-pred-{name_time}.csv'
+    #     label_path = f'./dataset-release/{setname}-label.csv'
+    #     name2preds = average_folder_results(folder_save, setname)
+    #     if args.savewhole: name2feats = gain_name2feat(folder_save, setname)
+    #     write_to_csv_pred(name2preds, pred_path)
+
+    #     res_name = 'nores'
+    #     if os.path.exists(label_path):
+    #         if setname in ['test1', 'test2']: emo_fscore, val_mse, final_metric = report_results_on_test1_test2(label_path, pred_path)
+    #         if setname in ['test3']:          emo_fscore, val_mse, final_metric = report_results_on_test3(label_path, pred_path)
+    #         res_name = f'f1:{emo_fscore:.4f}_val:{val_mse:.4f}_metric:{final_metric:.4f}'
+
+    #     save_path = f'{save_modelroot}/{setname}_features:{feature_name}_{res_name}_{name_time}.npz'
+    #     print (f'save results in {save_path}')
+
+    #     if args.savewhole:
+    #         np.savez_compressed(save_path,
+    #                         name2preds=name2preds,
+    #                         name2feats=name2feats,
+    #                         args=np.array(args, dtype=object))
+    #     else:
+    #         np.savez_compressed(save_path,
+    #                             name2preds=name2preds,
+    #                             args=np.array(args, dtype=object))
