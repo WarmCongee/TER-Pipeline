@@ -103,6 +103,7 @@ class TextClassification(nn.Module):
     def __init__(self, checkpoint, freeze):
         super(TextClassification, self).__init__()
         self.encoder = BertModel.from_pretrained(checkpoint)
+        self.layer_ids = [-4, -3, -2, -1]
         if freeze == "1":
             self.encoder.embeddings.word_embeddings.requires_grad_(False)
         if freeze == "2":
@@ -113,8 +114,12 @@ class TextClassification(nn.Module):
         self.attention = Attention(self.encoder.config.hidden_size, self.encoder.config.hidden_size, self.encoder.config.hidden_size, 6)
         
     def forward(self, enc_inputs, attention_mask, token_type_ids):
-        outs = self.encoder(input_ids=enc_inputs, attention_mask=attention_mask, token_type_ids=token_type_ids)
-        print(outs.last_hidden_state.shape)
+        outs = self.encoder(input_ids=enc_inputs, attention_mask=attention_mask, token_type_ids=token_type_ids, output_hidden_states=True)
+        outputs = outs.hidden_states
+        outputs = torch.stack(outputs)[self.layer_ids].sum(dim=0) # sum => [batch, T, D=768]
+        print(outputs.shape)
+        outputs = outputs[0, 1:-1]
+        print(outputs.shape)
         outs = outs.pooler_output
         
         outs = self.attention(outs, outs, outs)
@@ -128,7 +133,7 @@ class FRA2UTT_new(nn.Module):
         super(FRA2UTT_new, self).__init__()
         self.atsize = atsize
         self.softmax_scale = softmax_scale
-        self.attention_context_vector = nn.Parameter(torch.empty(32,atsize)) #(batch_size, feature_dim)
+        self.attention_context_vector = nn.Parameter(torch.empty(4,atsize)) #(batch_size, feature_dim)
         nn.init.xavier_normal_(self.attention_context_vector)
         self.input_proj = nn.Linear(input_dim, self.atsize)
     
@@ -147,7 +152,7 @@ class FRA2UTT_new(nn.Module):
 class AttentionNew(nn.Module):
     def __init__(self, audio_dim, text_dim, video_dim, output_dim1, output_dim2=1, layers='256,128', dropout=0.3):
         super(AttentionNew, self).__init__()
-        self.fra2utt = FRA2UTT_new(input_dim=1024)
+        self.fra2utt = FRA2UTT_new(input_dim=audio_dim)
         self.audio_mlp = self.MLP(audio_dim, layers, dropout)
         self.text_mlp  = self.MLP(text_dim,  layers, dropout)
         self.video_mlp = self.MLP(video_dim, layers, dropout)
@@ -221,7 +226,8 @@ class AdapterClassification(nn.Module):
         # Enable adapter training
         self.encoder.train_adapter(adapter_config_str)
         self.encoder.set_active_adapters(adapter_config_str)
-
+        self.layer_ids = [-4, -3, -2, -1]
+        self.feature_dim = 768
         # if freeze == "1":
         #     self.encoder.embeddings.word_embeddings.requires_grad_(False)
         # if freeze == "2":
@@ -233,13 +239,39 @@ class AdapterClassification(nn.Module):
         #     self.encoder.embeddings.requires_grad_(False)
         #     self.encoder.encoder.requires_grad_(False)
         #     self.encoder.pooler.requires_grad_(False)
-        self.attention = AttentionNew(self.encoder.config.hidden_size, self.encoder.config.hidden_size, self.encoder.config.hidden_size, 6)
+        self.attention = AttentionNew(self.feature_dim, self.feature_dim, self.feature_dim, 6)
         
     def forward(self, enc_inputs, attention_mask, token_type_ids):
-        outs = self.encoder(input_ids=enc_inputs, attention_mask=attention_mask, token_type_ids=token_type_ids)
-        outs = outs.pooler_output
-        outs = self.attention(outs, outs, outs)
+        outs = self.encoder(input_ids=enc_inputs, attention_mask=attention_mask, token_type_ids=token_type_ids,  output_hidden_states=True).hidden_states
+        outs = torch.stack(outs)[self.layer_ids].sum(dim=0) # sum => [batch, T, D=768]
+        # embeddings = outs[: , 1:-1, :]
+        feature_dim = outs.shape[-1]
+        embeddings = outs
+        embeddings = embeddings.squeeze()
+        if len(embeddings) == 0:
+            embeddings = np.zeros((1, feature_dim))
+        elif len(embeddings.shape) == 1:
+            embeddings = embeddings.unsqueeze(0)
+        
+    
+        # outs = self.solve_frame_shape(embeddings)
+        # print(type(embeddings))
+        outs = self.attention(embeddings, embeddings, embeddings)
         return outs
+    
+    def solve_frame_shape(self, inp_0):
+        length_rule = 1024
+        length = inp_0.shape[0]
+        feature_dim = inp_0.shape[1]
+        collated_tensor = torch.zeros(length_rule, feature_dim).cuda()
+        if length <= length_rule:
+            collated_tensor[0:length, ] = inp_0
+        else:
+            collated_tensor[0:length_rule, ] = inp_0[0:length_rule]
+        return collated_tensor
+
+
+
 
 
 

@@ -22,6 +22,7 @@ ASR_TRANS_REFINEMENT_DATASET_PATH = '/home/dataset/wyz_mer_dataset/ter_dataset/b
 ASR_TRANS_LONG_TEXT_PATH = '/home/dataset/wyz_mer_dataset/ter_dataset/base_long_text.csv'
 ASR_TRANS_REFINEMENT_DATASET_PATH_TRAIN = '/home/dataset/wyz_mer_dataset/ter_dataset/base_train.csv'
 ASR_TRANS_REFINEMENT_DATASET_PATH_TEST = '/home/dataset/wyz_mer_dataset/ter_dataset/base_test.csv'
+ASR_WHISPER_TRANS_DATASET_PATH = '/home/dataset/wyz_mer_dataset/ter_dataset/whisper_text_dataset_all.csv'
 
 # Tools path
 PATH_TO_FFMPEG = '/home/wyz/MER-TER/TER-Pipeline/tools/ffmpeg-4.4.1-i686-static/ffmpeg'

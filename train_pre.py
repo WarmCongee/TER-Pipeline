@@ -523,13 +523,17 @@ if __name__ == '__main__':
             model = nn.DataParallel(AdapterClassification(checkpoint=checkpoint, freeze=freeze), device_ids = [0, 1])
         else:
             model = nn.DataParallel(TextClassification(checkpoint=checkpoint, freeze=freeze), device_ids = [0, 1])
+        # for name, param in model.named_parameters():
+        #     if param.requires_grad:
+        #         print(name)
+
         reg_loss = MSELoss()
         cls_loss = CELoss()
         model.cuda()
         reg_loss.cuda()
         cls_loss.cuda()
         optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.l2)
-        gamma = 0.9; stepsize = 2; warm_up_epochs=5
+        gamma = 0.9; stepsize = 3; warm_up_epochs=5
         warm_up_with_step_lr = lambda epoch: (epoch+1) / warm_up_epochs if epoch < warm_up_epochs \
             else gamma**( (epoch+1 - warm_up_epochs)//stepsize )
         scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=warm_up_with_step_lr)

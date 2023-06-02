@@ -131,7 +131,10 @@ def extract_bert_embedding_chinese(model_name, trans_dir, save_dir, feature_leve
             inputs = inputs.to(device)
             with torch.no_grad():
                 outputs = model(**inputs, output_hidden_states=True).hidden_states # for new version 4.5.1
+                print(len(outputs))
+                print(outputs[0].shape)
                 outputs = torch.stack(outputs)[layer_ids].sum(dim=0) # sum => [batch, T, D=768]
+                print(outputs.shape)
                 outputs = outputs.cpu().numpy() # (B, T, D)
                 assert outputs.shape[0] == 1
                 if model_name == XLNET_BASE_CHINESE:
@@ -151,6 +154,7 @@ def extract_bert_embedding_chinese(model_name, trans_dir, save_dir, feature_leve
                 embeddings = np.zeros((1, feature_dim))
             elif len(embeddings.shape) == 1:
                 embeddings = embeddings[np.newaxis, :]
+            print(embeddings.shape)
             np.save(csv_file, embeddings)
         else:
             embeddings = np.array(embeddings).squeeze()
@@ -183,7 +187,7 @@ if __name__ == '__main__':
     os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
     
     trans_dir = config.PATH_TO_TRANSCRIPTIONS[args.dataset] # directory of transcriptions
-    save_dir = config.PATH_TO_FEATURES[args.dataset] # directory used to store features
+    save_dir = './temp/' # config.PATH_TO_FEATURES[args.dataset] # directory used to store features
     layer_ids = [-4, -3, -2, -1] # hidden states of selected layers will be used to obtain the embedding, only for transformers
 
     main(args.model_name, args.feature_level, trans_dir, save_dir, layer_ids=layer_ids, overwrite=args.overwrite, gpu=args.gpu, batch_size=16)

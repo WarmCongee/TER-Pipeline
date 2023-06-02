@@ -150,6 +150,42 @@ def preserve_longer_text_datasets(csv_path_all, save_path, label_root_path):
     if not os.path.exists(label_root_path): os.makedirs(label_root_path)
     np.savez_compressed(save_label,
                         train_corpus=train_corpus)
+    
+
+# generate transcription files using asr
+def generate_transcription_files_whisper(audio_root: str, save_path: str):
+    import whisper
+    whisper_model = whisper.load_model("large-v2", device="cpu")
+    
+    whisper_model.encoder.to("cuda:0")
+    whisper_model.decoder.to("cuda:1")
+    whisper_model.decoder.register_forward_pre_hook(lambda _, inputs: tuple([inputs[0].to("cuda:1"), inputs[1].to("cuda:1")] + list(inputs[2:])))
+    whisper_model.decoder.register_forward_hook(lambda _, inputs, outputs: outputs.to("cuda:0"))
+
+    names = []
+    sentences = []
+    emos =[]
+    valences =[]
+
+    lable_dictionary = np.load(config_path.TRAIN_LABLE_NPZ_PATH, allow_pickle=True)
+
+    for audio_path in tqdm.tqdm(glob.glob(audio_root + '/*')):
+        name = os.path.basename(audio_path)[:-4]
+        print(audio_path)
+        sentence = (whisper_model.transcribe(audio_path, language='zh', initial_prompt='你好，以下是普通话的句子。'))['text']
+        # sentence = sentence.split('"')[5]
+        names.append(name)
+        sentences.append(sentence)
+        
+        emos.append(lable_dictionary['train_corpus'][()][name]['emo'])
+        valences.append(lable_dictionary['train_corpus'][()][name]['val'])
+
+    ## write to csv file
+    columns = ['emo', 'val', 'name', 'sentence']
+    data = np.column_stack([emos, valences, names, sentences])
+    df = pd.DataFrame(data=data, columns=columns)
+    df[columns] = df[columns].astype(str)
+    df.to_csv(save_path, sep='\t', index=False)
         
 
 def construct_text_dataset():
@@ -165,6 +201,10 @@ def construct_text_dataset():
     # divide_train_test_dateset(config_path.ASR_TRANS_REFINEMENT_DATASET_PATH, config_path.TRAIN_LABLE_NPZ_PATH, 
     #                           config_path.ASR_TRANS_REFINEMENT_DATASET_PATH_TRAIN, config_path.TRAIN_LABLE_NPZ_PATH_TRAIN,
     #                           config_path.ASR_TRANS_REFINEMENT_DATASET_PATH_TEST, config_path.TRAIN_LABLE_NPZ_PATH_TEST)
-    preserve_longer_text_datasets(config_path.ASR_TRANS_REFINEMENT_DATASET_PATH, config_path.ASR_TRANS_LONG_TEXT_PATH, config_path.TRAIN_LONG_LABLE_NPZ_PATH)
+    # preserve_longer_text_datasets(config_path.ASR_TRANS_REFINEMENT_DATASET_PATH, config_path.ASR_TRANS_LONG_TEXT_PATH, config_path.TRAIN_LONG_LABLE_NPZ_PATH)
+
+    # 使用whisper提取
+    generate_transcription_files_whisper(config_path.TER_DATASET_PATH_AUDIO, config_path.ASR_WHISPER_TRANS_DATASET_PATH)
+
 if __name__ == '__main__':
     construct_text_dataset()

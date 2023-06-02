@@ -67,8 +67,8 @@ def func_read_one(argv=None, feature_root=None, name=None):
     single_feature = np.array(feature).squeeze()
     if len(single_feature) == 0:
         print ('feature has errors!!')
-    elif len(single_feature.shape) == 2:
-        single_feature = np.mean(single_feature, axis=0)
+    # elif len(single_feature.shape) == 2:
+        # single_feature = np.mean(single_feature, axis=0)
     return single_feature
     
 def read_data_multiprocess(label_path, feature_root, task='emo', data_type='train', debug=False):
@@ -105,7 +105,7 @@ def read_data_multiprocess(label_path, feature_root, task='emo', data_type='trai
     features = []
     with multiprocessing.Pool(processes=8) as pool:
         features = list(tqdm.tqdm(pool.imap(func_read_one, params), total=len(params)))
-    feature_dim = np.array(features).shape[-1]
+    feature_dim = np.array(features)[0].shape[-1]
 
     ## save (names, features)
     print (f'Input feature {feature_root} ===> dim is {feature_dim}')
@@ -153,15 +153,25 @@ class Collate_fn():
         # print('*'*60)
         lengths = []
         feature_dim = []
+        length_rule = 1024
         for i in range(3):
             length = []
             for tensor in batch:
-                length.append(tensor[i].shape[0])
+                if(len(tensor[i].shape) == 2):
+                    length.append(tensor[i].shape[0])
+                else:
+                    length.append(1)
             lengths.append(length)
-            
-            feature_dim.append(batch[0][i].shape[0])
+            if(len(batch[0][i].shape) == 2):
+                feature_dim.append(batch[0][i].shape[1])
+            else:
+                feature_dim.append(batch[0][i].shape[0])
                
+        
         max_length = [max(length) for length in lengths]
+        for i, item in enumerate(max_length):
+            max_length[i] = length_rule
+                
         collated_batch = []
         batch_size = len(batch)
         audio_collated_batch = torch.zeros(batch_size, max_length[0], feature_dim[0])
@@ -174,16 +184,28 @@ class Collate_fn():
         for i, tuple_pre in enumerate(batch):
             audio_length = tuple_pre[0].shape[0]
             audio_collated_tensor = torch.zeros(max_length[0], feature_dim[0])
-            audio_collated_tensor[0:audio_length, ] = tuple_pre[0]
+            if audio_length <= length_rule:
+                audio_collated_tensor[0:audio_length, ] = tuple_pre[0]
+            else:
+                audio_collated_tensor[0:length_rule, ] = tuple_pre[0][0:length_rule]
             audio_collated_batch[i,:,:] = audio_collated_tensor
+
             text_length = tuple_pre[1].shape[0]
             text_collated_tensor = torch.zeros(max_length[1], feature_dim[1])
-            text_collated_tensor[0:text_length, ] = tuple_pre[1]
+            if text_length <= length_rule:
+                text_collated_tensor[0:text_length, ] = tuple_pre[1]
+            else:
+                text_collated_tensor[0:text_length, ] = tuple_pre[1][0:length_rule]
             text_collated_batch[i,:,:] = text_collated_tensor
+
             video_length = tuple_pre[2].shape[0]
             video_collated_tensor = torch.zeros(max_length[2], feature_dim[2])
-            video_collated_tensor[0:video_length, ] = tuple_pre[2]
+            if video_length <= length_rule:
+                video_collated_tensor[0:video_length, ] = tuple_pre[2]
+            else:
+                video_collated_tensor[0:video_length, ] = tuple_pre[2][0:length_rule]
             video_collated_batch[i,:,:] = video_collated_tensor
+
             emo_collated_batch[i] = tuple_pre[3]
             val_collated_batch[i] = tuple_pre[4]
             name_collated_batch.append(tuple_pre[5])
@@ -308,6 +330,7 @@ class FRA2UTT(nn.Module):
         self.input_proj = nn.Linear(input_dim, self.atsize)
     
     def forward(self, input_tensor):
+        print(input_tensor.shape)
         batch_size = input_tensor.shape[0]
         attention_context_vector = self.attention_context_vector.repeat(batch_size,1).unsqueeze(2)
         input_proj = torch.tanh(self.input_proj(input_tensor))
@@ -329,6 +352,7 @@ class FRA2UTT_new(nn.Module):
         self.input_proj = nn.Linear(input_dim, self.atsize)
     
     def forward(self, input_tensor):
+        print(input_tensor.shape)
         input_proj = torch.tanh(self.input_proj(input_tensor))
         vector_attention = torch.bmm(input_proj, self.attention_context_vector.unsqueeze(2))
         #softmax
