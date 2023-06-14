@@ -1,0 +1,468 @@
+nohup: ignoring input
+2023-06-02 20:27:20.984833: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-06-02 20:27:21.461213: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+Namespace(adapter=1, audio_feature='chinese-macbert-large-4-FRA', batch_size=16, dataset='MER2023', debug=False, dropout=0.5, epochs=42, gpu=1, l2=1e-05, layers='256,128', lr=0.001, model_type='attention', n_classes=6, num_folder=5, num_workers=0, save_root='./saved-unimodal', savewhole=False, seed=100, test_dataset='MER2023', test_sets=['test3'], text_feature='chinese-macbert-large-4-FRA', train_dataset='MER2023', video_feature='chinese-macbert-large-4-FRA')
+====== Reading Data =======
+====== Training and Evaluation =======
+>>>>> Cross-validation: training on the 1 folder >>>>>
+Step1: build model (each folder has its own model)
+Some weights of the model checkpoint at hfl/chinese-macbert-large were not used when initializing BertAdapterModel: ['cls.predictions.decoder.weight', 'cls.seq_relationship.weight', 'cls.predictions.transform.LayerNorm.bias', 'cls.predictions.decoder.bias', 'cls.predictions.bias', 'cls.predictions.transform.dense.weight', 'cls.seq_relationship.bias', 'cls.predictions.transform.dense.bias', 'cls.predictions.transform.LayerNorm.weight']
+- This IS expected if you are initializing BertAdapterModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertAdapterModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Step2: training (multiple epoches)
+0.0002
+epoch:1; eval_acc:0.3527; eval_fscore:0.2739; eval_val_mse:2.7358; eval_metric:-0.4100
+0.0004
+epoch:2; eval_acc:0.3586; eval_fscore:0.2884; eval_val_mse:2.6782; eval_metric:-0.3812
+0.0006
+epoch:3; eval_acc:0.4390; eval_fscore:0.4140; eval_val_mse:2.5034; eval_metric:-0.2118
+0.0008
+epoch:4; eval_acc:0.3914; eval_fscore:0.3450; eval_val_mse:2.6163; eval_metric:-0.3091
+0.001
+epoch:5; eval_acc:0.3780; eval_fscore:0.3414; eval_val_mse:2.6687; eval_metric:-0.3258
+0.001
+epoch:6; eval_acc:0.4286; eval_fscore:0.4041; eval_val_mse:2.4344; eval_metric:-0.2045
+0.001
+epoch:7; eval_acc:0.4167; eval_fscore:0.3937; eval_val_mse:2.4449; eval_metric:-0.2176
+0.0009000000000000001
+epoch:8; eval_acc:0.4182; eval_fscore:0.4106; eval_val_mse:2.4331; eval_metric:-0.1977
+0.0009000000000000001
+epoch:9; eval_acc:0.4107; eval_fscore:0.4043; eval_val_mse:2.5316; eval_metric:-0.2286
+0.0009000000000000001
+epoch:10; eval_acc:0.4122; eval_fscore:0.3919; eval_val_mse:2.6714; eval_metric:-0.2760
+0.0008100000000000001
+epoch:11; eval_acc:0.4048; eval_fscore:0.3899; eval_val_mse:2.6606; eval_metric:-0.2753
+0.0008100000000000001
+epoch:12; eval_acc:0.3929; eval_fscore:0.3850; eval_val_mse:2.8239; eval_metric:-0.3210
+0.0008100000000000001
+epoch:13; eval_acc:0.3869; eval_fscore:0.3787; eval_val_mse:2.9194; eval_metric:-0.3512
+0.0007290000000000002
+epoch:14; eval_acc:0.4062; eval_fscore:0.3972; eval_val_mse:2.6423; eval_metric:-0.2634
+0.0007290000000000002
+epoch:15; eval_acc:0.4062; eval_fscore:0.3977; eval_val_mse:2.7375; eval_metric:-0.2867
+0.0007290000000000002
+epoch:16; eval_acc:0.4092; eval_fscore:0.3965; eval_val_mse:2.7803; eval_metric:-0.2985
+0.0006561000000000001
+epoch:17; eval_acc:0.3884; eval_fscore:0.3831; eval_val_mse:3.0301; eval_metric:-0.3745
+0.0006561000000000001
+epoch:18; eval_acc:0.3884; eval_fscore:0.3815; eval_val_mse:2.9132; eval_metric:-0.3468
+0.0006561000000000001
+epoch:19; eval_acc:0.4033; eval_fscore:0.3960; eval_val_mse:2.8098; eval_metric:-0.3064
+0.00059049
+epoch:20; eval_acc:0.4077; eval_fscore:0.3978; eval_val_mse:2.8003; eval_metric:-0.3023
+0.00059049
+epoch:21; eval_acc:0.4122; eval_fscore:0.4011; eval_val_mse:2.8034; eval_metric:-0.2998
+0.00059049
+epoch:22; eval_acc:0.4182; eval_fscore:0.4135; eval_val_mse:2.8097; eval_metric:-0.2889
+0.000531441
+epoch:23; eval_acc:0.4241; eval_fscore:0.4173; eval_val_mse:2.8509; eval_metric:-0.2954
+0.000531441
+epoch:24; eval_acc:0.4211; eval_fscore:0.4203; eval_val_mse:2.8334; eval_metric:-0.2880
+0.000531441
+epoch:25; eval_acc:0.4211; eval_fscore:0.4159; eval_val_mse:2.7861; eval_metric:-0.2806
+0.0004782969000000001
+epoch:26; eval_acc:0.4271; eval_fscore:0.4218; eval_val_mse:2.7842; eval_metric:-0.2743
+0.0004782969000000001
+epoch:27; eval_acc:0.4226; eval_fscore:0.4154; eval_val_mse:2.7818; eval_metric:-0.2801
+0.0004782969000000001
+epoch:28; eval_acc:0.4167; eval_fscore:0.4069; eval_val_mse:2.7262; eval_metric:-0.2747
+0.0004304672100000001
+epoch:29; eval_acc:0.4360; eval_fscore:0.4281; eval_val_mse:2.7449; eval_metric:-0.2581
+0.0004304672100000001
+epoch:30; eval_acc:0.4226; eval_fscore:0.4194; eval_val_mse:2.7680; eval_metric:-0.2726
+0.0004304672100000001
+epoch:31; eval_acc:0.4137; eval_fscore:0.4041; eval_val_mse:2.7919; eval_metric:-0.2939
+0.0003874204890000001
+epoch:32; eval_acc:0.4256; eval_fscore:0.4272; eval_val_mse:2.8041; eval_metric:-0.2738
+0.0003874204890000001
+epoch:33; eval_acc:0.4345; eval_fscore:0.4298; eval_val_mse:2.8286; eval_metric:-0.2773
+0.0003874204890000001
+epoch:34; eval_acc:0.4122; eval_fscore:0.4125; eval_val_mse:2.8836; eval_metric:-0.3084
+0.0003486784401000001
+epoch:35; eval_acc:0.4256; eval_fscore:0.4179; eval_val_mse:2.7715; eval_metric:-0.2750
+0.0003486784401000001
+epoch:36; eval_acc:0.4137; eval_fscore:0.4117; eval_val_mse:2.7660; eval_metric:-0.2798
+0.0003486784401000001
+epoch:37; eval_acc:0.4018; eval_fscore:0.4022; eval_val_mse:2.7515; eval_metric:-0.2857
+0.0003138105960900001
+epoch:38; eval_acc:0.4077; eval_fscore:0.4035; eval_val_mse:2.6909; eval_metric:-0.2693
+0.0003138105960900001
+epoch:39; eval_acc:0.4092; eval_fscore:0.4028; eval_val_mse:2.7967; eval_metric:-0.2964
+0.0003138105960900001
+epoch:40; eval_acc:0.4137; eval_fscore:0.4094; eval_val_mse:2.7678; eval_metric:-0.2825
+0.0002824295364810001
+epoch:41; eval_acc:0.4241; eval_fscore:0.4210; eval_val_mse:2.7949; eval_metric:-0.2778
+0.0002824295364810001
+epoch:42; eval_acc:0.4062; eval_fscore:0.4013; eval_val_mse:2.7705; eval_metric:-0.2913
+Step3: saving and testing on the 1 folder
+>>>>> Finish: training on the 1 folder, duration: 11292.147706508636 >>>>>
+>>>>> Cross-validation: training on the 2 folder >>>>>
+Step1: build model (each folder has its own model)
+Some weights of the model checkpoint at hfl/chinese-macbert-large were not used when initializing BertAdapterModel: ['cls.predictions.decoder.weight', 'cls.seq_relationship.weight', 'cls.predictions.transform.LayerNorm.bias', 'cls.predictions.decoder.bias', 'cls.predictions.bias', 'cls.predictions.transform.dense.weight', 'cls.seq_relationship.bias', 'cls.predictions.transform.dense.bias', 'cls.predictions.transform.LayerNorm.weight']
+- This IS expected if you are initializing BertAdapterModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertAdapterModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Step2: training (multiple epoches)
+0.0002
+epoch:1; eval_acc:0.3914; eval_fscore:0.3091; eval_val_mse:2.6999; eval_metric:-0.3659
+0.0004
+epoch:2; eval_acc:0.3869; eval_fscore:0.3073; eval_val_mse:2.5505; eval_metric:-0.3303
+0.0006
+epoch:3; eval_acc:0.4226; eval_fscore:0.3688; eval_val_mse:2.5822; eval_metric:-0.2768
+0.0008
+epoch:4; eval_acc:0.4241; eval_fscore:0.3681; eval_val_mse:2.5876; eval_metric:-0.2788
+0.001
+epoch:5; eval_acc:0.4271; eval_fscore:0.4009; eval_val_mse:2.5381; eval_metric:-0.2337
+0.001
+epoch:6; eval_acc:0.4360; eval_fscore:0.4039; eval_val_mse:2.7315; eval_metric:-0.2790
+0.001
+epoch:7; eval_acc:0.4345; eval_fscore:0.4163; eval_val_mse:2.5998; eval_metric:-0.2336
+0.0009000000000000001
+epoch:8; eval_acc:0.4420; eval_fscore:0.4039; eval_val_mse:2.5715; eval_metric:-0.2390
+0.0009000000000000001
+epoch:9; eval_acc:0.4315; eval_fscore:0.4133; eval_val_mse:2.7168; eval_metric:-0.2659
+0.0009000000000000001
+epoch:10; eval_acc:0.4301; eval_fscore:0.4187; eval_val_mse:2.8331; eval_metric:-0.2896
+0.0008100000000000001
+epoch:11; eval_acc:0.4182; eval_fscore:0.4081; eval_val_mse:3.1011; eval_metric:-0.3672
+0.0008100000000000001
+epoch:12; eval_acc:0.4167; eval_fscore:0.4030; eval_val_mse:2.9322; eval_metric:-0.3300
+0.0008100000000000001
+epoch:13; eval_acc:0.3943; eval_fscore:0.3917; eval_val_mse:3.0088; eval_metric:-0.3605
+0.0007290000000000002
+epoch:14; eval_acc:0.4107; eval_fscore:0.4079; eval_val_mse:3.0153; eval_metric:-0.3460
+0.0007290000000000002
+epoch:15; eval_acc:0.4182; eval_fscore:0.4019; eval_val_mse:2.9730; eval_metric:-0.3413
+0.0007290000000000002
+epoch:16; eval_acc:0.3750; eval_fscore:0.3735; eval_val_mse:3.1590; eval_metric:-0.4163
+0.0006561000000000001
+epoch:17; eval_acc:0.3973; eval_fscore:0.3959; eval_val_mse:2.9526; eval_metric:-0.3422
+0.0006561000000000001
+epoch:18; eval_acc:0.3780; eval_fscore:0.3784; eval_val_mse:3.0018; eval_metric:-0.3720
+0.0006561000000000001
+epoch:19; eval_acc:0.4256; eval_fscore:0.4137; eval_val_mse:2.8709; eval_metric:-0.3040
+0.00059049
+epoch:20; eval_acc:0.3973; eval_fscore:0.3958; eval_val_mse:2.8640; eval_metric:-0.3202
+0.00059049
+epoch:21; eval_acc:0.4018; eval_fscore:0.3914; eval_val_mse:2.7444; eval_metric:-0.2947
+0.00059049
+epoch:22; eval_acc:0.3735; eval_fscore:0.3770; eval_val_mse:2.8027; eval_metric:-0.3237
+0.000531441
+epoch:23; eval_acc:0.3958; eval_fscore:0.3855; eval_val_mse:2.9638; eval_metric:-0.3555
+0.000531441
+epoch:24; eval_acc:0.3735; eval_fscore:0.3750; eval_val_mse:2.8732; eval_metric:-0.3433
+0.000531441
+epoch:25; eval_acc:0.3854; eval_fscore:0.3830; eval_val_mse:2.8789; eval_metric:-0.3367
+0.0004782969000000001
+epoch:26; eval_acc:0.3929; eval_fscore:0.3864; eval_val_mse:2.9237; eval_metric:-0.3446
+0.0004782969000000001
+epoch:27; eval_acc:0.4033; eval_fscore:0.3976; eval_val_mse:2.8580; eval_metric:-0.3169
+0.0004782969000000001
+epoch:28; eval_acc:0.3929; eval_fscore:0.3891; eval_val_mse:2.8459; eval_metric:-0.3224
+0.0004304672100000001
+epoch:29; eval_acc:0.4003; eval_fscore:0.3980; eval_val_mse:2.8825; eval_metric:-0.3226
+0.0004304672100000001
+epoch:30; eval_acc:0.3929; eval_fscore:0.3913; eval_val_mse:2.8379; eval_metric:-0.3182
+0.0004304672100000001
+epoch:31; eval_acc:0.3839; eval_fscore:0.3822; eval_val_mse:2.8453; eval_metric:-0.3291
+0.0003874204890000001
+epoch:32; eval_acc:0.3973; eval_fscore:0.3932; eval_val_mse:2.8311; eval_metric:-0.3145
+0.0003874204890000001
+epoch:33; eval_acc:0.3884; eval_fscore:0.3867; eval_val_mse:2.9264; eval_metric:-0.3449
+0.0003874204890000001
+epoch:34; eval_acc:0.4077; eval_fscore:0.4019; eval_val_mse:2.9234; eval_metric:-0.3289
+0.0003486784401000001
+epoch:35; eval_acc:0.3958; eval_fscore:0.3918; eval_val_mse:2.8776; eval_metric:-0.3276
+0.0003486784401000001
+epoch:36; eval_acc:0.4003; eval_fscore:0.3971; eval_val_mse:2.8873; eval_metric:-0.3248
+0.0003486784401000001
+epoch:37; eval_acc:0.4077; eval_fscore:0.4011; eval_val_mse:2.8929; eval_metric:-0.3221
+0.0003138105960900001
+epoch:38; eval_acc:0.4122; eval_fscore:0.4104; eval_val_mse:2.8826; eval_metric:-0.3102
+0.0003138105960900001
+epoch:39; eval_acc:0.3914; eval_fscore:0.3841; eval_val_mse:2.8502; eval_metric:-0.3285
+0.0003138105960900001
+epoch:40; eval_acc:0.3839; eval_fscore:0.3852; eval_val_mse:2.9522; eval_metric:-0.3528
+0.0002824295364810001
+epoch:41; eval_acc:0.3988; eval_fscore:0.3922; eval_val_mse:2.8026; eval_metric:-0.3085
+0.0002824295364810001
+epoch:42; eval_acc:0.3899; eval_fscore:0.3904; eval_val_mse:2.8603; eval_metric:-0.3246
+Step3: saving and testing on the 2 folder
+>>>>> Finish: training on the 2 folder, duration: 11279.44151544571 >>>>>
+>>>>> Cross-validation: training on the 3 folder >>>>>
+Step1: build model (each folder has its own model)
+Some weights of the model checkpoint at hfl/chinese-macbert-large were not used when initializing BertAdapterModel: ['cls.predictions.decoder.weight', 'cls.seq_relationship.weight', 'cls.predictions.transform.LayerNorm.bias', 'cls.predictions.decoder.bias', 'cls.predictions.bias', 'cls.predictions.transform.dense.weight', 'cls.seq_relationship.bias', 'cls.predictions.transform.dense.bias', 'cls.predictions.transform.LayerNorm.weight']
+- This IS expected if you are initializing BertAdapterModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertAdapterModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Step2: training (multiple epoches)
+0.0002
+epoch:1; eval_acc:0.3408; eval_fscore:0.2854; eval_val_mse:2.6317; eval_metric:-0.3725
+0.0004
+epoch:2; eval_acc:0.3854; eval_fscore:0.3511; eval_val_mse:2.5955; eval_metric:-0.2978
+0.0006
+epoch:3; eval_acc:0.3988; eval_fscore:0.3569; eval_val_mse:2.4929; eval_metric:-0.2663
+0.0008
+epoch:4; eval_acc:0.4211; eval_fscore:0.3966; eval_val_mse:2.4406; eval_metric:-0.2135
+0.001
+epoch:5; eval_acc:0.3914; eval_fscore:0.3623; eval_val_mse:2.8036; eval_metric:-0.3386
+0.001
+epoch:6; eval_acc:0.4256; eval_fscore:0.4029; eval_val_mse:2.5722; eval_metric:-0.2401
+0.001
+epoch:7; eval_acc:0.3869; eval_fscore:0.3795; eval_val_mse:2.5529; eval_metric:-0.2587
+0.0009000000000000001
+epoch:8; eval_acc:0.4107; eval_fscore:0.3985; eval_val_mse:2.6754; eval_metric:-0.2703
+0.0009000000000000001
+epoch:9; eval_acc:0.4048; eval_fscore:0.3968; eval_val_mse:2.5846; eval_metric:-0.2494
+0.0009000000000000001
+epoch:10; eval_acc:0.4018; eval_fscore:0.3923; eval_val_mse:2.8646; eval_metric:-0.3238
+0.0008100000000000001
+epoch:11; eval_acc:0.4211; eval_fscore:0.4045; eval_val_mse:2.7680; eval_metric:-0.2875
+0.0008100000000000001
+epoch:12; eval_acc:0.4241; eval_fscore:0.4204; eval_val_mse:2.7211; eval_metric:-0.2599
+0.0008100000000000001
+epoch:13; eval_acc:0.4092; eval_fscore:0.4068; eval_val_mse:2.8477; eval_metric:-0.3051
+0.0007290000000000002
+epoch:14; eval_acc:0.3810; eval_fscore:0.3829; eval_val_mse:2.9993; eval_metric:-0.3669
+0.0007290000000000002
+epoch:15; eval_acc:0.3958; eval_fscore:0.3924; eval_val_mse:2.8274; eval_metric:-0.3145
+0.0007290000000000002
+epoch:16; eval_acc:0.4033; eval_fscore:0.3986; eval_val_mse:2.8207; eval_metric:-0.3066
+0.0006561000000000001
+epoch:17; eval_acc:0.3958; eval_fscore:0.3901; eval_val_mse:2.8290; eval_metric:-0.3172
+0.0006561000000000001
+epoch:18; eval_acc:0.3899; eval_fscore:0.3893; eval_val_mse:2.8862; eval_metric:-0.3323
+0.0006561000000000001
+epoch:19; eval_acc:0.3810; eval_fscore:0.3834; eval_val_mse:2.8758; eval_metric:-0.3356
+0.00059049
+epoch:20; eval_acc:0.3765; eval_fscore:0.3776; eval_val_mse:2.9170; eval_metric:-0.3516
+0.00059049
+epoch:21; eval_acc:0.3958; eval_fscore:0.3955; eval_val_mse:2.8743; eval_metric:-0.3231
+0.00059049
+epoch:22; eval_acc:0.3735; eval_fscore:0.3729; eval_val_mse:2.9965; eval_metric:-0.3762
+0.000531441
+epoch:23; eval_acc:0.3765; eval_fscore:0.3780; eval_val_mse:3.0226; eval_metric:-0.3776
+0.000531441
+epoch:24; eval_acc:0.3973; eval_fscore:0.3993; eval_val_mse:3.0526; eval_metric:-0.3638
+0.000531441
+epoch:25; eval_acc:0.3661; eval_fscore:0.3689; eval_val_mse:2.9018; eval_metric:-0.3566
+0.0004782969000000001
+epoch:26; eval_acc:0.3899; eval_fscore:0.3897; eval_val_mse:2.9478; eval_metric:-0.3473
+0.0004782969000000001
+epoch:27; eval_acc:0.3765; eval_fscore:0.3740; eval_val_mse:2.9049; eval_metric:-0.3522
+0.0004782969000000001
+epoch:28; eval_acc:0.3780; eval_fscore:0.3775; eval_val_mse:2.8120; eval_metric:-0.3254
+0.0004304672100000001
+epoch:29; eval_acc:0.3810; eval_fscore:0.3801; eval_val_mse:2.8526; eval_metric:-0.3330
+0.0004304672100000001
+epoch:30; eval_acc:0.3646; eval_fscore:0.3656; eval_val_mse:2.8705; eval_metric:-0.3521
+0.0004304672100000001
+epoch:31; eval_acc:0.3839; eval_fscore:0.3845; eval_val_mse:2.9263; eval_metric:-0.3470
+0.0003874204890000001
+epoch:32; eval_acc:0.3780; eval_fscore:0.3785; eval_val_mse:2.9580; eval_metric:-0.3610
+0.0003874204890000001
+epoch:33; eval_acc:0.3750; eval_fscore:0.3737; eval_val_mse:2.8711; eval_metric:-0.3440
+0.0003874204890000001
+epoch:34; eval_acc:0.3676; eval_fscore:0.3695; eval_val_mse:2.9582; eval_metric:-0.3701
+0.0003486784401000001
+epoch:35; eval_acc:0.3824; eval_fscore:0.3857; eval_val_mse:2.9877; eval_metric:-0.3612
+0.0003486784401000001
+epoch:36; eval_acc:0.3765; eval_fscore:0.3762; eval_val_mse:2.9374; eval_metric:-0.3581
+0.0003486784401000001
+epoch:37; eval_acc:0.3929; eval_fscore:0.3885; eval_val_mse:3.0166; eval_metric:-0.3656
+0.0003138105960900001
+epoch:38; eval_acc:0.3690; eval_fscore:0.3680; eval_val_mse:2.9652; eval_metric:-0.3733
+0.0003138105960900001
+epoch:39; eval_acc:0.3854; eval_fscore:0.3841; eval_val_mse:2.9673; eval_metric:-0.3577
+0.0003138105960900001
+epoch:40; eval_acc:0.3765; eval_fscore:0.3754; eval_val_mse:2.9615; eval_metric:-0.3649
+0.0002824295364810001
+epoch:41; eval_acc:0.3705; eval_fscore:0.3695; eval_val_mse:2.9222; eval_metric:-0.3610
+0.0002824295364810001
+epoch:42; eval_acc:0.3616; eval_fscore:0.3647; eval_val_mse:3.0113; eval_metric:-0.3882
+Step3: saving and testing on the 3 folder
+>>>>> Finish: training on the 3 folder, duration: 11282.521272182465 >>>>>
+>>>>> Cross-validation: training on the 4 folder >>>>>
+Step1: build model (each folder has its own model)
+Some weights of the model checkpoint at hfl/chinese-macbert-large were not used when initializing BertAdapterModel: ['cls.predictions.decoder.weight', 'cls.seq_relationship.weight', 'cls.predictions.transform.LayerNorm.bias', 'cls.predictions.decoder.bias', 'cls.predictions.bias', 'cls.predictions.transform.dense.weight', 'cls.seq_relationship.bias', 'cls.predictions.transform.dense.bias', 'cls.predictions.transform.LayerNorm.weight']
+- This IS expected if you are initializing BertAdapterModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertAdapterModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Step2: training (multiple epoches)
+0.0002
+epoch:1; eval_acc:0.3780; eval_fscore:0.2941; eval_val_mse:2.3481; eval_metric:-0.2929
+0.0004
+epoch:2; eval_acc:0.3780; eval_fscore:0.3475; eval_val_mse:2.2524; eval_metric:-0.2156
+0.0006
+epoch:3; eval_acc:0.3973; eval_fscore:0.3467; eval_val_mse:2.5134; eval_metric:-0.2817
+0.0008
+epoch:4; eval_acc:0.3810; eval_fscore:0.3345; eval_val_mse:2.5150; eval_metric:-0.2943
+0.001
+epoch:5; eval_acc:0.4018; eval_fscore:0.3928; eval_val_mse:2.6920; eval_metric:-0.2802
+0.001
+epoch:6; eval_acc:0.4301; eval_fscore:0.4167; eval_val_mse:2.3181; eval_metric:-0.1628
+0.001
+epoch:7; eval_acc:0.3899; eval_fscore:0.3832; eval_val_mse:2.6141; eval_metric:-0.2703
+0.0009000000000000001
+epoch:8; eval_acc:0.4137; eval_fscore:0.4045; eval_val_mse:2.4333; eval_metric:-0.2039
+0.0009000000000000001
+epoch:9; eval_acc:0.4256; eval_fscore:0.4012; eval_val_mse:2.5989; eval_metric:-0.2485
+0.0009000000000000001
+epoch:10; eval_acc:0.3943; eval_fscore:0.3725; eval_val_mse:2.5800; eval_metric:-0.2725
+0.0008100000000000001
+epoch:11; eval_acc:0.4211; eval_fscore:0.4037; eval_val_mse:2.4584; eval_metric:-0.2109
+0.0008100000000000001
+epoch:12; eval_acc:0.4122; eval_fscore:0.4050; eval_val_mse:2.8865; eval_metric:-0.3166
+0.0008100000000000001
+epoch:13; eval_acc:0.3720; eval_fscore:0.3608; eval_val_mse:2.7984; eval_metric:-0.3388
+0.0007290000000000002
+epoch:14; eval_acc:0.4062; eval_fscore:0.4012; eval_val_mse:2.9019; eval_metric:-0.3243
+0.0007290000000000002
+epoch:15; eval_acc:0.3765; eval_fscore:0.3734; eval_val_mse:2.8153; eval_metric:-0.3304
+0.0007290000000000002
+epoch:16; eval_acc:0.4033; eval_fscore:0.3881; eval_val_mse:2.8990; eval_metric:-0.3367
+0.0006561000000000001
+epoch:17; eval_acc:0.3795; eval_fscore:0.3752; eval_val_mse:2.9636; eval_metric:-0.3657
+0.0006561000000000001
+epoch:18; eval_acc:0.3810; eval_fscore:0.3831; eval_val_mse:2.9403; eval_metric:-0.3520
+0.0006561000000000001
+epoch:19; eval_acc:0.3765; eval_fscore:0.3726; eval_val_mse:3.0159; eval_metric:-0.3813
+0.00059049
+epoch:20; eval_acc:0.3824; eval_fscore:0.3820; eval_val_mse:2.8461; eval_metric:-0.3295
+0.00059049
+epoch:21; eval_acc:0.3839; eval_fscore:0.3841; eval_val_mse:2.7757; eval_metric:-0.3099
+0.00059049
+epoch:22; eval_acc:0.3824; eval_fscore:0.3831; eval_val_mse:3.0813; eval_metric:-0.3872
+0.000531441
+epoch:23; eval_acc:0.3988; eval_fscore:0.3939; eval_val_mse:2.9620; eval_metric:-0.3466
+0.000531441
+epoch:24; eval_acc:0.3824; eval_fscore:0.3808; eval_val_mse:2.6969; eval_metric:-0.2935
+0.000531441
+epoch:25; eval_acc:0.3810; eval_fscore:0.3799; eval_val_mse:2.7766; eval_metric:-0.3143
+0.0004782969000000001
+epoch:26; eval_acc:0.3839; eval_fscore:0.3768; eval_val_mse:2.7575; eval_metric:-0.3126
+0.0004782969000000001
+epoch:27; eval_acc:0.3973; eval_fscore:0.3920; eval_val_mse:2.8524; eval_metric:-0.3211
+0.0004782969000000001
+epoch:28; eval_acc:0.3988; eval_fscore:0.3928; eval_val_mse:2.8653; eval_metric:-0.3235
+0.0004304672100000001
+epoch:29; eval_acc:0.3958; eval_fscore:0.3919; eval_val_mse:3.0032; eval_metric:-0.3589
+0.0004304672100000001
+epoch:30; eval_acc:0.3929; eval_fscore:0.3916; eval_val_mse:2.8331; eval_metric:-0.3167
+0.0004304672100000001
+epoch:31; eval_acc:0.3914; eval_fscore:0.3884; eval_val_mse:2.8772; eval_metric:-0.3308
+0.0003874204890000001
+epoch:32; eval_acc:0.4003; eval_fscore:0.3982; eval_val_mse:2.8772; eval_metric:-0.3211
+0.0003874204890000001
+epoch:33; eval_acc:0.3929; eval_fscore:0.3905; eval_val_mse:2.9305; eval_metric:-0.3421
+0.0003874204890000001
+epoch:34; eval_acc:0.3839; eval_fscore:0.3737; eval_val_mse:2.8416; eval_metric:-0.3367
+0.0003486784401000001
+epoch:35; eval_acc:0.4122; eval_fscore:0.4074; eval_val_mse:2.7967; eval_metric:-0.2918
+0.0003486784401000001
+epoch:36; eval_acc:0.3943; eval_fscore:0.3873; eval_val_mse:2.7592; eval_metric:-0.3025
+0.0003486784401000001
+epoch:37; eval_acc:0.3988; eval_fscore:0.3998; eval_val_mse:2.8862; eval_metric:-0.3217
+0.0003138105960900001
+epoch:38; eval_acc:0.4092; eval_fscore:0.4050; eval_val_mse:2.7983; eval_metric:-0.2946
+0.0003138105960900001
+epoch:39; eval_acc:0.4033; eval_fscore:0.4016; eval_val_mse:2.7901; eval_metric:-0.2960
+0.0003138105960900001
+epoch:40; eval_acc:0.3929; eval_fscore:0.3912; eval_val_mse:2.8698; eval_metric:-0.3262
+0.0002824295364810001
+epoch:41; eval_acc:0.4077; eval_fscore:0.4025; eval_val_mse:2.7608; eval_metric:-0.2877
+0.0002824295364810001
+epoch:42; eval_acc:0.4048; eval_fscore:0.4017; eval_val_mse:2.7960; eval_metric:-0.2973
+Step3: saving and testing on the 4 folder
+>>>>> Finish: training on the 4 folder, duration: 11268.311736345291 >>>>>
+>>>>> Cross-validation: training on the 5 folder >>>>>
+Step1: build model (each folder has its own model)
+Some weights of the model checkpoint at hfl/chinese-macbert-large were not used when initializing BertAdapterModel: ['cls.predictions.decoder.weight', 'cls.seq_relationship.weight', 'cls.predictions.transform.LayerNorm.bias', 'cls.predictions.decoder.bias', 'cls.predictions.bias', 'cls.predictions.transform.dense.weight', 'cls.seq_relationship.bias', 'cls.predictions.transform.dense.bias', 'cls.predictions.transform.LayerNorm.weight']
+- This IS expected if you are initializing BertAdapterModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing BertAdapterModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Step2: training (multiple epoches)
+0.0002
+epoch:1; eval_acc:0.3750; eval_fscore:0.3454; eval_val_mse:2.7554; eval_metric:-0.3435
+0.0004
+epoch:2; eval_acc:0.3973; eval_fscore:0.3731; eval_val_mse:2.7812; eval_metric:-0.3222
+0.0006
+epoch:3; eval_acc:0.4062; eval_fscore:0.3881; eval_val_mse:2.4689; eval_metric:-0.2291
+0.0008
+epoch:4; eval_acc:0.4062; eval_fscore:0.3944; eval_val_mse:2.7349; eval_metric:-0.2893
+0.001
+epoch:5; eval_acc:0.4033; eval_fscore:0.3984; eval_val_mse:2.5875; eval_metric:-0.2485
+0.001
+epoch:6; eval_acc:0.4375; eval_fscore:0.4139; eval_val_mse:2.4741; eval_metric:-0.2046
+0.001
+epoch:7; eval_acc:0.3810; eval_fscore:0.3729; eval_val_mse:3.1943; eval_metric:-0.4257
+0.0009000000000000001
+epoch:8; eval_acc:0.4241; eval_fscore:0.4264; eval_val_mse:2.6026; eval_metric:-0.2242
+0.0009000000000000001
+epoch:9; eval_acc:0.4018; eval_fscore:0.4005; eval_val_mse:2.7198; eval_metric:-0.2795
+0.0009000000000000001
+epoch:10; eval_acc:0.4256; eval_fscore:0.4249; eval_val_mse:2.7341; eval_metric:-0.2586
+0.0008100000000000001
+epoch:11; eval_acc:0.4360; eval_fscore:0.4342; eval_val_mse:2.7729; eval_metric:-0.2590
+0.0008100000000000001
+epoch:12; eval_acc:0.4137; eval_fscore:0.4081; eval_val_mse:2.7308; eval_metric:-0.2746
+0.0008100000000000001
+epoch:13; eval_acc:0.4167; eval_fscore:0.4196; eval_val_mse:2.6891; eval_metric:-0.2527
+0.0007290000000000002
+epoch:14; eval_acc:0.4077; eval_fscore:0.4113; eval_val_mse:2.8055; eval_metric:-0.2901
+0.0007290000000000002
+epoch:15; eval_acc:0.3914; eval_fscore:0.3947; eval_val_mse:2.9935; eval_metric:-0.3536
+0.0007290000000000002
+epoch:16; eval_acc:0.4107; eval_fscore:0.4057; eval_val_mse:2.7782; eval_metric:-0.2889
+0.0006561000000000001
+epoch:17; eval_acc:0.4048; eval_fscore:0.4013; eval_val_mse:2.9906; eval_metric:-0.3463
+0.0006561000000000001
+epoch:18; eval_acc:0.4018; eval_fscore:0.4068; eval_val_mse:2.7789; eval_metric:-0.2879
+0.0006561000000000001
+epoch:19; eval_acc:0.4077; eval_fscore:0.4059; eval_val_mse:3.0003; eval_metric:-0.3442
+0.00059049
+epoch:20; eval_acc:0.3973; eval_fscore:0.4015; eval_val_mse:2.8099; eval_metric:-0.3010
+0.00059049
+epoch:21; eval_acc:0.3958; eval_fscore:0.3942; eval_val_mse:2.9483; eval_metric:-0.3429
+0.00059049
+epoch:22; eval_acc:0.4182; eval_fscore:0.4197; eval_val_mse:2.7492; eval_metric:-0.2676
+0.000531441
+epoch:23; eval_acc:0.4182; eval_fscore:0.4172; eval_val_mse:2.8652; eval_metric:-0.2991
+0.000531441
+epoch:24; eval_acc:0.3884; eval_fscore:0.3935; eval_val_mse:2.9351; eval_metric:-0.3403
+0.000531441
+epoch:25; eval_acc:0.3869; eval_fscore:0.3908; eval_val_mse:2.9455; eval_metric:-0.3456
+0.0004782969000000001
+epoch:26; eval_acc:0.3929; eval_fscore:0.3976; eval_val_mse:2.9080; eval_metric:-0.3294
+0.0004782969000000001
+epoch:27; eval_acc:0.4048; eval_fscore:0.4079; eval_val_mse:2.8559; eval_metric:-0.3060
+0.0004782969000000001
+epoch:28; eval_acc:0.4033; eval_fscore:0.4079; eval_val_mse:2.9650; eval_metric:-0.3333
+0.0004304672100000001
+epoch:29; eval_acc:0.4062; eval_fscore:0.4095; eval_val_mse:2.8557; eval_metric:-0.3045
+0.0004304672100000001
+epoch:30; eval_acc:0.4003; eval_fscore:0.3990; eval_val_mse:2.7801; eval_metric:-0.2961
+0.0004304672100000001
+epoch:31; eval_acc:0.4048; eval_fscore:0.4094; eval_val_mse:2.8874; eval_metric:-0.3125
+0.0003874204890000001
+epoch:32; eval_acc:0.3839; eval_fscore:0.3893; eval_val_mse:2.8441; eval_metric:-0.3218
+0.0003874204890000001
+epoch:33; eval_acc:0.4003; eval_fscore:0.4016; eval_val_mse:2.7949; eval_metric:-0.2972
+0.0003874204890000001
+epoch:34; eval_acc:0.3929; eval_fscore:0.3968; eval_val_mse:2.8290; eval_metric:-0.3104
+0.0003486784401000001
+epoch:35; eval_acc:0.4018; eval_fscore:0.4039; eval_val_mse:2.8339; eval_metric:-0.3046
+0.0003486784401000001
+epoch:36; eval_acc:0.4048; eval_fscore:0.4067; eval_val_mse:2.8639; eval_metric:-0.3092
+0.0003486784401000001
+epoch:37; eval_acc:0.4107; eval_fscore:0.4167; eval_val_mse:2.8347; eval_metric:-0.2920
+0.0003138105960900001
+epoch:38; eval_acc:0.4137; eval_fscore:0.4161; eval_val_mse:2.9004; eval_metric:-0.3090
+0.0003138105960900001
+epoch:39; eval_acc:0.4122; eval_fscore:0.4139; eval_val_mse:2.8024; eval_metric:-0.2867
+0.0003138105960900001
+epoch:40; eval_acc:0.3988; eval_fscore:0.4011; eval_val_mse:2.8653; eval_metric:-0.3153
+0.0002824295364810001
+epoch:41; eval_acc:0.3661; eval_fscore:0.3660; eval_val_mse:2.8201; eval_metric:-0.3391
+0.0002824295364810001
+epoch:42; eval_acc:0.3884; eval_fscore:0.3935; eval_val_mse:2.8149; eval_metric:-0.3103
+Step3: saving and testing on the 5 folder
+>>>>> Finish: training on the 5 folder, duration: 11087.616557359695 >>>>>
+====== Gain predition on test data =======

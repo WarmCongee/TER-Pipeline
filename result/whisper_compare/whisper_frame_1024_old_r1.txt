@@ -1,0 +1,235 @@
+nohup: ignoring input
+Namespace(audio_feature='chinese-macbert-large-4-FRA', batch_size=32, dataset='MER2023_WHISPER_LARGE2_TRANS', debug=False, dropout=0.5, epochs=36, gpu=1, l2=1e-05, layers='256,128', lr=0.001, model_type='attention', n_classes=6, num_folder=5, num_workers=0, save_root='./saved-unimodal', savewhole=False, seed=100, test_dataset='MER2023_WHISPER_LARGE2_TRANS', test_sets=['test3'], text_feature='chinese-macbert-large-4-FRA', train_dataset='MER2023_WHISPER_LARGE2_TRANS', video_feature='chinese-macbert-large-4-FRA')
+====== Reading Data =======
+0it [00:00, ?it/s]3373it [00:00, 3202940.32it/s]
+  0%|          | 0/3373 [00:00<?, ?it/s]  8%|▊         | 265/3373 [00:00<00:01, 2643.51it/s] 16%|█▌        | 545/3373 [00:00<00:01, 2734.64it/s] 24%|██▍       | 823/3373 [00:00<00:00, 2750.74it/s] 33%|███▎      | 1113/3373 [00:00<00:00, 2807.58it/s] 42%|████▏     | 1422/3373 [00:00<00:00, 2893.78it/s] 52%|█████▏    | 1755/3373 [00:00<00:00, 3029.52it/s] 61%|██████▏   | 2066/3373 [00:00<00:00, 3050.01it/s] 71%|███████   | 2383/3373 [00:00<00:00, 3085.94it/s] 80%|████████  | 2714/3373 [00:00<00:00, 3153.48it/s] 90%|████████▉ | 3032/3373 [00:01<00:00, 3160.09it/s]100%|█████████▉| 3362/3373 [00:01<00:00, 3199.98it/s]100%|██████████| 3373/3373 [00:01<00:00, 3043.99it/s]
+train_frame_1024.py:108: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  feature_dim = np.array(features)[0].shape[-1]
+Input feature /home/wyz/MER-TER/TER-Pipeline/features/whisper/chinese-macbert-large-4-FRA ===> dim is 1024
+0it [00:00, ?it/s]3373it [00:00, 3386973.28it/s]
+  0%|          | 0/3373 [00:00<?, ?it/s]  9%|▉         | 303/3373 [00:00<00:01, 3021.15it/s] 18%|█▊        | 612/3373 [00:00<00:00, 3005.87it/s] 27%|██▋       | 913/3373 [00:00<00:00, 2868.51it/s] 36%|███▌      | 1218/3373 [00:00<00:00, 2928.81it/s] 45%|████▌     | 1524/3373 [00:00<00:00, 2969.09it/s] 54%|█████▍    | 1822/3373 [00:00<00:00, 2952.11it/s] 63%|██████▎   | 2118/3373 [00:00<00:00, 2953.44it/s] 72%|███████▏  | 2414/3373 [00:00<00:00, 2098.24it/s] 84%|████████▍ | 2833/3373 [00:01<00:00, 2599.81it/s] 93%|█████████▎| 3130/3373 [00:01<00:00, 2642.00it/s]100%|██████████| 3373/3373 [00:01<00:00, 2725.24it/s]
+Input feature /home/wyz/MER-TER/TER-Pipeline/features/whisper/chinese-macbert-large-4-FRA ===> dim is 1024
+0it [00:00, ?it/s]3373it [00:00, 88728.39it/s]
+  0%|          | 0/3373 [00:00<?, ?it/s]  9%|▊         | 295/3373 [00:00<00:01, 2949.65it/s] 18%|█▊        | 622/3373 [00:00<00:00, 3111.92it/s] 28%|██▊       | 934/3373 [00:00<00:00, 3034.33it/s] 37%|███▋      | 1238/3373 [00:00<00:00, 3019.72it/s] 46%|████▌     | 1541/3373 [00:00<00:00, 2932.85it/s] 54%|█████▍    | 1835/3373 [00:00<00:00, 2892.72it/s] 63%|██████▎   | 2125/3373 [00:00<00:00, 2811.88it/s] 72%|███████▏  | 2429/3373 [00:00<00:00, 2873.47it/s] 81%|████████  | 2734/3373 [00:00<00:00, 2921.18it/s] 90%|█████████ | 3037/3373 [00:01<00:00, 2950.26it/s] 99%|█████████▉| 3333/3373 [00:01<00:00, 2934.84it/s]100%|██████████| 3373/3373 [00:01<00:00, 2935.14it/s]
+Input feature /home/wyz/MER-TER/TER-Pipeline/features/whisper/chinese-macbert-large-4-FRA ===> dim is 1024
+0it [00:00, ?it/s]3373it [00:00, 4116202.33it/s]
+  0%|          | 0/3373 [00:00<?, ?it/s]  8%|▊         | 281/3373 [00:00<00:01, 2764.18it/s] 17%|█▋        | 558/3373 [00:00<00:01, 2766.14it/s] 25%|██▍       | 840/3373 [00:00<00:00, 2783.43it/s] 33%|███▎      | 1127/3373 [00:00<00:00, 2817.29it/s] 42%|████▏     | 1431/3373 [00:00<00:00, 2896.90it/s] 51%|█████▏    | 1732/3373 [00:00<00:00, 2934.27it/s] 60%|██████    | 2026/3373 [00:00<00:00, 2868.51it/s] 69%|██████▊   | 2314/3373 [00:00<00:00, 2847.26it/s] 77%|███████▋  | 2599/3373 [00:00<00:00, 2833.69it/s] 86%|████████▌ | 2901/3373 [00:01<00:00, 2883.75it/s] 95%|█████████▌| 3208/3373 [00:01<00:00, 2937.65it/s]100%|██████████| 3373/3373 [00:01<00:00, 2883.01it/s]
+Input feature /home/wyz/MER-TER/TER-Pipeline/features/whisper/chinese-macbert-large-4-FRA ===> dim is 1024
+0it [00:00, ?it/s]3373it [00:00, 4289686.90it/s]
+  0%|          | 0/3373 [00:00<?, ?it/s]  7%|▋         | 232/3373 [00:00<00:01, 2292.29it/s] 15%|█▌        | 520/3373 [00:00<00:01, 2630.75it/s] 24%|██▍       | 812/3373 [00:00<00:00, 2748.54it/s] 32%|███▏      | 1087/3373 [00:00<00:00, 2735.16it/s] 40%|████      | 1363/3373 [00:00<00:00, 2739.50it/s] 49%|████▉     | 1648/3373 [00:00<00:00, 2774.70it/s] 57%|█████▋    | 1926/3373 [00:00<00:00, 2731.59it/s] 65%|██████▌   | 2204/3373 [00:00<00:00, 2744.29it/s] 74%|███████▎  | 2487/3373 [00:00<00:00, 2763.96it/s] 82%|████████▏ | 2764/3373 [00:01<00:00, 2731.37it/s] 90%|█████████ | 3047/3373 [00:01<00:00, 2750.09it/s] 99%|█████████▉| 3347/3373 [00:01<00:00, 2823.92it/s]100%|██████████| 3373/3373 [00:01<00:00, 2753.11it/s]
+Input feature /home/wyz/MER-TER/TER-Pipeline/features/whisper/chinese-macbert-large-4-FRA ===> dim is 1024
+0it [00:00, ?it/s]3373it [00:00, 4226885.99it/s]
+  0%|          | 0/3373 [00:00<?, ?it/s]  8%|▊         | 282/3373 [00:00<00:01, 2786.27it/s] 17%|█▋        | 589/3373 [00:00<00:00, 2951.05it/s] 27%|██▋       | 904/3373 [00:00<00:00, 3041.41it/s] 36%|███▌      | 1209/3373 [00:00<00:00, 3041.34it/s] 45%|████▍     | 1514/3373 [00:00<00:00, 3034.88it/s] 54%|█████▍    | 1818/3373 [00:00<00:00, 2978.57it/s] 63%|██████▎   | 2117/3373 [00:00<00:00, 2937.92it/s] 71%|███████▏  | 2411/3373 [00:00<00:00, 2912.46it/s] 80%|████████  | 2703/3373 [00:00<00:00, 2844.73it/s] 89%|████████▊ | 2988/3373 [00:01<00:00, 2805.36it/s] 98%|█████████▊| 3296/3373 [00:01<00:00, 2885.18it/s]100%|██████████| 3373/3373 [00:01<00:00, 2922.44it/s]
+Input feature /home/wyz/MER-TER/TER-Pipeline/features/whisper/chinese-macbert-large-4-FRA ===> dim is 1024
+audio dimension: 1024; text dimension: 1024; video dimension: 1024
+====== Training and Evaluation =======
+>>>>> Cross-validation: training on the 1 folder >>>>>
+Step1: build model (each folder has its own model)
+Step2: training (multiple epoches)
+epoch:1; eval_acc:0.2961; eval_fscore:0.2392; eval_val_mse:3.0103; eval_metric:-0.5134
+epoch:2; eval_acc:0.4048; eval_fscore:0.3421; eval_val_mse:2.8077; eval_metric:-0.3598
+epoch:3; eval_acc:0.4271; eval_fscore:0.3853; eval_val_mse:2.3699; eval_metric:-0.2072
+epoch:4; eval_acc:0.4077; eval_fscore:0.3897; eval_val_mse:2.3349; eval_metric:-0.1940
+epoch:5; eval_acc:0.4226; eval_fscore:0.3991; eval_val_mse:2.2508; eval_metric:-0.1636
+epoch:6; eval_acc:0.4360; eval_fscore:0.4153; eval_val_mse:2.1997; eval_metric:-0.1346
+epoch:7; eval_acc:0.4301; eval_fscore:0.4202; eval_val_mse:2.2722; eval_metric:-0.1479
+epoch:8; eval_acc:0.4226; eval_fscore:0.4113; eval_val_mse:2.3105; eval_metric:-0.1663
+epoch:9; eval_acc:0.4211; eval_fscore:0.4168; eval_val_mse:2.1943; eval_metric:-0.1318
+epoch:10; eval_acc:0.4405; eval_fscore:0.4313; eval_val_mse:2.2560; eval_metric:-0.1327
+epoch:11; eval_acc:0.4241; eval_fscore:0.4137; eval_val_mse:2.4415; eval_metric:-0.1967
+epoch:12; eval_acc:0.4405; eval_fscore:0.4368; eval_val_mse:2.2819; eval_metric:-0.1337
+epoch:13; eval_acc:0.4211; eval_fscore:0.4115; eval_val_mse:2.5454; eval_metric:-0.2248
+epoch:14; eval_acc:0.4211; eval_fscore:0.4184; eval_val_mse:2.5327; eval_metric:-0.2148
+epoch:15; eval_acc:0.4345; eval_fscore:0.4279; eval_val_mse:2.4586; eval_metric:-0.1867
+epoch:16; eval_acc:0.4152; eval_fscore:0.4103; eval_val_mse:2.5897; eval_metric:-0.2371
+epoch:17; eval_acc:0.4360; eval_fscore:0.4290; eval_val_mse:2.5078; eval_metric:-0.1980
+epoch:18; eval_acc:0.4315; eval_fscore:0.4300; eval_val_mse:2.5893; eval_metric:-0.2173
+epoch:19; eval_acc:0.4226; eval_fscore:0.4187; eval_val_mse:2.5343; eval_metric:-0.2149
+epoch:20; eval_acc:0.4092; eval_fscore:0.4052; eval_val_mse:2.6765; eval_metric:-0.2639
+epoch:21; eval_acc:0.4375; eval_fscore:0.4310; eval_val_mse:2.6821; eval_metric:-0.2396
+epoch:22; eval_acc:0.4137; eval_fscore:0.4086; eval_val_mse:2.6183; eval_metric:-0.2460
+epoch:23; eval_acc:0.4360; eval_fscore:0.4325; eval_val_mse:2.4751; eval_metric:-0.1862
+epoch:24; eval_acc:0.4345; eval_fscore:0.4306; eval_val_mse:2.5574; eval_metric:-0.2087
+epoch:25; eval_acc:0.4301; eval_fscore:0.4243; eval_val_mse:2.5944; eval_metric:-0.2243
+epoch:26; eval_acc:0.4211; eval_fscore:0.4206; eval_val_mse:2.5392; eval_metric:-0.2141
+epoch:27; eval_acc:0.4062; eval_fscore:0.4036; eval_val_mse:2.4683; eval_metric:-0.2134
+epoch:28; eval_acc:0.4241; eval_fscore:0.4206; eval_val_mse:2.5357; eval_metric:-0.2133
+epoch:29; eval_acc:0.4271; eval_fscore:0.4254; eval_val_mse:2.4632; eval_metric:-0.1904
+epoch:30; eval_acc:0.4182; eval_fscore:0.4167; eval_val_mse:2.5252; eval_metric:-0.2146
+epoch:31; eval_acc:0.4167; eval_fscore:0.4153; eval_val_mse:2.6225; eval_metric:-0.2403
+epoch:32; eval_acc:0.4211; eval_fscore:0.4176; eval_val_mse:2.5911; eval_metric:-0.2302
+epoch:33; eval_acc:0.4152; eval_fscore:0.4110; eval_val_mse:2.5283; eval_metric:-0.2210
+epoch:34; eval_acc:0.4107; eval_fscore:0.4068; eval_val_mse:2.4677; eval_metric:-0.2101
+epoch:35; eval_acc:0.4196; eval_fscore:0.4171; eval_val_mse:2.4516; eval_metric:-0.1958
+epoch:36; eval_acc:0.4226; eval_fscore:0.4173; eval_val_mse:2.4481; eval_metric:-0.1947
+Step3: saving and testing on the 1 folder
+>>>>> Finish: training on the 1 folder, duration: 2325.630360364914 >>>>>
+>>>>> Cross-validation: training on the 2 folder >>>>>
+Step1: build model (each folder has its own model)
+Step2: training (multiple epoches)
+epoch:1; eval_acc:0.2411; eval_fscore:0.1585; eval_val_mse:3.5683; eval_metric:-0.7335
+epoch:2; eval_acc:0.2932; eval_fscore:0.2380; eval_val_mse:2.7652; eval_metric:-0.4532
+epoch:3; eval_acc:0.3795; eval_fscore:0.2821; eval_val_mse:2.7239; eval_metric:-0.3989
+epoch:4; eval_acc:0.4271; eval_fscore:0.3957; eval_val_mse:2.6056; eval_metric:-0.2557
+epoch:5; eval_acc:0.4509; eval_fscore:0.4063; eval_val_mse:2.6984; eval_metric:-0.2683
+epoch:6; eval_acc:0.4524; eval_fscore:0.4190; eval_val_mse:2.4498; eval_metric:-0.1935
+epoch:7; eval_acc:0.4449; eval_fscore:0.4217; eval_val_mse:2.5166; eval_metric:-0.2075
+epoch:8; eval_acc:0.4554; eval_fscore:0.4392; eval_val_mse:2.4907; eval_metric:-0.1835
+epoch:9; eval_acc:0.4613; eval_fscore:0.4303; eval_val_mse:2.4417; eval_metric:-0.1801
+epoch:10; eval_acc:0.4940; eval_fscore:0.4780; eval_val_mse:2.3733; eval_metric:-0.1153
+epoch:11; eval_acc:0.4732; eval_fscore:0.4635; eval_val_mse:2.4171; eval_metric:-0.1408
+epoch:12; eval_acc:0.4673; eval_fscore:0.4652; eval_val_mse:2.4418; eval_metric:-0.1452
+epoch:13; eval_acc:0.4628; eval_fscore:0.4542; eval_val_mse:2.5463; eval_metric:-0.1824
+epoch:14; eval_acc:0.4598; eval_fscore:0.4523; eval_val_mse:2.5479; eval_metric:-0.1847
+epoch:15; eval_acc:0.4628; eval_fscore:0.4572; eval_val_mse:2.5343; eval_metric:-0.1763
+epoch:16; eval_acc:0.4598; eval_fscore:0.4516; eval_val_mse:2.5570; eval_metric:-0.1876
+epoch:17; eval_acc:0.4613; eval_fscore:0.4570; eval_val_mse:2.6234; eval_metric:-0.1988
+epoch:18; eval_acc:0.4524; eval_fscore:0.4469; eval_val_mse:2.6496; eval_metric:-0.2155
+epoch:19; eval_acc:0.4435; eval_fscore:0.4381; eval_val_mse:2.6139; eval_metric:-0.2154
+epoch:20; eval_acc:0.4583; eval_fscore:0.4532; eval_val_mse:2.7085; eval_metric:-0.2240
+epoch:21; eval_acc:0.4524; eval_fscore:0.4466; eval_val_mse:2.6785; eval_metric:-0.2230
+epoch:22; eval_acc:0.4524; eval_fscore:0.4502; eval_val_mse:2.7032; eval_metric:-0.2256
+epoch:23; eval_acc:0.4554; eval_fscore:0.4495; eval_val_mse:2.6482; eval_metric:-0.2126
+epoch:24; eval_acc:0.4598; eval_fscore:0.4530; eval_val_mse:2.5888; eval_metric:-0.1942
+epoch:25; eval_acc:0.4524; eval_fscore:0.4418; eval_val_mse:2.6279; eval_metric:-0.2151
+epoch:26; eval_acc:0.4613; eval_fscore:0.4554; eval_val_mse:2.5922; eval_metric:-0.1926
+epoch:27; eval_acc:0.4494; eval_fscore:0.4450; eval_val_mse:2.5936; eval_metric:-0.2034
+epoch:28; eval_acc:0.4598; eval_fscore:0.4549; eval_val_mse:2.7250; eval_metric:-0.2263
+epoch:29; eval_acc:0.4479; eval_fscore:0.4435; eval_val_mse:2.6994; eval_metric:-0.2314
+epoch:30; eval_acc:0.4539; eval_fscore:0.4476; eval_val_mse:2.6084; eval_metric:-0.2045
+epoch:31; eval_acc:0.4613; eval_fscore:0.4560; eval_val_mse:2.6288; eval_metric:-0.2012
+epoch:32; eval_acc:0.4643; eval_fscore:0.4591; eval_val_mse:2.5464; eval_metric:-0.1775
+epoch:33; eval_acc:0.4643; eval_fscore:0.4576; eval_val_mse:2.6227; eval_metric:-0.1981
+epoch:34; eval_acc:0.4613; eval_fscore:0.4528; eval_val_mse:2.6175; eval_metric:-0.2016
+epoch:35; eval_acc:0.4539; eval_fscore:0.4475; eval_val_mse:2.6273; eval_metric:-0.2093
+epoch:36; eval_acc:0.4628; eval_fscore:0.4548; eval_val_mse:2.5847; eval_metric:-0.1914
+Step3: saving and testing on the 2 folder
+>>>>> Finish: training on the 2 folder, duration: 2343.5126779079437 >>>>>
+>>>>> Cross-validation: training on the 3 folder >>>>>
+Step1: build model (each folder has its own model)
+Step2: training (multiple epoches)
+epoch:1; eval_acc:0.2664; eval_fscore:0.1350; eval_val_mse:3.6837; eval_metric:-0.7860
+epoch:2; eval_acc:0.3690; eval_fscore:0.2920; eval_val_mse:3.4060; eval_metric:-0.5595
+epoch:3; eval_acc:0.3839; eval_fscore:0.3147; eval_val_mse:2.6042; eval_metric:-0.3364
+epoch:4; eval_acc:0.4345; eval_fscore:0.3899; eval_val_mse:2.5073; eval_metric:-0.2370
+epoch:5; eval_acc:0.4613; eval_fscore:0.4513; eval_val_mse:2.4097; eval_metric:-0.1511
+epoch:6; eval_acc:0.4554; eval_fscore:0.4415; eval_val_mse:2.5829; eval_metric:-0.2043
+epoch:7; eval_acc:0.4568; eval_fscore:0.4518; eval_val_mse:2.4518; eval_metric:-0.1612
+epoch:8; eval_acc:0.3884; eval_fscore:0.3727; eval_val_mse:2.4873; eval_metric:-0.2492
+epoch:9; eval_acc:0.4509; eval_fscore:0.4443; eval_val_mse:2.4314; eval_metric:-0.1636
+epoch:10; eval_acc:0.4345; eval_fscore:0.4225; eval_val_mse:2.6903; eval_metric:-0.2501
+epoch:11; eval_acc:0.4539; eval_fscore:0.4461; eval_val_mse:2.5361; eval_metric:-0.1879
+epoch:12; eval_acc:0.4524; eval_fscore:0.4504; eval_val_mse:2.7168; eval_metric:-0.2288
+epoch:13; eval_acc:0.4405; eval_fscore:0.4274; eval_val_mse:3.0285; eval_metric:-0.3297
+epoch:14; eval_acc:0.4435; eval_fscore:0.4370; eval_val_mse:2.8150; eval_metric:-0.2667
+epoch:15; eval_acc:0.4182; eval_fscore:0.4108; eval_val_mse:2.8571; eval_metric:-0.3034
+epoch:16; eval_acc:0.4211; eval_fscore:0.4164; eval_val_mse:2.8394; eval_metric:-0.2935
+epoch:17; eval_acc:0.4152; eval_fscore:0.4175; eval_val_mse:2.7722; eval_metric:-0.2756
+epoch:18; eval_acc:0.4256; eval_fscore:0.4238; eval_val_mse:2.8037; eval_metric:-0.2771
+epoch:19; eval_acc:0.4196; eval_fscore:0.4175; eval_val_mse:2.8069; eval_metric:-0.2842
+epoch:20; eval_acc:0.3973; eval_fscore:0.3970; eval_val_mse:2.9162; eval_metric:-0.3321
+epoch:21; eval_acc:0.4152; eval_fscore:0.4159; eval_val_mse:2.9063; eval_metric:-0.3106
+epoch:22; eval_acc:0.4018; eval_fscore:0.3989; eval_val_mse:2.8593; eval_metric:-0.3160
+epoch:23; eval_acc:0.3884; eval_fscore:0.3894; eval_val_mse:2.8914; eval_metric:-0.3334
+epoch:24; eval_acc:0.3973; eval_fscore:0.3995; eval_val_mse:2.8142; eval_metric:-0.3041
+epoch:25; eval_acc:0.3958; eval_fscore:0.3973; eval_val_mse:2.8659; eval_metric:-0.3191
+epoch:26; eval_acc:0.4077; eval_fscore:0.4056; eval_val_mse:2.8554; eval_metric:-0.3083
+epoch:27; eval_acc:0.4018; eval_fscore:0.4054; eval_val_mse:2.8339; eval_metric:-0.3031
+epoch:28; eval_acc:0.4062; eval_fscore:0.4102; eval_val_mse:2.7618; eval_metric:-0.2803
+epoch:29; eval_acc:0.4018; eval_fscore:0.4036; eval_val_mse:2.8616; eval_metric:-0.3118
+epoch:30; eval_acc:0.4107; eval_fscore:0.4138; eval_val_mse:2.8034; eval_metric:-0.2870
+epoch:31; eval_acc:0.4152; eval_fscore:0.4131; eval_val_mse:2.8483; eval_metric:-0.2990
+epoch:32; eval_acc:0.4003; eval_fscore:0.4029; eval_val_mse:2.8118; eval_metric:-0.3001
+epoch:33; eval_acc:0.3988; eval_fscore:0.4015; eval_val_mse:2.8608; eval_metric:-0.3137
+epoch:34; eval_acc:0.4003; eval_fscore:0.4010; eval_val_mse:2.8469; eval_metric:-0.3107
+epoch:35; eval_acc:0.4048; eval_fscore:0.4071; eval_val_mse:2.8305; eval_metric:-0.3005
+epoch:36; eval_acc:0.3988; eval_fscore:0.4026; eval_val_mse:2.8197; eval_metric:-0.3023
+Step3: saving and testing on the 3 folder
+>>>>> Finish: training on the 3 folder, duration: 2336.8644506931305 >>>>>
+>>>>> Cross-validation: training on the 4 folder >>>>>
+Step1: build model (each folder has its own model)
+Step2: training (multiple epoches)
+epoch:1; eval_acc:0.2842; eval_fscore:0.1926; eval_val_mse:3.2434; eval_metric:-0.6183
+epoch:2; eval_acc:0.3631; eval_fscore:0.2702; eval_val_mse:2.9377; eval_metric:-0.4643
+epoch:3; eval_acc:0.3810; eval_fscore:0.3165; eval_val_mse:2.6404; eval_metric:-0.3436
+epoch:4; eval_acc:0.4286; eval_fscore:0.3822; eval_val_mse:2.4106; eval_metric:-0.2204
+epoch:5; eval_acc:0.4345; eval_fscore:0.3960; eval_val_mse:2.4728; eval_metric:-0.2222
+epoch:6; eval_acc:0.4301; eval_fscore:0.4061; eval_val_mse:2.3872; eval_metric:-0.1907
+epoch:7; eval_acc:0.4390; eval_fscore:0.4080; eval_val_mse:2.4051; eval_metric:-0.1933
+epoch:8; eval_acc:0.4122; eval_fscore:0.3927; eval_val_mse:2.5905; eval_metric:-0.2549
+epoch:9; eval_acc:0.4152; eval_fscore:0.4054; eval_val_mse:2.5535; eval_metric:-0.2330
+epoch:10; eval_acc:0.4256; eval_fscore:0.4194; eval_val_mse:2.6503; eval_metric:-0.2432
+epoch:11; eval_acc:0.4152; eval_fscore:0.4096; eval_val_mse:2.6521; eval_metric:-0.2535
+epoch:12; eval_acc:0.4167; eval_fscore:0.4117; eval_val_mse:2.8487; eval_metric:-0.3005
+epoch:13; eval_acc:0.4256; eval_fscore:0.4209; eval_val_mse:2.7342; eval_metric:-0.2626
+epoch:14; eval_acc:0.4107; eval_fscore:0.4028; eval_val_mse:2.8605; eval_metric:-0.3123
+epoch:15; eval_acc:0.4062; eval_fscore:0.3997; eval_val_mse:2.7707; eval_metric:-0.2930
+epoch:16; eval_acc:0.3973; eval_fscore:0.3890; eval_val_mse:2.7641; eval_metric:-0.3020
+epoch:17; eval_acc:0.4241; eval_fscore:0.4190; eval_val_mse:2.8185; eval_metric:-0.2856
+epoch:18; eval_acc:0.3973; eval_fscore:0.3948; eval_val_mse:2.7660; eval_metric:-0.2967
+epoch:19; eval_acc:0.4033; eval_fscore:0.3992; eval_val_mse:2.6513; eval_metric:-0.2636
+epoch:20; eval_acc:0.4033; eval_fscore:0.3971; eval_val_mse:2.7808; eval_metric:-0.2981
+epoch:21; eval_acc:0.3988; eval_fscore:0.3951; eval_val_mse:2.8817; eval_metric:-0.3253
+epoch:22; eval_acc:0.3869; eval_fscore:0.3854; eval_val_mse:2.7323; eval_metric:-0.2977
+epoch:23; eval_acc:0.4137; eval_fscore:0.4078; eval_val_mse:2.7560; eval_metric:-0.2812
+epoch:24; eval_acc:0.3914; eval_fscore:0.3878; eval_val_mse:2.8126; eval_metric:-0.3154
+epoch:25; eval_acc:0.3914; eval_fscore:0.3868; eval_val_mse:2.8057; eval_metric:-0.3146
+epoch:26; eval_acc:0.3973; eval_fscore:0.3950; eval_val_mse:2.8515; eval_metric:-0.3179
+epoch:27; eval_acc:0.4077; eval_fscore:0.4043; eval_val_mse:2.8091; eval_metric:-0.2980
+epoch:28; eval_acc:0.4003; eval_fscore:0.3970; eval_val_mse:2.7841; eval_metric:-0.2990
+epoch:29; eval_acc:0.3869; eval_fscore:0.3832; eval_val_mse:2.7672; eval_metric:-0.3086
+epoch:30; eval_acc:0.3884; eval_fscore:0.3867; eval_val_mse:2.7391; eval_metric:-0.2981
+epoch:31; eval_acc:0.4152; eval_fscore:0.4093; eval_val_mse:2.7877; eval_metric:-0.2877
+epoch:32; eval_acc:0.3988; eval_fscore:0.3948; eval_val_mse:2.7680; eval_metric:-0.2972
+epoch:33; eval_acc:0.4048; eval_fscore:0.4000; eval_val_mse:2.7306; eval_metric:-0.2827
+epoch:34; eval_acc:0.4033; eval_fscore:0.3999; eval_val_mse:2.7379; eval_metric:-0.2846
+epoch:35; eval_acc:0.3973; eval_fscore:0.3947; eval_val_mse:2.7480; eval_metric:-0.2923
+epoch:36; eval_acc:0.3929; eval_fscore:0.3888; eval_val_mse:2.7490; eval_metric:-0.2984
+Step3: saving and testing on the 4 folder
+>>>>> Finish: training on the 4 folder, duration: 2582.7014825344086 >>>>>
+>>>>> Cross-validation: training on the 5 folder >>>>>
+Step1: build model (each folder has its own model)
+Step2: training (multiple epoches)
+epoch:1; eval_acc:0.2827; eval_fscore:0.1895; eval_val_mse:3.3654; eval_metric:-0.6518
+epoch:2; eval_acc:0.3869; eval_fscore:0.3331; eval_val_mse:2.8558; eval_metric:-0.3808
+epoch:3; eval_acc:0.3958; eval_fscore:0.3269; eval_val_mse:2.4779; eval_metric:-0.2926
+epoch:4; eval_acc:0.4286; eval_fscore:0.3922; eval_val_mse:2.5156; eval_metric:-0.2367
+epoch:5; eval_acc:0.4539; eval_fscore:0.4259; eval_val_mse:2.4498; eval_metric:-0.1865
+epoch:6; eval_acc:0.4375; eval_fscore:0.4086; eval_val_mse:2.5561; eval_metric:-0.2305
+epoch:7; eval_acc:0.4554; eval_fscore:0.4325; eval_val_mse:2.3538; eval_metric:-0.1560
+epoch:8; eval_acc:0.4688; eval_fscore:0.4581; eval_val_mse:2.3739; eval_metric:-0.1354
+epoch:9; eval_acc:0.4583; eval_fscore:0.4477; eval_val_mse:2.4197; eval_metric:-0.1572
+epoch:10; eval_acc:0.4554; eval_fscore:0.4439; eval_val_mse:2.6380; eval_metric:-0.2156
+epoch:11; eval_acc:0.4702; eval_fscore:0.4591; eval_val_mse:2.5377; eval_metric:-0.1753
+epoch:12; eval_acc:0.4390; eval_fscore:0.4254; eval_val_mse:2.7764; eval_metric:-0.2687
+epoch:13; eval_acc:0.4420; eval_fscore:0.4319; eval_val_mse:2.6855; eval_metric:-0.2395
+epoch:14; eval_acc:0.4345; eval_fscore:0.4275; eval_val_mse:2.9108; eval_metric:-0.3002
+epoch:15; eval_acc:0.4524; eval_fscore:0.4405; eval_val_mse:2.6571; eval_metric:-0.2238
+epoch:16; eval_acc:0.4405; eval_fscore:0.4255; eval_val_mse:2.8285; eval_metric:-0.2817
+epoch:17; eval_acc:0.4360; eval_fscore:0.4279; eval_val_mse:2.8108; eval_metric:-0.2748
+epoch:18; eval_acc:0.4360; eval_fscore:0.4267; eval_val_mse:2.9521; eval_metric:-0.3113
+epoch:19; eval_acc:0.4315; eval_fscore:0.4232; eval_val_mse:2.9486; eval_metric:-0.3139
+epoch:20; eval_acc:0.4360; eval_fscore:0.4279; eval_val_mse:2.8178; eval_metric:-0.2766
+epoch:21; eval_acc:0.4226; eval_fscore:0.4150; eval_val_mse:2.8747; eval_metric:-0.3037
+epoch:22; eval_acc:0.4330; eval_fscore:0.4221; eval_val_mse:2.9207; eval_metric:-0.3081
+epoch:23; eval_acc:0.4464; eval_fscore:0.4380; eval_val_mse:2.8712; eval_metric:-0.2798
+epoch:24; eval_acc:0.4345; eval_fscore:0.4290; eval_val_mse:2.9483; eval_metric:-0.3081
+epoch:25; eval_acc:0.4479; eval_fscore:0.4407; eval_val_mse:2.8367; eval_metric:-0.2685
+epoch:26; eval_acc:0.4241; eval_fscore:0.4187; eval_val_mse:2.9057; eval_metric:-0.3077
+epoch:27; eval_acc:0.4479; eval_fscore:0.4399; eval_val_mse:2.9189; eval_metric:-0.2898
+epoch:28; eval_acc:0.4360; eval_fscore:0.4299; eval_val_mse:2.8278; eval_metric:-0.2770
+epoch:29; eval_acc:0.4315; eval_fscore:0.4236; eval_val_mse:2.8414; eval_metric:-0.2867
+epoch:30; eval_acc:0.4301; eval_fscore:0.4232; eval_val_mse:2.8599; eval_metric:-0.2918
+epoch:31; eval_acc:0.4226; eval_fscore:0.4177; eval_val_mse:2.8406; eval_metric:-0.2925
+epoch:32; eval_acc:0.4301; eval_fscore:0.4255; eval_val_mse:2.8787; eval_metric:-0.2942
+epoch:33; eval_acc:0.4256; eval_fscore:0.4200; eval_val_mse:2.7885; eval_metric:-0.2772
+epoch:34; eval_acc:0.4256; eval_fscore:0.4211; eval_val_mse:2.8698; eval_metric:-0.2964
+epoch:35; eval_acc:0.4315; eval_fscore:0.4252; eval_val_mse:2.8429; eval_metric:-0.2856
+epoch:36; eval_acc:0.4405; eval_fscore:0.4381; eval_val_mse:2.8603; eval_metric:-0.2770
+Step3: saving and testing on the 5 folder
+>>>>> Finish: training on the 5 folder, duration: 2869.425104379654 >>>>>
+====== Gain predition on test data =======
+save results in ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4421_valmse:2.3477_metric:-0.1448_1685690947.5756059.npz
+1314
+1837
+209

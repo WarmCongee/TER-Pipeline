@@ -1,0 +1,576 @@
+nohup: ignoring input
+Namespace(audio_feature='chinese-macbert-large-4-FRA', batch_size=32, dataset='MER2023', debug=False, dropout=0.5, epochs=65, gpu=0, l2=1e-05, layers='256,128', lr=0.001, model_type='attention', n_classes=6, num_folder=5, num_workers=0, save_root='./saved-unimodal', savewhole=False, seed=100, test_dataset='MER2023', test_sets=['test3'], text_feature='chinese-macbert-large-4-FRA', train_dataset='MER2023', video_feature='chinese-macbert-large-4-FRA')
+====== Reading Data =======
+
+0it [00:00, ?it/s]
+3373it [00:00, 2703494.63it/s]
+
+  0%|          | 0/3373 [00:00<?, ?it/s]
+  2%|▏         | 83/3373 [00:00<00:04, 786.83it/s]
+  6%|▌         | 188/3373 [00:00<00:03, 924.44it/s]
+  9%|▉         | 307/3373 [00:00<00:02, 1028.50it/s]
+ 12%|█▏        | 410/3373 [00:00<00:03, 982.38it/s] 
+ 15%|█▌        | 509/3373 [00:00<00:02, 966.97it/s]
+ 19%|█▉        | 641/3373 [00:00<00:02, 1041.56it/s]
+ 22%|██▏       | 746/3373 [00:00<00:02, 991.25it/s] 
+ 26%|██▌       | 866/3373 [00:00<00:02, 984.35it/s]
+ 29%|██▉       | 987/3373 [00:00<00:02, 1005.03it/s]
+ 32%|███▏      | 1088/3373 [00:01<00:02, 974.22it/s]
+ 36%|███▌      | 1213/3373 [00:01<00:02, 1039.33it/s]
+ 39%|███▉      | 1318/3373 [00:01<00:02, 1018.75it/s]
+ 42%|████▏     | 1422/3373 [00:01<00:01, 984.52it/s] 
+ 45%|████▌     | 1528/3373 [00:01<00:01, 985.22it/s]
+ 49%|████▊     | 1643/3373 [00:01<00:01, 1031.56it/s]
+ 52%|█████▏    | 1747/3373 [00:01<00:01, 1019.84it/s]
+ 55%|█████▍    | 1850/3373 [00:01<00:01, 968.07it/s] 
+ 58%|█████▊    | 1954/3373 [00:01<00:01, 931.40it/s]
+ 61%|██████▏   | 2066/3373 [00:02<00:01, 964.61it/s]
+ 64%|██████▍   | 2164/3373 [00:02<00:01, 954.70it/s]
+ 67%|██████▋   | 2268/3373 [00:02<00:01, 958.26it/s]
+ 71%|███████   | 2381/3373 [00:02<00:00, 1005.13it/s]
+ 74%|███████▍  | 2491/3373 [00:02<00:00, 990.93it/s] 
+ 77%|███████▋  | 2598/3373 [00:02<00:00, 988.52it/s]
+ 80%|████████  | 2706/3373 [00:02<00:00, 941.65it/s]
+ 84%|████████▍ | 2840/3373 [00:02<00:00, 1040.44it/s]
+ 87%|████████▋ | 2946/3373 [00:02<00:00, 1029.03it/s]
+ 90%|█████████ | 3050/3373 [00:03<00:00, 1000.13it/s]
+ 94%|█████████▎| 3154/3373 [00:03<00:00, 1006.48it/s]
+ 97%|█████████▋| 3270/3373 [00:03<00:00, 1019.33it/s]
+100%|██████████| 3373/3373 [00:03<00:00, 996.24it/s] 
+Input feature /home/wyz/MER-TER/TER-Pipeline/features/chinese-macbert-large-4-FRA ===> dim is 1024
+
+0it [00:00, ?it/s]
+3373it [00:00, 2835147.77it/s]
+
+  0%|          | 0/3373 [00:00<?, ?it/s]
+  5%|▍         | 160/3373 [00:00<00:02, 1442.43it/s]
+  9%|▉         | 305/3373 [00:00<00:02, 1117.20it/s]
+ 12%|█▏        | 421/3373 [00:00<00:02, 1005.38it/s]
+ 16%|█▌        | 524/3373 [00:00<00:03, 945.97it/s] 
+ 19%|█▊        | 631/3373 [00:00<00:03, 903.95it/s]
+ 22%|██▏       | 754/3373 [00:00<00:02, 985.26it/s]
+ 25%|██▌       | 855/3373 [00:00<00:02, 952.68it/s]
+ 29%|██▉       | 970/3373 [00:00<00:02, 951.22it/s]
+ 32%|███▏      | 1077/3373 [00:01<00:02, 951.55it/s]
+ 35%|███▌      | 1193/3373 [00:01<00:02, 960.71it/s]
+ 38%|███▊      | 1297/3373 [00:01<00:02, 948.09it/s]
+ 43%|████▎     | 1437/3373 [00:01<00:01, 1069.05it/s]
+ 46%|████▌     | 1546/3373 [00:01<00:01, 1019.27it/s]
+ 49%|████▉     | 1650/3373 [00:01<00:01, 1001.21it/s]
+ 52%|█████▏    | 1751/3373 [00:01<00:01, 907.61it/s] 
+ 55%|█████▌    | 1859/3373 [00:01<00:01, 885.29it/s]
+ 58%|█████▊    | 1969/3373 [00:02<00:01, 907.21it/s]
+ 62%|██████▏   | 2076/3373 [00:02<00:01, 950.00it/s]
+ 64%|██████▍   | 2173/3373 [00:02<00:01, 767.41it/s]
+ 68%|██████▊   | 2291/3373 [00:02<00:01, 718.06it/s]
+ 71%|███████   | 2392/3373 [00:02<00:01, 731.00it/s]
+ 75%|███████▌  | 2546/3373 [00:02<00:00, 899.18it/s]
+ 79%|███████▉  | 2665/3373 [00:02<00:00, 931.68it/s]
+ 82%|████████▏ | 2774/3373 [00:02<00:00, 949.15it/s]
+ 85%|████████▌ | 2874/3373 [00:03<00:00, 952.62it/s]
+ 89%|████████▉ | 3008/3373 [00:03<00:00, 1007.72it/s]
+ 93%|█████████▎| 3123/3373 [00:03<00:00, 1039.54it/s]
+ 97%|█████████▋| 3256/3373 [00:03<00:00, 1074.85it/s]
+100%|█████████▉| 3365/3373 [00:03<00:00, 985.89it/s] 
+100%|██████████| 3373/3373 [00:03<00:00, 948.00it/s]
+Input feature /home/wyz/MER-TER/TER-Pipeline/features/chinese-macbert-large-4-FRA ===> dim is 1024
+
+0it [00:00, ?it/s]
+2164it [00:00, 8715.14it/s]
+3373it [00:00, 13551.10it/s]
+
+  0%|          | 0/3373 [00:00<?, ?it/s]
+  4%|▍         | 128/3373 [00:00<00:02, 1274.76it/s]
+  8%|▊         | 285/3373 [00:00<00:02, 1447.56it/s]
+ 13%|█▎        | 430/3373 [00:00<00:02, 1223.82it/s]
+ 16%|█▋        | 556/3373 [00:00<00:02, 1166.29it/s]
+ 20%|██        | 675/3373 [00:00<00:02, 1033.42it/s]
+ 23%|██▎       | 782/3373 [00:00<00:02, 999.48it/s] 
+ 27%|██▋       | 904/3373 [00:00<00:02, 1035.24it/s]
+ 30%|██▉       | 1009/3373 [00:00<00:02, 1034.09it/s]
+ 34%|███▎      | 1132/3373 [00:01<00:02, 1062.18it/s]
+ 37%|███▋      | 1242/3373 [00:01<00:02, 999.33it/s] 
+ 40%|████      | 1358/3373 [00:01<00:01, 1038.68it/s]
+ 44%|████▎     | 1469/3373 [00:01<00:01, 1053.10it/s]
+ 47%|████▋     | 1576/3373 [00:01<00:01, 983.48it/s] 
+ 50%|████▉     | 1676/3373 [00:01<00:01, 956.41it/s]
+ 53%|█████▎    | 1773/3373 [00:01<00:01, 949.90it/s]
+ 56%|█████▌    | 1875/3373 [00:01<00:01, 948.60it/s]
+ 58%|█████▊    | 1971/3373 [00:01<00:01, 930.00it/s]
+ 62%|██████▏   | 2079/3373 [00:02<00:01, 954.49it/s]
+ 65%|██████▌   | 2198/3373 [00:02<00:01, 988.69it/s]
+ 68%|██████▊   | 2308/3373 [00:02<00:01, 1018.58it/s]
+ 71%|███████▏  | 2411/3373 [00:02<00:00, 995.98it/s] 
+ 74%|███████▍  | 2511/3373 [00:02<00:00, 969.38it/s]
+ 77%|███████▋  | 2612/3373 [00:02<00:00, 958.82it/s]
+ 80%|████████  | 2709/3373 [00:02<00:00, 960.27it/s]
+ 83%|████████▎ | 2806/3373 [00:02<00:00, 900.89it/s]
+ 86%|████████▌ | 2897/3373 [00:02<00:00, 879.92it/s]
+ 89%|████████▉ | 3013/3373 [00:03<00:00, 918.25it/s]
+ 93%|█████████▎| 3122/3373 [00:03<00:00, 942.64it/s]
+ 96%|█████████▌| 3228/3373 [00:03<00:00, 965.62it/s]
+ 99%|█████████▉| 3334/3373 [00:03<00:00, 957.61it/s]
+100%|██████████| 3373/3373 [00:03<00:00, 1001.33it/s]
+Input feature /home/wyz/MER-TER/TER-Pipeline/features/chinese-macbert-large-4-FRA ===> dim is 1024
+
+0it [00:00, ?it/s]
+3373it [00:00, 1281118.12it/s]
+
+  0%|          | 0/3373 [00:00<?, ?it/s]
+  4%|▎         | 126/3373 [00:00<00:02, 1219.41it/s]
+  7%|▋         | 248/3373 [00:00<00:02, 1115.39it/s]
+ 11%|█         | 361/3373 [00:00<00:02, 1105.33it/s]
+ 14%|█▍        | 472/3373 [00:00<00:02, 1021.59it/s]
+ 18%|█▊        | 618/3373 [00:00<00:02, 1131.91it/s]
+ 22%|██▏       | 732/3373 [00:00<00:02, 1084.62it/s]
+ 25%|██▍       | 842/3373 [00:00<00:02, 1065.80it/s]
+ 28%|██▊       | 954/3373 [00:00<00:02, 1077.87it/s]
+ 32%|███▏      | 1063/3373 [00:00<00:02, 1040.81it/s]
+ 35%|███▍      | 1168/3373 [00:01<00:02, 972.27it/s] 
+ 39%|███▊      | 1299/3373 [00:01<00:02, 1025.02it/s]
+ 42%|████▏     | 1406/3373 [00:01<00:01, 1035.73it/s]
+ 45%|████▌     | 1523/3373 [00:01<00:01, 1067.44it/s]
+ 48%|████▊     | 1631/3373 [00:01<00:01, 1037.77it/s]
+ 52%|█████▏    | 1738/3373 [00:01<00:01, 1017.64it/s]
+ 55%|█████▍    | 1855/3373 [00:01<00:01, 1059.73it/s]
+ 58%|█████▊    | 1962/3373 [00:01<00:01, 1049.62it/s]
+ 62%|██████▏   | 2076/3373 [00:01<00:01, 970.48it/s] 
+ 66%|██████▌   | 2221/3373 [00:02<00:01, 1069.84it/s]
+ 69%|██████▉   | 2330/3373 [00:02<00:01, 1021.58it/s]
+ 73%|███████▎  | 2452/3373 [00:02<00:00, 1060.42it/s]
+ 76%|███████▌  | 2560/3373 [00:02<00:00, 1055.70it/s]
+ 79%|███████▉  | 2667/3373 [00:02<00:00, 963.45it/s] 
+ 84%|████████▍ | 2846/3373 [00:02<00:00, 1130.70it/s]
+ 88%|████████▊ | 2961/3373 [00:02<00:00, 1129.80it/s]
+ 91%|█████████ | 3075/3373 [00:02<00:00, 987.90it/s] 
+ 94%|█████████▍| 3183/3373 [00:03<00:00, 993.65it/s]
+ 98%|█████████▊| 3306/3373 [00:03<00:00, 1037.94it/s]
+100%|██████████| 3373/3373 [00:03<00:00, 1040.68it/s]
+Input feature /home/wyz/MER-TER/TER-Pipeline/features/chinese-macbert-large-4-FRA ===> dim is 1024
+
+0it [00:00, ?it/s]
+3373it [00:00, 3419721.39it/s]
+
+  0%|          | 0/3373 [00:00<?, ?it/s]
+  2%|▏         | 78/3373 [00:00<00:05, 613.45it/s]
+  5%|▌         | 183/3373 [00:00<00:03, 843.79it/s]
+  8%|▊         | 270/3373 [00:00<00:03, 846.51it/s]
+ 12%|█▏        | 389/3373 [00:00<00:03, 957.28it/s]
+ 15%|█▍        | 499/3373 [00:00<00:03, 934.95it/s]
+ 19%|█▊        | 628/3373 [00:00<00:02, 977.53it/s]
+ 22%|██▏       | 742/3373 [00:00<00:02, 1018.95it/s]
+ 25%|██▌       | 845/3373 [00:00<00:02, 1010.82it/s]
+ 28%|██▊       | 955/3373 [00:00<00:02, 1035.38it/s]
+ 31%|███▏      | 1059/3373 [00:01<00:02, 984.78it/s]
+ 35%|███▍      | 1166/3373 [00:01<00:02, 1002.82it/s]
+ 38%|███▊      | 1267/3373 [00:01<00:02, 997.70it/s] 
+ 41%|████      | 1368/3373 [00:01<00:02, 917.98it/s]
+ 43%|████▎     | 1462/3373 [00:01<00:02, 861.35it/s]
+ 47%|████▋     | 1585/3373 [00:01<00:01, 955.56it/s]
+ 50%|█████     | 1687/3373 [00:01<00:01, 962.41it/s]
+ 53%|█████▎    | 1785/3373 [00:01<00:01, 932.11it/s]
+ 56%|█████▌    | 1891/3373 [00:01<00:01, 947.51it/s]
+ 59%|█████▉    | 1987/3373 [00:02<00:01, 937.66it/s]
+ 62%|██████▏   | 2082/3373 [00:02<00:01, 910.06it/s]
+ 64%|██████▍   | 2174/3373 [00:02<00:01, 894.99it/s]
+ 68%|██████▊   | 2302/3373 [00:02<00:01, 933.79it/s]
+ 71%|███████▏  | 2404/3373 [00:02<00:01, 934.55it/s]
+ 75%|███████▌  | 2542/3373 [00:02<00:00, 1054.23it/s]
+ 79%|███████▊  | 2652/3373 [00:02<00:00, 963.81it/s] 
+ 82%|████████▏ | 2779/3373 [00:02<00:00, 1040.84it/s]
+ 86%|████████▌ | 2898/3373 [00:03<00:00, 1015.33it/s]
+ 90%|████████▉ | 3026/3373 [00:03<00:00, 1078.21it/s]
+ 93%|█████████▎| 3141/3373 [00:03<00:00, 1097.85it/s]
+ 97%|█████████▋| 3276/3373 [00:03<00:00, 1166.88it/s]
+100%|██████████| 3373/3373 [00:03<00:00, 993.47it/s] 
+Input feature /home/wyz/MER-TER/TER-Pipeline/features/chinese-macbert-large-4-FRA ===> dim is 1024
+
+0it [00:00, ?it/s]
+3373it [00:00, 3514005.81it/s]
+
+  0%|          | 0/3373 [00:00<?, ?it/s]
+  2%|▏         | 79/3373 [00:00<00:04, 783.86it/s]
+  6%|▌         | 205/3373 [00:00<00:03, 1024.34it/s]
+ 10%|▉         | 327/3373 [00:00<00:02, 1063.48it/s]
+ 13%|█▎        | 433/3373 [00:00<00:02, 1023.54it/s]
+ 16%|█▌        | 536/3373 [00:00<00:03, 923.49it/s] 
+ 20%|█▉        | 674/3373 [00:00<00:02, 1009.54it/s]
+ 24%|██▍       | 811/3373 [00:00<00:02, 1083.58it/s]
+ 27%|██▋       | 921/3373 [00:00<00:02, 979.62it/s] 
+ 31%|███       | 1041/3373 [00:01<00:02, 967.67it/s]
+ 34%|███▍      | 1152/3373 [00:01<00:02, 980.14it/s]
+ 37%|███▋      | 1251/3373 [00:01<00:02, 974.07it/s]
+ 41%|████      | 1368/3373 [00:01<00:01, 1027.65it/s]
+ 44%|████▎     | 1472/3373 [00:01<00:01, 1029.46it/s]
+ 47%|████▋     | 1576/3373 [00:01<00:01, 975.30it/s] 
+ 50%|█████     | 1688/3373 [00:01<00:01, 1003.49it/s]
+ 53%|█████▎    | 1796/3373 [00:01<00:01, 923.17it/s] 
+ 57%|█████▋    | 1938/3373 [00:01<00:01, 1051.44it/s]
+ 61%|██████    | 2046/3373 [00:02<00:01, 1038.04it/s]
+ 64%|██████▍   | 2152/3373 [00:02<00:01, 911.06it/s] 
+ 67%|██████▋   | 2247/3373 [00:02<00:01, 875.91it/s]
+ 69%|██████▉   | 2338/3373 [00:02<00:01, 875.71it/s]
+ 72%|███████▏  | 2440/3373 [00:02<00:01, 913.65it/s]
+ 76%|███████▌  | 2548/3373 [00:02<00:00, 958.49it/s]
+ 78%|███████▊  | 2646/3373 [00:02<00:00, 951.00it/s]
+ 82%|████████▏ | 2770/3373 [00:02<00:00, 1016.69it/s]
+ 85%|████████▌ | 2873/3373 [00:02<00:00, 970.96it/s] 
+ 88%|████████▊ | 2971/3373 [00:03<00:00, 951.40it/s]
+ 91%|█████████ | 3067/3373 [00:03<00:00, 934.82it/s]
+ 95%|█████████▍| 3198/3373 [00:03<00:00, 1030.14it/s]
+ 98%|█████████▊| 3302/3373 [00:03<00:00, 930.42it/s] 
+100%|██████████| 3373/3373 [00:03<00:00, 968.00it/s]
+Input feature /home/wyz/MER-TER/TER-Pipeline/features/chinese-macbert-large-4-FRA ===> dim is 1024
+audio dimension: 1024; text dimension: 1024; video dimension: 1024
+====== Training and Evaluation =======
+>>>>> Cross-validation: training on the 1 folder >>>>>
+Step1: build model (each folder has its own model)
+Step2: training (multiple epoches)
+epoch:1; eval_acc:0.3929; eval_fscore:0.3187; eval_val_mse:3.1519; eval_metric:-0.4693
+epoch:2; eval_acc:0.3973; eval_fscore:0.3576; eval_val_mse:2.5320; eval_metric:-0.2754
+epoch:3; eval_acc:0.4137; eval_fscore:0.3838; eval_val_mse:2.5134; eval_metric:-0.2446
+epoch:4; eval_acc:0.4152; eval_fscore:0.3736; eval_val_mse:2.5028; eval_metric:-0.2520
+epoch:5; eval_acc:0.4062; eval_fscore:0.3839; eval_val_mse:2.4617; eval_metric:-0.2315
+epoch:6; eval_acc:0.4033; eval_fscore:0.3658; eval_val_mse:2.4544; eval_metric:-0.2478
+epoch:7; eval_acc:0.3988; eval_fscore:0.3690; eval_val_mse:2.5237; eval_metric:-0.2619
+epoch:8; eval_acc:0.3973; eval_fscore:0.3795; eval_val_mse:2.6440; eval_metric:-0.2815
+epoch:9; eval_acc:0.4033; eval_fscore:0.3816; eval_val_mse:2.5459; eval_metric:-0.2549
+epoch:10; eval_acc:0.4152; eval_fscore:0.4000; eval_val_mse:2.5090; eval_metric:-0.2273
+epoch:11; eval_acc:0.4107; eval_fscore:0.3998; eval_val_mse:2.6321; eval_metric:-0.2583
+epoch:12; eval_acc:0.4048; eval_fscore:0.4060; eval_val_mse:2.5609; eval_metric:-0.2342
+epoch:13; eval_acc:0.4211; eval_fscore:0.4120; eval_val_mse:2.5970; eval_metric:-0.2373
+epoch:14; eval_acc:0.4360; eval_fscore:0.4261; eval_val_mse:2.5586; eval_metric:-0.2136
+epoch:15; eval_acc:0.4167; eval_fscore:0.3995; eval_val_mse:2.6112; eval_metric:-0.2533
+epoch:16; eval_acc:0.4390; eval_fscore:0.4332; eval_val_mse:2.6275; eval_metric:-0.2237
+epoch:17; eval_acc:0.3988; eval_fscore:0.3840; eval_val_mse:2.6880; eval_metric:-0.2880
+epoch:18; eval_acc:0.4167; eval_fscore:0.4066; eval_val_mse:2.7336; eval_metric:-0.2768
+epoch:19; eval_acc:0.4122; eval_fscore:0.3961; eval_val_mse:2.7982; eval_metric:-0.3034
+epoch:20; eval_acc:0.4211; eval_fscore:0.4127; eval_val_mse:2.7816; eval_metric:-0.2827
+epoch:21; eval_acc:0.4196; eval_fscore:0.4150; eval_val_mse:2.8834; eval_metric:-0.3059
+epoch:22; eval_acc:0.4018; eval_fscore:0.3947; eval_val_mse:2.8618; eval_metric:-0.3208
+epoch:23; eval_acc:0.4167; eval_fscore:0.4119; eval_val_mse:2.9119; eval_metric:-0.3160
+epoch:24; eval_acc:0.4345; eval_fscore:0.4276; eval_val_mse:2.8679; eval_metric:-0.2894
+epoch:25; eval_acc:0.4315; eval_fscore:0.4246; eval_val_mse:2.8958; eval_metric:-0.2993
+epoch:26; eval_acc:0.4092; eval_fscore:0.4066; eval_val_mse:2.8719; eval_metric:-0.3114
+epoch:27; eval_acc:0.4048; eval_fscore:0.4010; eval_val_mse:2.9083; eval_metric:-0.3261
+epoch:28; eval_acc:0.4152; eval_fscore:0.4025; eval_val_mse:2.7880; eval_metric:-0.2945
+epoch:29; eval_acc:0.4226; eval_fscore:0.4155; eval_val_mse:2.7777; eval_metric:-0.2789
+epoch:30; eval_acc:0.4048; eval_fscore:0.4008; eval_val_mse:2.8639; eval_metric:-0.3152
+epoch:31; eval_acc:0.4196; eval_fscore:0.4125; eval_val_mse:2.9065; eval_metric:-0.3142
+epoch:32; eval_acc:0.4196; eval_fscore:0.4105; eval_val_mse:2.8077; eval_metric:-0.2914
+epoch:33; eval_acc:0.4018; eval_fscore:0.3963; eval_val_mse:2.9182; eval_metric:-0.3332
+epoch:34; eval_acc:0.4196; eval_fscore:0.4121; eval_val_mse:2.8533; eval_metric:-0.3012
+epoch:35; eval_acc:0.4167; eval_fscore:0.4065; eval_val_mse:2.9237; eval_metric:-0.3245
+epoch:36; eval_acc:0.4122; eval_fscore:0.4037; eval_val_mse:2.8839; eval_metric:-0.3173
+epoch:37; eval_acc:0.4152; eval_fscore:0.4109; eval_val_mse:2.9090; eval_metric:-0.3163
+epoch:38; eval_acc:0.4092; eval_fscore:0.4051; eval_val_mse:2.9576; eval_metric:-0.3343
+epoch:39; eval_acc:0.4315; eval_fscore:0.4227; eval_val_mse:2.8748; eval_metric:-0.2960
+epoch:40; eval_acc:0.4167; eval_fscore:0.4020; eval_val_mse:2.8004; eval_metric:-0.2981
+epoch:41; eval_acc:0.4196; eval_fscore:0.4139; eval_val_mse:2.8579; eval_metric:-0.3006
+epoch:42; eval_acc:0.4196; eval_fscore:0.4151; eval_val_mse:2.8675; eval_metric:-0.3018
+epoch:43; eval_acc:0.4211; eval_fscore:0.4123; eval_val_mse:2.8161; eval_metric:-0.2917
+epoch:44; eval_acc:0.4286; eval_fscore:0.4185; eval_val_mse:2.8015; eval_metric:-0.2819
+epoch:45; eval_acc:0.4182; eval_fscore:0.4082; eval_val_mse:2.8542; eval_metric:-0.3053
+epoch:46; eval_acc:0.4271; eval_fscore:0.4200; eval_val_mse:2.8817; eval_metric:-0.3004
+epoch:47; eval_acc:0.4271; eval_fscore:0.4209; eval_val_mse:2.8346; eval_metric:-0.2878
+epoch:48; eval_acc:0.4226; eval_fscore:0.4161; eval_val_mse:2.8464; eval_metric:-0.2954
+epoch:49; eval_acc:0.4182; eval_fscore:0.4099; eval_val_mse:2.8594; eval_metric:-0.3049
+epoch:50; eval_acc:0.4122; eval_fscore:0.4078; eval_val_mse:2.8907; eval_metric:-0.3149
+epoch:51; eval_acc:0.4315; eval_fscore:0.4242; eval_val_mse:2.8641; eval_metric:-0.2918
+epoch:52; eval_acc:0.4152; eval_fscore:0.4092; eval_val_mse:2.8386; eval_metric:-0.3005
+epoch:53; eval_acc:0.4315; eval_fscore:0.4237; eval_val_mse:2.8703; eval_metric:-0.2938
+epoch:54; eval_acc:0.4286; eval_fscore:0.4227; eval_val_mse:2.8342; eval_metric:-0.2859
+epoch:55; eval_acc:0.4122; eval_fscore:0.4033; eval_val_mse:2.8489; eval_metric:-0.3089
+epoch:56; eval_acc:0.4182; eval_fscore:0.4118; eval_val_mse:2.8621; eval_metric:-0.3037
+epoch:57; eval_acc:0.4211; eval_fscore:0.4123; eval_val_mse:2.8262; eval_metric:-0.2943
+epoch:58; eval_acc:0.4196; eval_fscore:0.4120; eval_val_mse:2.8661; eval_metric:-0.3045
+epoch:59; eval_acc:0.4137; eval_fscore:0.4059; eval_val_mse:2.8314; eval_metric:-0.3020
+epoch:60; eval_acc:0.4196; eval_fscore:0.4119; eval_val_mse:2.8730; eval_metric:-0.3063
+epoch:61; eval_acc:0.4196; eval_fscore:0.4127; eval_val_mse:2.8550; eval_metric:-0.3011
+epoch:62; eval_acc:0.4301; eval_fscore:0.4232; eval_val_mse:2.8567; eval_metric:-0.2910
+epoch:63; eval_acc:0.4256; eval_fscore:0.4211; eval_val_mse:2.8524; eval_metric:-0.2920
+epoch:64; eval_acc:0.4182; eval_fscore:0.4138; eval_val_mse:2.8565; eval_metric:-0.3003
+epoch:65; eval_acc:0.4211; eval_fscore:0.4144; eval_val_mse:2.8692; eval_metric:-0.3029
+Step3: saving and testing on the 1 folder
+>>>>> Finish: training on the 1 folder, duration: 10610.938796520233 >>>>>
+>>>>> Cross-validation: training on the 2 folder >>>>>
+Step1: build model (each folder has its own model)
+Step2: training (multiple epoches)
+epoch:1; eval_acc:0.3735; eval_fscore:0.2742; eval_val_mse:2.7768; eval_metric:-0.4200
+epoch:2; eval_acc:0.4494; eval_fscore:0.4277; eval_val_mse:2.5830; eval_metric:-0.2180
+epoch:3; eval_acc:0.4167; eval_fscore:0.3918; eval_val_mse:2.5273; eval_metric:-0.2401
+epoch:4; eval_acc:0.4330; eval_fscore:0.3983; eval_val_mse:2.3569; eval_metric:-0.1909
+epoch:5; eval_acc:0.4286; eval_fscore:0.4161; eval_val_mse:2.8060; eval_metric:-0.2855
+epoch:6; eval_acc:0.4241; eval_fscore:0.4203; eval_val_mse:2.3920; eval_metric:-0.1777
+epoch:7; eval_acc:0.4554; eval_fscore:0.4471; eval_val_mse:2.2893; eval_metric:-0.1252
+epoch:8; eval_acc:0.4375; eval_fscore:0.4314; eval_val_mse:2.4284; eval_metric:-0.1757
+epoch:9; eval_acc:0.4301; eval_fscore:0.4130; eval_val_mse:2.4084; eval_metric:-0.1891
+epoch:10; eval_acc:0.4375; eval_fscore:0.4305; eval_val_mse:2.4868; eval_metric:-0.1912
+epoch:11; eval_acc:0.4524; eval_fscore:0.4409; eval_val_mse:2.5722; eval_metric:-0.2021
+epoch:12; eval_acc:0.4583; eval_fscore:0.4551; eval_val_mse:2.4649; eval_metric:-0.1612
+epoch:13; eval_acc:0.4420; eval_fscore:0.4324; eval_val_mse:2.4798; eval_metric:-0.1875
+epoch:14; eval_acc:0.4554; eval_fscore:0.4510; eval_val_mse:2.4571; eval_metric:-0.1632
+epoch:15; eval_acc:0.4256; eval_fscore:0.4184; eval_val_mse:2.5369; eval_metric:-0.2158
+epoch:16; eval_acc:0.4479; eval_fscore:0.4378; eval_val_mse:2.5725; eval_metric:-0.2053
+epoch:17; eval_acc:0.4345; eval_fscore:0.4267; eval_val_mse:2.5395; eval_metric:-0.2082
+epoch:18; eval_acc:0.4405; eval_fscore:0.4282; eval_val_mse:2.4993; eval_metric:-0.1966
+epoch:19; eval_acc:0.4315; eval_fscore:0.4217; eval_val_mse:2.6646; eval_metric:-0.2444
+epoch:20; eval_acc:0.4524; eval_fscore:0.4501; eval_val_mse:2.6621; eval_metric:-0.2154
+epoch:21; eval_acc:0.4241; eval_fscore:0.4210; eval_val_mse:2.5671; eval_metric:-0.2208
+epoch:22; eval_acc:0.4449; eval_fscore:0.4356; eval_val_mse:2.4664; eval_metric:-0.1810
+epoch:23; eval_acc:0.4435; eval_fscore:0.4386; eval_val_mse:2.5310; eval_metric:-0.1942
+epoch:24; eval_acc:0.4345; eval_fscore:0.4303; eval_val_mse:2.5165; eval_metric:-0.1988
+epoch:25; eval_acc:0.4360; eval_fscore:0.4344; eval_val_mse:2.5280; eval_metric:-0.1976
+epoch:26; eval_acc:0.4509; eval_fscore:0.4491; eval_val_mse:2.5759; eval_metric:-0.1949
+epoch:27; eval_acc:0.4375; eval_fscore:0.4375; eval_val_mse:2.5145; eval_metric:-0.1912
+epoch:28; eval_acc:0.4464; eval_fscore:0.4437; eval_val_mse:2.5732; eval_metric:-0.1996
+epoch:29; eval_acc:0.4286; eval_fscore:0.4278; eval_val_mse:2.5030; eval_metric:-0.1979
+epoch:30; eval_acc:0.4390; eval_fscore:0.4368; eval_val_mse:2.4960; eval_metric:-0.1872
+epoch:31; eval_acc:0.4405; eval_fscore:0.4382; eval_val_mse:2.5157; eval_metric:-0.1908
+epoch:32; eval_acc:0.4330; eval_fscore:0.4327; eval_val_mse:2.4756; eval_metric:-0.1862
+epoch:33; eval_acc:0.4286; eval_fscore:0.4270; eval_val_mse:2.5200; eval_metric:-0.2030
+epoch:34; eval_acc:0.4405; eval_fscore:0.4409; eval_val_mse:2.5640; eval_metric:-0.2001
+epoch:35; eval_acc:0.4360; eval_fscore:0.4323; eval_val_mse:2.5236; eval_metric:-0.1986
+epoch:36; eval_acc:0.4345; eval_fscore:0.4330; eval_val_mse:2.5072; eval_metric:-0.1938
+epoch:37; eval_acc:0.4330; eval_fscore:0.4313; eval_val_mse:2.5063; eval_metric:-0.1952
+epoch:38; eval_acc:0.4449; eval_fscore:0.4428; eval_val_mse:2.4763; eval_metric:-0.1762
+epoch:39; eval_acc:0.4420; eval_fscore:0.4395; eval_val_mse:2.5092; eval_metric:-0.1878
+epoch:40; eval_acc:0.4241; eval_fscore:0.4242; eval_val_mse:2.5092; eval_metric:-0.2031
+epoch:41; eval_acc:0.4435; eval_fscore:0.4424; eval_val_mse:2.5254; eval_metric:-0.1889
+epoch:42; eval_acc:0.4390; eval_fscore:0.4379; eval_val_mse:2.4988; eval_metric:-0.1867
+epoch:43; eval_acc:0.4375; eval_fscore:0.4359; eval_val_mse:2.5152; eval_metric:-0.1929
+epoch:44; eval_acc:0.4375; eval_fscore:0.4365; eval_val_mse:2.5157; eval_metric:-0.1924
+epoch:45; eval_acc:0.4449; eval_fscore:0.4428; eval_val_mse:2.5356; eval_metric:-0.1911
+epoch:46; eval_acc:0.4420; eval_fscore:0.4400; eval_val_mse:2.5048; eval_metric:-0.1862
+epoch:47; eval_acc:0.4420; eval_fscore:0.4403; eval_val_mse:2.5096; eval_metric:-0.1871
+epoch:48; eval_acc:0.4241; eval_fscore:0.4217; eval_val_mse:2.5291; eval_metric:-0.2106
+epoch:49; eval_acc:0.4241; eval_fscore:0.4247; eval_val_mse:2.5201; eval_metric:-0.2054
+epoch:50; eval_acc:0.4420; eval_fscore:0.4392; eval_val_mse:2.5025; eval_metric:-0.1864
+epoch:51; eval_acc:0.4464; eval_fscore:0.4435; eval_val_mse:2.4975; eval_metric:-0.1809
+epoch:52; eval_acc:0.4420; eval_fscore:0.4400; eval_val_mse:2.5032; eval_metric:-0.1858
+epoch:53; eval_acc:0.4390; eval_fscore:0.4372; eval_val_mse:2.4942; eval_metric:-0.1863
+eepoch:58; eval_acc:0.4375; eval_fscore:0.4355; eval_val_mse:2.5006; eval_metric:-0.1897
+epoch:59; eval_acc:0.4435; eval_fscore:0.4418; eval_val_mse:2.4916; eval_metric:-0.1811
+epoch:60; eval_acc:0.4375; eval_fscore:0.4358; eval_val_mse:2.5116; eval_metric:-0.1921
+epoch:61; eval_acc:0.4494; eval_fscore:0.4484; eval_val_mse:2.4905; eval_metric:-0.1742
+epoch:62; eval_acc:0.4479; eval_fscore:0.4461; eval_val_mse:2.5031; eval_metric:-0.1797
+epoch:63; eval_acc:0.4524; eval_fscore:0.4496; eval_val_mse:2.4957; eval_metric:-0.1743
+epoch:64; eval_acc:0.4464; eval_fscore:0.4445; eval_val_mse:2.5029; eval_metric:-0.1813
+epoch:65; eval_acc:0.4360; eval_fscore:0.4353; eval_val_mse:2.4665; eval_metric:-0.1813
+Step3: saving and testing on the 2 folder
+>>>>> Finish: training on the 2 folder, duration: 9666.172400474548 >>>>>
+>>>>> Cross-validation: training on the 3 folder >>>>>
+Step1: build model (each folder has its own model)
+Step2: training (multiple epoches)
+epoch:1; eval_acc:0.3229; eval_fscore:0.2599; eval_val_mse:2.7254; eval_metric:-0.4215
+epoch:2; eval_acc:0.3824; eval_fscore:0.3444; eval_val_mse:2.5638; eval_metric:-0.2965
+epoch:3; eval_acc:0.4256; eval_fscore:0.3815; eval_val_mse:2.3581; eval_metric:-0.2080
+epoch:4; eval_acc:0.3988; eval_fscore:0.3644; eval_val_mse:2.7326; eval_metric:-0.3187
+epoch:5; eval_acc:0.4226; eval_fscore:0.4056; eval_val_mse:2.3338; eval_metric:-0.1779
+epoch:6; eval_acc:0.4226; eval_fscore:0.4176; eval_val_mse:2.4269; eval_metric:-0.1891
+epoch:7; eval_acc:0.4345; eval_fscore:0.4331; eval_val_mse:2.4533; eval_metric:-0.1803
+epoch:8; eval_acc:0.4286; eval_fscore:0.4220; eval_val_mse:2.3480; eval_metric:-0.1650
+epoch:9; eval_acc:0.4479; eval_fscore:0.4396; eval_val_mse:2.3940; eval_metric:-0.1589
+epoch:10; eval_acc:0.4360; eval_fscore:0.4322; eval_val_mse:2.3416; eval_metric:-0.1532
+epoch:11; eval_acc:0.4167; eval_fscore:0.4111; eval_val_mse:2.5316; eval_metric:-0.2218
+epoch:12; eval_acc:0.4048; eval_fscore:0.4042; eval_val_mse:2.4769; eval_metric:-0.2150
+epoch:13; eval_acc:0.4598; eval_fscore:0.4525; eval_val_mse:2.4355; eval_metric:-0.1564
+epoch:14; eval_acc:0.4420; eval_fscore:0.4397; eval_val_mse:2.4876; eval_metric:-0.1822
+epoch:15; eval_acc:0.4211; eval_fscore:0.4167; eval_val_mse:2.4818; eval_metric:-0.2037
+epoch:16; eval_acc:0.4315; eval_fscore:0.4270; eval_val_mse:2.6179; eval_metric:-0.2275
+epoch:17; eval_acc:0.4167; eval_fscore:0.4146; eval_val_mse:2.7534; eval_metric:-0.2737
+epoch:18; eval_acc:0.4196; eval_fscore:0.4149; eval_val_mse:2.6810; eval_metric:-0.2553
+epoch:19; eval_acc:0.4375; eval_fscore:0.4339; eval_val_mse:2.6515; eval_metric:-0.2289
+epoch:20; eval_acc:0.4062; eval_fscore:0.4015; eval_val_mse:2.6997; eval_metric:-0.2735
+epoch:21; eval_acc:0.4167; eval_fscore:0.4102; eval_val_mse:2.7574; eval_metric:-0.2791
+epoch:22; eval_acc:0.4062; eval_fscore:0.4037; eval_val_mse:2.8102; eval_metric:-0.2989
+epoch:23; eval_acc:0.4241; eval_fscore:0.4230; eval_val_mse:2.7297; eval_metric:-0.2594
+epoch:24; eval_acc:0.4256; eval_fscore:0.4210; eval_val_mse:2.7978; eval_metric:-0.2784
+epoch:25; eval_acc:0.4211; eval_fscore:0.4208; eval_val_mse:2.7702; eval_metric:-0.2718
+epoch:26; eval_acc:0.4077; eval_fscore:0.4010; eval_val_mse:2.7439; eval_metric:-0.2850
+epoch:27; eval_acc:0.4256; eval_fscore:0.4186; eval_val_mse:2.7354; eval_metric:-0.2653
+epoch:28; eval_acc:0.4256; eval_fscore:0.4237; eval_val_mse:2.8462; eval_metric:-0.2878
+epoch:29; eval_acc:0.4301; eval_fscore:0.4276; eval_val_mse:2.7178; eval_metric:-0.2518
+epoch:30; eval_acc:0.4033; eval_fscore:0.4017; eval_val_mse:2.8434; eval_metric:-0.3092
+epoch:31; eval_acc:0.4330; eval_fscore:0.4301; eval_val_mse:2.7050; eval_metric:-0.2461
+epoch:32; eval_acc:0.4286; eval_fscore:0.4260; eval_val_mse:2.7990; eval_metric:-0.2738
+epoch:33; eval_acc:0.4211; eval_fscore:0.4211; eval_val_mse:2.7875; eval_metric:-0.2757
+epoch:34; eval_acc:0.4256; eval_fscore:0.4230; eval_val_mse:2.7725; eval_metric:-0.2702
+epoch:35; eval_acc:0.4241; eval_fscore:0.4229; eval_val_mse:2.8083; eval_metric:-0.2792
+epoch:36; eval_acc:0.4211; eval_fscore:0.4180; eval_val_mse:2.7726; eval_metric:-0.2752
+epoch:37; eval_acc:0.4256; eval_fscore:0.4234; eval_val_mse:2.7019; eval_metric:-0.2520
+epoch:38; eval_acc:0.4226; eval_fscore:0.4209; eval_val_mse:2.7169; eval_metric:-0.2583
+epoch:39; eval_acc:0.4182; eval_fscore:0.4130; eval_val_mse:2.7915; eval_metric:-0.2849
+epoch:40; eval_acc:0.4018; eval_fscore:0.4000; eval_val_mse:2.7707; eval_metric:-0.2927
+epoch:41; eval_acc:0.4167; eval_fscore:0.4139; eval_val_mse:2.7195; eval_metric:-0.2659
+epoch:42; eval_acc:0.4167; eval_fscore:0.4127; eval_val_mse:2.7739; eval_metric:-0.2808
+epoch:43; eval_acc:0.4167; eval_fscore:0.4147; eval_val_mse:2.8309; eval_metric:-0.2930
+epoch:44; eval_acc:0.4182; eval_fscore:0.4174; eval_val_mse:2.7886; eval_metric:-0.2797
+epoch:45; eval_acc:0.4182; eval_fscore:0.4159; eval_val_mse:2.7429; eval_metric:-0.2699
+epoch:46; eval_acc:0.4137; eval_fscore:0.4149; eval_val_mse:2.8140; eval_metric:-0.2886
+epoch:47; eval_acc:0.4241; eval_fscore:0.4204; eval_val_mse:2.8244; eval_metric:-0.2857
+epoch:48; eval_acc:0.4137; eval_fscore:0.4121; eval_val_mse:2.7001; eval_metric:-0.2629
+epoch:49; eval_acc:0.4137; eval_fscore:0.4121; eval_val_mse:2.8355; eval_metric:-0.2967
+epoch:50; eval_acc:0.4211; eval_fscore:0.4196; eval_val_mse:2.7126; eval_metric:-0.2585
+epoch:51; eval_acc:0.4271; eval_fscore:0.4242; eval_val_mse:2.7757; eval_metric:-0.2697
+epoch:52; eval_acc:0.4241; eval_fscore:0.4227; eval_val_mse:2.7353; eval_metric:-0.2612
+epoch:53; eval_acc:0.4152; eval_fscore:0.4146; eval_val_mse:2.7310; eval_metric:-0.2681
+epoch:54; eval_acc:0.4182; eval_fscore:0.4167; eval_val_mse:2.7433; eval_metric:-0.2691
+epoch:55; eval_acc:0.4077; eval_fscore:0.4060; eval_val_mse:2.7760; eval_metric:-0.2880
+epoch:56; eval_acc:0.4137; eval_fscore:0.4120; eval_val_mse:2.7598; eval_metric:-0.2779
+epoch:57; eval_acc:0.4152; eval_fscore:0.4139; eval_val_mse:2.7559; eval_metric:-0.2751
+epoch:58; eval_acc:0.4137; eval_fscore:0.4112; eval_val_mse:2.7781; eval_metric:-0.2833
+epoch:59; eval_acc:0.4211; eval_fscore:0.4193; eval_val_mse:2.7510; eval_metric:-0.2684
+epoch:60; eval_acc:0.4182; eval_fscore:0.4171; eval_val_mse:2.7712; eval_metric:-0.2757
+epoch:61; eval_acc:0.4167; eval_fscore:0.4151; eval_val_mse:2.7572; eval_metric:-0.2742
+epoch:62; eval_acc:0.4122; eval_fscore:0.4108; eval_val_mse:2.7488; eval_metric:-0.2764
+epoch:63; eval_acc:0.4152; eval_fscore:0.4141; eval_val_mse:2.7692; eval_metric:-0.2782
+epoch:64; eval_acc:0.4196; eval_fscore:0.4180; eval_val_mse:2.7690; eval_metric:-0.2742
+epoch:65; eval_acc:0.4167; eval_fscore:0.4160; eval_val_mse:2.7168; eval_metric:-0.2632
+Step3: saving and testing on the 3 folder
+>>>>> Finish: training on the 3 folder, duration: 9648.585705518723 >>>>>
+>>>>> Cross-validation: training on the 4 folder >>>>>
+Step1: build model (each folder has its own model)
+Step2: training (multiple epoches)
+epoch:1; eval_acc:0.3542; eval_fscore:0.2647; eval_val_mse:2.7988; eval_metric:-0.4350
+epoch:2; eval_acc:0.4182; eval_fscore:0.3848; eval_val_mse:2.6422; eval_metric:-0.2757
+epoch:3; eval_acc:0.4167; eval_fscore:0.3473; eval_val_mse:2.5574; eval_metric:-0.2920
+epoch:4; eval_acc:0.4375; eval_fscore:0.4262; eval_val_mse:2.4810; eval_metric:-0.1940
+epoch:5; eval_acc:0.4420; eval_fscore:0.4129; eval_val_mse:2.5928; eval_metric:-0.2353
+epoch:6; eval_acc:0.4658; eval_fscore:0.4472; eval_val_mse:2.5799; eval_metric:-0.1977
+epoch:7; eval_acc:0.4583; eval_fscore:0.4499; eval_val_mse:2.5166; eval_metric:-0.1792
+epoch:8; eval_acc:0.4435; eval_fscore:0.4364; eval_val_mse:2.6193; eval_metric:-0.2184
+epoch:9; eval_acc:0.4613; eval_fscore:0.4534; eval_val_mse:2.5331; eval_metric:-0.1799
+epoch:10; eval_acc:0.4583; eval_fscore:0.4568; eval_val_mse:2.5451; eval_metric:-0.1795
+epoch:11; eval_acc:0.4301; eval_fscore:0.4277; eval_val_mse:2.5234; eval_metric:-0.2032
+epoch:12; eval_acc:0.4554; eval_fscore:0.4332; eval_val_mse:2.4776; eval_metric:-0.1862
+epoch:13; eval_acc:0.4375; eval_fscore:0.4351; eval_val_mse:2.5546; eval_metric:-0.2035
+epoch:14; eval_acc:0.4568; eval_fscore:0.4409; eval_val_mse:2.5617; eval_metric:-0.1996
+epoch:15; eval_acc:0.4420; eval_fscore:0.4381; eval_val_mse:2.5941; eval_metric:-0.2105
+epoch:16; eval_acc:0.4211; eval_fscore:0.4101; eval_val_mse:2.6276; eval_metric:-0.2468
+epoch:17; eval_acc:0.4390; eval_fscore:0.4324; eval_val_mse:2.6767; eval_metric:-0.2368
+epoch:18; eval_acc:0.4182; eval_fscore:0.4095; eval_val_mse:2.6809; eval_metric:-0.2608
+epoch:19; eval_acc:0.4256; eval_fscore:0.4187; eval_val_mse:2.5975; eval_metric:-0.2306
+epoch:20; eval_acc:0.4152; eval_fscore:0.4071; eval_val_mse:2.5434; eval_metric:-0.2287
+epoch:21; eval_acc:0.4137; eval_fscore:0.4054; eval_val_mse:2.7253; eval_metric:-0.2759
+epoch:22; eval_acc:0.4211; eval_fscore:0.4122; eval_val_mse:2.7112; eval_metric:-0.2656
+epoch:23; eval_acc:0.4241; eval_fscore:0.4165; eval_val_mse:2.7063; eval_metric:-0.2601
+epoch:24; eval_acc:0.4107; eval_fscore:0.4024; eval_val_mse:2.7087; eval_metric:-0.2748
+epoch:25; eval_acc:0.4033; eval_fscore:0.3991; eval_val_mse:2.6868; eval_metric:-0.2726
+epoch:26; eval_acc:0.4182; eval_fscore:0.4150; eval_val_mse:2.6644; eval_metric:-0.2511
+epoch:27; eval_acc:0.4092; eval_fscore:0.4068; eval_val_mse:2.7214; eval_metric:-0.2735
+epoch:28; eval_acc:0.4137; eval_fscore:0.4076; eval_val_mse:2.7492; eval_metric:-0.2797
+epoch:29; eval_acc:0.4018; eval_fscore:0.4000; eval_val_mse:2.6641; eval_metric:-0.2660
+epoch:30; eval_acc:0.4182; eval_fscore:0.4131; eval_val_mse:2.7366; eval_metric:-0.2711
+epoch:31; eval_acc:0.4107; eval_fscore:0.4061; eval_val_mse:2.6513; eval_metric:-0.2568
+epoch:32; eval_acc:0.4167; eval_fscore:0.4120; eval_val_mse:2.7238; eval_metric:-0.2690
+epoch:33; eval_acc:0.4211; eval_fscore:0.4141; eval_val_mse:2.8366; eval_metric:-0.2951
+epoch:34; eval_acc:0.4137; eval_fscore:0.4045; eval_val_mse:2.6760; eval_metric:-0.2645
+epoch:35; eval_acc:0.4077; eval_fscore:0.4038; eval_val_mse:2.7218; eval_metric:-0.2766
+epoch:36; eval_acc:0.4003; eval_fscore:0.3965; eval_val_mse:2.6737; eval_metric:-0.2720
+epoch:37; eval_acc:0.4167; eval_fscore:0.4128; eval_val_mse:2.6547; eval_metric:-0.2509
+epoch:38; eval_acc:0.4226; eval_fscore:0.4196; eval_val_mse:2.6602; eval_metric:-0.2455
+epoch:39; eval_acc:0.4167; eval_fscore:0.4095; eval_val_mse:2.6810; eval_metric:-0.2607
+epoch:40; eval_acc:0.4196; eval_fscore:0.4135; eval_val_mse:2.7353; eval_metric:-0.2704
+epoch:41; eval_acc:0.4137; eval_fscore:0.4090; eval_val_mse:2.7189; eval_metric:-0.2708
+epoch:42; eval_acc:0.4122; eval_fscore:0.4062; eval_val_mse:2.6862; eval_metric:-0.2653
+epoch:43; eval_acc:0.4092; eval_fscore:0.4077; eval_val_mse:2.7013; eval_metric:-0.2677
+epoch:44; eval_acc:0.4092; eval_fscore:0.4029; eval_val_mse:2.7345; eval_metric:-0.2807
+epoch:45; eval_acc:0.4226; eval_fscore:0.4204; eval_val_mse:2.7006; eval_metric:-0.2548
+epoch:46; eval_acc:0.4122; eval_fscore:0.4078; eval_val_mse:2.6701; eval_metric:-0.2597
+epoch:47; eval_acc:0.4211; eval_fscore:0.4141; eval_val_mse:2.6795; eval_metric:-0.2558
+epoch:48; eval_acc:0.4137; eval_fscore:0.4108; eval_val_mse:2.6665; eval_metric:-0.2559
+epoch:49; eval_acc:0.4211; eval_fscore:0.4164; eval_val_mse:2.6689; eval_metric:-0.2508
+epoch:50; eval_acc:0.4211; eval_fscore:0.4175; eval_val_mse:2.6491; eval_metric:-0.2448
+epoch:51; eval_acc:0.4241; eval_fscore:0.4202; eval_val_mse:2.6549; eval_metric:-0.2435
+epoch:52; eval_acc:0.4182; eval_fscore:0.4132; eval_val_mse:2.6663; eval_metric:-0.2533
+epoch:53; eval_acc:0.4196; eval_fscore:0.4160; eval_val_mse:2.6653; eval_metric:-0.2503
+epoch:54; eval_acc:0.4196; eval_fscore:0.4145; eval_val_mse:2.6356; eval_metric:-0.2444
+epoch:55; eval_acc:0.4211; eval_fscore:0.4156; eval_val_mse:2.6372; eval_metric:-0.2437
+epoch:56; eval_acc:0.4226; eval_fscore:0.4186; eval_val_mse:2.6478; eval_metric:-0.2433
+epoch:57; eval_acc:0.4167; eval_fscore:0.4116; eval_val_mse:2.6546; eval_metric:-0.2521
+epoch:58; eval_acc:0.4196; eval_fscore:0.4163; eval_val_mse:2.6443; eval_metric:-0.2448
+epoch:59; eval_acc:0.4211; eval_fscore:0.4169; eval_val_mse:2.6708; eval_metric:-0.2508
+epoch:60; eval_acc:0.4241; eval_fscore:0.4198; eval_val_mse:2.6418; eval_metric:-0.2406
+epoch:61; eval_acc:0.4241; eval_fscore:0.4199; eval_val_mse:2.6569; eval_metric:-0.2443
+epoch:62; eval_acc:0.4152; eval_fscore:0.4101; eval_val_mse:2.6661; eval_metric:-0.2564
+epoch:63; eval_acc:0.4122; eval_fscore:0.4085; eval_val_mse:2.6452; eval_metric:-0.2528
+epoch:64; eval_acc:0.4167; eval_fscore:0.4122; eval_val_mse:2.6706; eval_metric:-0.2554
+epoch:65; eval_acc:0.4152; eval_fscore:0.4102; eval_val_mse:2.6415; eval_metric:-0.2502
+Step3: saving and testing on the 4 folder
+>>>>> Finish: training on the 4 folder, duration: 8775.882395744324 >>>>>
+>>>>> Cross-validation: training on the 5 folder >>>>>
+Step1: build model (each folder has its own model)
+Step2: training (multiple epoches)
+epoch:1; eval_acc:0.3646; eval_fscore:0.2831; eval_val_mse:2.5713; eval_metric:-0.3597
+epoch:2; eval_acc:0.4018; eval_fscore:0.3378; eval_val_mse:2.2677; eval_metric:-0.2291
+epoch:3; eval_acc:0.4375; eval_fscore:0.3989; eval_val_mse:2.2253; eval_metric:-0.1574
+epoch:4; eval_acc:0.4330; eval_fscore:0.4085; eval_val_mse:2.6666; eval_metric:-0.2582
+epoch:5; eval_acc:0.4479; eval_fscore:0.4273; eval_val_mse:2.2310; eval_metric:-0.1305
+epoch:6; eval_acc:0.4628; eval_fscore:0.4469; eval_val_mse:2.3368; eval_metric:-0.1373
+epoch:7; eval_acc:0.4494; eval_fscore:0.4362; eval_val_mse:2.2425; eval_metric:-0.1244
+epoch:8; eval_acc:0.4643; eval_fscore:0.4609; eval_val_mse:2.2471; eval_metric:-0.1009
+epoch:9; eval_acc:0.4152; eval_fscore:0.4120; eval_val_mse:2.3317; eval_metric:-0.1709
+epoch:10; eval_acc:0.4464; eval_fscore:0.4383; eval_val_mse:2.1658; eval_metric:-0.1032
+epoch:11; eval_acc:0.4494; eval_fscore:0.4350; eval_val_mse:2.3289; eval_metric:-0.1472
+epoch:12; eval_acc:0.4375; eval_fscore:0.4202; eval_val_mse:2.3246; eval_metric:-0.1610
+epoch:13; eval_acc:0.4420; eval_fscore:0.4384; eval_val_mse:2.4477; eval_metric:-0.1735
+epoch:14; eval_acc:0.4241; eval_fscore:0.4114; eval_val_mse:2.2934; eval_metric:-0.1619
+epoch:15; eval_acc:0.4301; eval_fscore:0.4207; eval_val_mse:2.4502; eval_metric:-0.1919
+epoch:16; eval_acc:0.4405; eval_fscore:0.4353; eval_val_mse:2.3849; eval_metric:-0.1609
+epoch:17; eval_acc:0.4256; eval_fscore:0.4181; eval_val_mse:2.4911; eval_metric:-0.2047
+epoch:18; eval_acc:0.4390; eval_fscore:0.4334; eval_val_mse:2.3718; eval_metric:-0.1596
+epoch:19; eval_acc:0.4211; eval_fscore:0.4130; eval_val_mse:2.5878; eval_metric:-0.2340
+epoch:20; eval_acc:0.4345; eval_fscore:0.4285; eval_val_mse:2.4906; eval_metric:-0.1942
+epoch:21; eval_acc:0.4167; eval_fscore:0.4175; eval_val_mse:2.5477; eval_metric:-0.2194
+epoch:22; eval_acc:0.4554; eval_fscore:0.4557; eval_val_mse:2.4284; eval_metric:-0.1514
+epoch:23; eval_acc:0.4196; eval_fscore:0.4186; eval_val_mse:2.3827; eval_metric:-0.1771
+epoch:24; eval_acc:0.4420; eval_fscore:0.4376; eval_val_mse:2.5185; eval_metric:-0.1920
+epoch:25; eval_acc:0.4122; eval_fscore:0.4082; eval_val_mse:2.5113; eval_metric:-0.2196
+epoch:26; eval_acc:0.4241; eval_fscore:0.4212; eval_val_mse:2.4830; eval_metric:-0.1996
+epoch:27; eval_acc:0.4271; eval_fscore:0.4209; eval_val_mse:2.4387; eval_metric:-0.1888
+epoch:28; eval_acc:0.4435; eval_fscore:0.4414; eval_val_mse:2.4650; eval_metric:-0.1748
+epoch:29; eval_acc:0.4286; eval_fscore:0.4256; eval_val_mse:2.4618; eval_metric:-0.1899
+epoch:30; eval_acc:0.4048; eval_fscore:0.4002; eval_val_mse:2.4799; eval_metric:-0.2198
+epoch:31; eval_acc:0.4286; eval_fscore:0.4252; eval_val_mse:2.4862; eval_metric:-0.1963
+epoch:32; eval_acc:0.4405; eval_fscore:0.4352; eval_val_mse:2.3930; eval_metric:-0.1631
+epoch:33; eval_acc:0.4211; eval_fscore:0.4199; eval_val_mse:2.4625; eval_metric:-0.1957
+epoch:34; eval_acc:0.4137; eval_fscore:0.4122; eval_val_mse:2.4555; eval_metric:-0.2017
+epoch:35; eval_acc:0.4375; eval_fscore:0.4366; eval_val_mse:2.5097; eval_metric:-0.1908
+epoch:36; eval_acc:0.4167; eval_fscore:0.4152; eval_val_mse:2.4948; eval_metric:-0.2085
+epoch:37; eval_acc:0.4256; eval_fscore:0.4238; eval_val_mse:2.4766; eval_metric:-0.1953
+epoch:38; eval_acc:0.4226; eval_fscore:0.4207; eval_val_mse:2.4640; eval_metric:-0.1953
+epoch:39; eval_acc:0.4196; eval_fscore:0.4161; eval_val_mse:2.4655; eval_metric:-0.2002
+epoch:40; eval_acc:0.4256; eval_fscore:0.4205; eval_val_mse:2.4205; eval_metric:-0.1846
+epoch:41; eval_acc:0.4226; eval_fscore:0.4185; eval_val_mse:2.4556; eval_metric:-0.1954
+epoch:42; eval_acc:0.4286; eval_fscore:0.4269; eval_val_mse:2.4619; eval_metric:-0.1885
+epoch:43; eval_acc:0.4271; eval_fscore:0.4219; eval_val_mse:2.4479; eval_metric:-0.1901
+epoch:44; eval_acc:0.4271; eval_fscore:0.4240; eval_val_mse:2.4001; eval_metric:-0.1760
+epoch:45; eval_acc:0.4211; eval_fscore:0.4173; eval_val_mse:2.4364; eval_metric:-0.1918
+epoch:46; eval_acc:0.4226; eval_fscore:0.4202; eval_val_mse:2.4348; eval_metric:-0.1885
+epoch:47; eval_acc:0.4271; eval_fscore:0.4251; eval_val_mse:2.4883; eval_metric:-0.1970
+epoch:48; eval_acc:0.4256; eval_fscore:0.4205; eval_val_mse:2.4711; eval_metric:-0.1972
+epoch:49; eval_acc:0.4315; eval_fscore:0.4288; eval_val_mse:2.4444; eval_metric:-0.1823
+epoch:50; eval_acc:0.4241; eval_fscore:0.4202; eval_val_mse:2.4134; eval_metric:-0.1832
+epoch:51; eval_acc:0.4241; eval_fscore:0.4222; eval_val_mse:2.4554; eval_metric:-0.1917
+epoch:52; eval_acc:0.4226; eval_fscore:0.4197; eval_val_mse:2.3892; eval_metric:-0.1776
+epoch:53; eval_acc:0.4182; eval_fscore:0.4170; eval_val_mse:2.4224; eval_metric:-0.1886
+epoch:54; eval_acc:0.4226; eval_fscore:0.4199; eval_val_mse:2.4706; eval_metric:-0.1978
+epoch:55; eval_acc:0.4256; eval_fscore:0.4225; eval_val_mse:2.4478; eval_metric:-0.1895
+epoch:56; eval_acc:0.4241; eval_fscore:0.4219; eval_val_mse:2.4553; eval_metric:-0.1919
+epoch:57; eval_acc:0.4375; eval_fscore:0.4332; eval_val_mse:2.4157; eval_metric:-0.1707
+epoch:58; eval_acc:0.4271; eval_fscore:0.4247; eval_val_mse:2.4572; eval_metric:-0.1896
+epoch:59; eval_acc:0.4330; eval_fscore:0.4305; eval_val_mse:2.4224; eval_metric:-0.1751
+epoch:60; eval_acc:0.4360; eval_fscore:0.4321; eval_val_mse:2.4654; eval_metric:-0.1842
+epoch:61; eval_acc:0.4315; eval_fscore:0.4293; eval_val_mse:2.4282; eval_metric:-0.1778
+epoch:62; eval_acc:0.4256; eval_fscore:0.4218; eval_val_mse:2.4204; eval_metric:-0.1833
+epoch:63; eval_acc:0.4167; eval_fscore:0.4141; eval_val_mse:2.4572; eval_metric:-0.2002
+epoch:64; eval_acc:0.4256; eval_fscore:0.4234; eval_val_mse:2.4382; eval_metric:-0.1862
+epoch:65; eval_acc:0.4256; eval_fscore:0.4225; eval_val_mse:2.4561; eval_metric:-0.1915
+Step3: saving and testing on the 5 folder
+>>>>> Finish: training on the 5 folder, duration: 4467.635356664658 >>>>>
+====== Gain predition on test data =======
+save results in ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4432_valmse:2.3907_metric:-0.1544_1685066305.895017.npz
+1500
+1667
+193

@@ -32,3 +32,41 @@ fscore: 0.4076, valmse: 2.5157, metric: -0.2214, train_args_path: ./saved-unimod
 fscore: 0.3976, valmse: 2.4957, metric: -0.2263, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.3976_valmse:2.4957_metric:-0.2263_1684849675.654867.npz
 fscore: 0.4170, valmse: 2.3988, metric: -0.1827, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.4170_valmse:2.3988_metric:-0.1827_1684852314.7395647.npz
 fscore: 0.4197, valmse: 2.4424, metric: -0.1909, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.4197_valmse:2.4424_metric:-0.1909_1684853061.1905017.npz
+
+fscore: 0.4368, valmse: 2.4121, metric: -0.1663, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.4368_valmse:2.4121_metric:-0.1663_1685007635.1542273.npz
+fscore: 0.4378, valmse: 2.4268, metric: -0.1689, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.4378_valmse:2.4268_metric:-0.1689_1685012160.7195742.npz
+fscore: 0.4314, valmse: 2.3656, metric: -0.1600, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT+chinese-macbert-large-4-UTT_f1:0.4314_valmse:2.3656_metric:-0.1600_1685012794.4589033.npz
+
+# First exp
+fscore: 0.4339, valmse: 2.4014, metric: -0.1664, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4339_valmse:2.4014_metric:-0.1664_1685055693.541139.npz
+fscore: 0.4355, valmse: 2.3663, metric: -0.1561, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4355_valmse:2.3663_metric:-0.1561_1685058905.5370572.npz
+fscore: 0.4432, valmse: 2.3907, metric: -0.1544, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4432_valmse:2.3907_metric:-0.1544_1685066305.895017.npz
+
+# Second exp
+fscore: 0.4386, valmse: 2.4202, metric: -0.1664, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4386_valmse:2.4202_metric:-0.1664_1685087095.6066778.npz
+fscore: 0.4343, valmse: 2.4126, metric: -0.1689, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4343_valmse:2.4126_metric:-0.1689_1685089665.428689.npz
+fscore: 0.4332, valmse: 2.3731, metric: -0.1600, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4332_valmse:2.3731_metric:-0.1600_1685090157.0459156.npz
+fscore: 0.3944, valmse: 2.5994, metric: -0.2555, pretrain_model: hfl/chinese-macbert-base, freez_mode: 4
+
+# whisper_large_2 
+fscore: 0.4413, valmse: 2.3666, metric: -0.1503, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4413_valmse:2.3666_metric:-0.1503_1685572921.4184144.npz
+# wenet
+fscore: 0.4365, valmse: 2.3725, metric: -0.1567, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4365_valmse:2.3725_metric:-0.1567_1685573184.058285.npz
+# whisper_large_2 
+fscore: 0.4419, valmse: 2.3942, metric: -0.1567, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4419_valmse:2.3942_metric:-0.1567_1685604523.9377806.npz
+# wenet
+fscore: 0.4324, valmse: 2.4313, metric: -0.1754, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4324_valmse:2.4313_metric:-0.1754_1685604631.6713345.npz
+fscore: 0.4303, valmse: 2.3866, metric: -0.1664, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4303_valmse:2.3866_metric:-0.1664_1685628520.8030443.npz
+fscore: 0.4303, valmse: 2.3938, metric: -0.1681, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4303_valmse:2.3938_metric:-0.1681_1685667417.6065762.npz
+fscore: 0.4214, valmse: 2.3960, metric: -0.1776, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4214_valmse:2.3960_metric:-0.1776_1685670055.8077698.npz
+fscore: 0.4260, valmse: 2.4300, metric: -0.1815, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4260_valmse:2.4300_metric:-0.1815_1685670066.1927724.npz
+
+# whisper_old + 帧级别结果  
+fscore: 0.4421, valmse: 2.3477, metric: -0.1448, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4421_valmse:2.3477_metric:-0.1448_1685690947.5756059.npz
+# adapter + 帧级别结果  学习率似乎太高
+fscore: 0.4108, valmse: 2.4531, metric: -0.2025, pretrain_model: hfl/chinese-macbert-large, freez_mode: 4
+
+
+fscore: 0.4435, valmse: 2.4506, metric: -0.1692, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4435_valmse:2.4506_metric:-0.1692_1685880970.9132147.npz
+fscore: 0.4334, valmse: 2.3717, metric: -0.1595, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4334_valmse:2.3717_metric:-0.1595_1686236672.4109957.npz
+fscore: 0.4260, valmse: 2.3643, metric: -0.1651, train_args_path: ./saved-unimodal/model/cv_features:chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA+chinese-macbert-large-4-FRA_f1:0.4260_valmse:2.3643_metric:-0.1651_1686241960.4835863.npz

@@ -1,0 +1,31 @@
+nohup: ignoring input
+Namespace(audio_feature='chinese-macbert-large-4-FRA', batch_size=32, dataset='MER2023_WHISPER_LARGE2_TRANS_-2_-1', debug=False, dropout=0.5, epochs=36, gpu=0, l2=1e-05, layers='256,128', lr=0.001, model_type='attention', n_classes=6, num_folder=5, num_workers=0, save_root='./saved-unimodal', savewhole=False, seed=100, test_dataset='MER2023_WHISPER_LARGE2_TRANS_-2_-1', test_sets=['test3'], text_feature='chinese-macbert-large-4-FRA', train_dataset='MER2023_WHISPER_LARGE2_TRANS_-2_-1', video_feature='chinese-macbert-large-4-FRA')
+====== Reading Data =======
+0it [00:00, ?it/s]3373it [00:00, 1504241.08it/s]
+  0%|          | 0/3373 [00:00<?, ?it/s]  0%|          | 0/3373 [00:00<?, ?it/s]
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/home/wyz/anaconda3/envs/torch1.8/lib/python3.8/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+  File "train_frame_1024.py", line 53, in func_read_one
+    assert len(feature_dir) == 1
+AssertionError
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "train_frame_1024.py", line 728, in <module>
+    train_loaders, eval_loaders, test_loaders, adim, tdim, vdim = get_loaders(args, config)      
+  File "train_frame_1024.py", line 219, in get_loaders
+    train_dataset = MERDataset(label_path = config.PATH_TO_LABEL[args.train_dataset],
+  File "train_frame_1024.py", line 127, in __init__
+    self.name2audio, self.name2labels, self.adim = read_data_multiprocess(label_path, audio_root, task='whole', data_type=data_type, debug=debug)
+  File "train_frame_1024.py", line 107, in read_data_multiprocess
+    features = list(tqdm.tqdm(pool.imap(func_read_one, params), total=len(params)))
+  File "/home/wyz/anaconda3/envs/torch1.8/lib/python3.8/site-packages/tqdm/std.py", line 1178, in __iter__
+    for obj in iterable:
+  File "/home/wyz/anaconda3/envs/torch1.8/lib/python3.8/multiprocessing/pool.py", line 868, in next
+    raise value
+AssertionError
