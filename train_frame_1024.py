@@ -330,7 +330,6 @@ class FRA2UTT(nn.Module):
         self.input_proj = nn.Linear(input_dim, self.atsize)
     
     def forward(self, input_tensor):
-        print(input_tensor.shape)
         batch_size = input_tensor.shape[0]
         attention_context_vector = self.attention_context_vector.repeat(batch_size,1).unsqueeze(2)
         input_proj = torch.tanh(self.input_proj(input_tensor))
@@ -352,7 +351,6 @@ class FRA2UTT_new(nn.Module):
         self.input_proj = nn.Linear(input_dim, self.atsize)
     
     def forward(self, input_tensor):
-        print(input_tensor.shape)
         input_proj = torch.tanh(self.input_proj(input_tensor))
         vector_attention = torch.bmm(input_proj, self.attention_context_vector.unsqueeze(2))
         #softmax

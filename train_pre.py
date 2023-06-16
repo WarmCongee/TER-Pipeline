@@ -494,7 +494,7 @@ if __name__ == '__main__':
     elif len(set(whole_features)) == 3:
         args.save_root = f'{args.save_root}-trimodal'
 
-    checkpoint = 'hfl/chinese-macbert-base'
+    checkpoint = 'hfl/chinese-macbert-large'
     freeze = "4"
 
     # torch.cuda.set_device(args.gpu)
@@ -526,6 +526,8 @@ if __name__ == '__main__':
         # for name, param in model.named_parameters():
         #     if param.requires_grad:
         #         print(name)
+        #for name, module in model._modules.items():
+            #print (name," : ",module)
 
         reg_loss = MSELoss()
         cls_loss = CELoss()
@@ -606,7 +608,7 @@ if __name__ == '__main__':
     cv_metric = overall_metric(cv_fscore, cv_valmse)
     res_name = f'f1:{cv_fscore:.4f}_valmse:{cv_valmse:.4f}_metric:{cv_metric:.4f}'
     save_path = f'{save_modelroot}/cv_features:{feature_name}_{res_name}_{name_time}.npz'
-    # print (f'save results in {save_path}')
+    print (res_name)
     # np.savez_compressed(save_path, args=np.array(args, dtype=object))  # 参数保存选择
 
     record_exp_result(cv_fscore, cv_valmse, cv_metric, checkpoint, freeze)
