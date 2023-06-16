@@ -11,7 +11,8 @@ DATA_DIR = {
     'MER2023_SIMPLE_TRANS': '/home/wyz/MER-TER/TER-Pipeline/dataset/',
     'MER2023_LONG_TRANS': '/home/wyz/MER-TER/TER-Pipeline/',
     'MER2023_WHISPER_LARGE2_TRANS': '/home/wyz/MER-TER/TER-Pipeline/',
-    'BASE_MOBILE': '/home/wyz/MER-TER/TER-Pipeline/'
+    'BASE_MOBILE': '/home/wyz/MER-TER/TER-Pipeline/',
+    'NEW_MOBILE': '/home/wyz/MER-TER/TER-Pipeline/'
 }
 PATH_TO_RAW_AUDIO = {
 	'MER2023': os.path.join(DATA_DIR['MER2023'], 'ter_dataset/audio'),
@@ -25,6 +26,7 @@ PATH_TO_TRANSCRIPTIONS = {
     'MER2023_LONG_TRANS': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/base_long_text.csv'),
     'MER2023_WHISPER_LARGE2_TRANS': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/whisper_text_dataset_all.csv'),
     'BASE_MOBILE': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/base_mobile_text.csv'),
+    'NEW_MOBILE': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/new_mobile_text_refine.csv'),
     'BASE_TRAIN': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/base_train.csv'),
     'BASE_TEST': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/base_test.csv'),
 }
@@ -34,8 +36,18 @@ PATH_TO_FEATURES = {
     'MER2023_LONG_TRANS': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'features/long'),
     'MER2023_WHISPER_LARGE2_TRANS': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'features/whisper'),
     'BASE_MOBILE': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'features/mobile'),
-    'BASE_TRAIN': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'features/base_train'),
-    'BASE_TEST': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'features/base_test'),
+    'NEW_MOBILE': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'features/new_mobile'),
+    
+    'MER2023_WHISPER_LARGE2_TRANS_-6_-3': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'features/whisper_old_-6_-3'),
+    'MER2023_WHISPER_LARGE2_TRANS_-8_-5': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'features/whisper_old_-8_-5'),
+    'MER2023_WHISPER_LARGE2_TRANS_-2_-1': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'features/whisper_old_-2_-1'),
+    'MER2023_WHISPER_LARGE2_TRANS_-4_-3': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'features/whisper_old_-4_-3'),
+    'MER2023_WHISPER_LARGE2_TRANS_-8_-7': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'features/whisper_old_-8_-7'),
+
+    'MER2023_WHISPER_LARGE2_TRANS_1_4': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'features/whisper_old_1_4'),
+    'MER2023_WHISPER_LARGE2_TRANS_5_8': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'features/whisper_old_5_8'),
+    'MER2023_WHISPER_LARGE2_TRANS_9_12': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'features/whisper_old_9_12'),
+    'MER2023_WHISPER_LARGE2_TRANS_13_16': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'features/whisper_old_13_16'),
 }
 PATH_TO_LABEL = {
 	'MER2023': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/label-6way.npz'),
@@ -43,8 +55,19 @@ PATH_TO_LABEL = {
     'MER2023_LONG_TRANS': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/label_base_long_text.npz'),
     'MER2023_WHISPER_LARGE2_TRANS': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/label-6way.npz'),
     'BASE_MOBILE': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/base_mobile_text.npz'),
-    'BASE_TRAIN': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/base_train_label.npz'),
-    'BASE_TEST': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/base_test_label.npz'),
+    'NEW_MOBILE': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/new_mobile_text.npz'),
+
+    'MER2023_WHISPER_LARGE2_TRANS_-6_-3': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/label-6way.npz'),
+    'MER2023_WHISPER_LARGE2_TRANS_-8_-5': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/label-6way.npz'),
+    'MER2023_WHISPER_LARGE2_TRANS_-2_-1': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/label-6way.npz'),
+    'MER2023_WHISPER_LARGE2_TRANS_-4_-3': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/label-6way.npz'),
+    'MER2023_WHISPER_LARGE2_TRANS_-8_-7': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/label-6way.npz'),
+
+    'MER2023_WHISPER_LARGE2_TRANS_1_4': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/label-6way.npz'),
+    'MER2023_WHISPER_LARGE2_TRANS_5_8': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/label-6way.npz'),
+    'MER2023_WHISPER_LARGE2_TRANS_9_12': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/label-6way.npz'),
+    'MER2023_WHISPER_LARGE2_TRANS_13_16': os.path.join(DATA_DIR['REPOSITORY_PATH'], 'dataset/label-6way.npz'),
+
 }
 
 PATH_TO_RESULT = {

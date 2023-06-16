@@ -133,7 +133,7 @@ class FRA2UTT_new(nn.Module):
         super(FRA2UTT_new, self).__init__()
         self.atsize = atsize
         self.softmax_scale = softmax_scale
-        self.attention_context_vector = nn.Parameter(torch.empty(4,atsize)) #(batch_size, feature_dim)
+        self.attention_context_vector = nn.Parameter(torch.empty(8,atsize)) #(batch_size, feature_dim)
         nn.init.xavier_normal_(self.attention_context_vector)
         self.input_proj = nn.Linear(input_dim, self.atsize)
     
@@ -220,14 +220,24 @@ class AdapterClassification(nn.Module):
         adapter_config_str = 'pfeiffer'
         if adapter_config_str not in self.encoder.config.adapters:
             # resolve the adapter config
-            adapter_config = AdapterConfig.load(adapter_config_str)
+            # adapter_config = AdapterConfig.load(adapter_config_str)
+            adapter_config = AdapterConfig.load(
+                adapter_config_str,
+                leave_out = list(range(0,19))#list(range(0,16))+(list(range(20,24)))
+            )
             # add a new adapter
             self.encoder.add_adapter(adapter_config_str, config=adapter_config)
         # Enable adapter training
         self.encoder.train_adapter(adapter_config_str)
         self.encoder.set_active_adapters(adapter_config_str)
-        self.layer_ids = [-4, -3, -2, -1]
-        self.feature_dim = 768
+        # self.encoder.bert.encoder.layer[0:-4].requires_grad_(False)
+        
+        self.layer_ids = [-5, -4, -3, -2]
+        if checkpoint == 'hfl/chinese-macbert-large':
+            self.feature_dim = 1024
+        else:
+            self.feature_dim = 768
+
         # if freeze == "1":
         #     self.encoder.embeddings.word_embeddings.requires_grad_(False)
         # if freeze == "2":
@@ -244,6 +254,7 @@ class AdapterClassification(nn.Module):
     def forward(self, enc_inputs, attention_mask, token_type_ids):
         outs = self.encoder(input_ids=enc_inputs, attention_mask=attention_mask, token_type_ids=token_type_ids,  output_hidden_states=True).hidden_states
         outs = torch.stack(outs)[self.layer_ids].sum(dim=0) # sum => [batch, T, D=768]
+        print(outs.shape)
         # embeddings = outs[: , 1:-1, :]
         feature_dim = outs.shape[-1]
         embeddings = outs
